@@ -508,14 +508,14 @@ h3.post-title, .comments h4 {
   color: gray;
   font-size: 90%;
   padding-bottom: 3ex;
-}
 
-.poem-info #author::before {
-  content: "by ";
-}
+  #author::before {
+    content: "by ";
+  }
 
-.poem-info #title {
-  display: none;
+  #title {
+    display: none;
+  }
 }
 
 .song-segment {
@@ -530,6 +530,21 @@ h3.post-title, .comments h4 {
   padding-top: 4ex;
 }
 
+.disclaimer {
+  color: gray;
+  font-size: 80%;
+  margin: 4ex 0;
+  padding: 2ex 0;
+  border-width: 1px;
+  border-color:purple;
+  border-style: solid;
+  border-right-style: none;
+  border-left-style: none;
+
+  :first-child {
+    font-weight: bold;
+  }
+}
 
 /* Mobile
 ----------------------------------------------- */
