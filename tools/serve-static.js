@@ -254,6 +254,52 @@ function concatenateAllHtmlFiles(dirPath) {
       }
     });
 
+    // Sort poems by date (oldest first) for display order
+    poemData.sort((a, b) => {
+      const parseDate = (dateStr) => {
+        if (dateStr === "Unknown Date") return new Date(0);
+
+        // Handle format: "Monday, 4 May 2015" or "Friday, 1 August 1997"
+        const months = {
+          January: 0,
+          February: 1,
+          March: 2,
+          April: 3,
+          May: 4,
+          June: 5,
+          July: 6,
+          August: 7,
+          September: 8,
+          October: 9,
+          November: 10,
+          December: 11,
+        };
+
+        const parts = dateStr.split(", ");
+        if (parts.length >= 2) {
+          const datePart = parts[1].split(" ");
+          if (datePart.length >= 3) {
+            const day = parseInt(datePart[0]);
+            const month = months[datePart[1]];
+            const year = parseInt(datePart[2]);
+            if (!isNaN(day) && month !== undefined && !isNaN(year)) {
+              return new Date(year, month, day);
+            }
+          }
+        }
+        return new Date(0); // fallback for invalid dates
+      };
+
+      const aDate = parseDate(a.date);
+      const bDate = parseDate(b.date);
+      return aDate - bDate; // oldest first
+    });
+
+    // Regenerate anchors based on sorted order
+    poemData.forEach((poem, index) => {
+      poem.anchor = `poem-${index}`;
+    });
+
     let concatenatedContent = `<!DOCTYPE html>
 <html lang="en">
 <head>
