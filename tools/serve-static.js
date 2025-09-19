@@ -221,18 +221,24 @@ function concatenateAllHtmlFiles(dirPath) {
       try {
         const content = fs.readFileSync(filePath, "utf8");
 
-        // Extract title from span id="title"
-        const titleMatch = content.match(/<span id="title">([^<]+)<\/span>/);
+        // Extract title from span id="title--suffix" or fallback to id="title"
+        const titleMatch =
+          content.match(/<span id="title--[^"]*">([^<]+)<\/span>/) ||
+          content.match(/<span id="title">([^<]+)<\/span>/);
         const title = titleMatch ? titleMatch[1] : fileName;
 
-        // Extract date from span id="date"
-        const dateMatch = content.match(/<span id="date">([^<]+)<\/span>/);
+        // Extract date from span id="date--suffix" or fallback to id="date"
+        const dateMatch =
+          content.match(/<span id="date--[^"]*">([^<]+)<\/span>/) ||
+          content.match(/<span id="date">([^<]+)<\/span>/);
         const date = dateMatch ? dateMatch[1] : "Unknown Date";
 
-        // Check for active song link (not commented out)
+        // Check for active song link (not commented out) - handle both old and new ID formats
         const hasSongLink =
-          content.includes('<div id="song" class="song-link">') &&
-          !content.includes('<!-- div id="song" class="song-link">');
+          (content.includes('<div id="song--') &&
+            !content.includes('<!-- div id="song--')) ||
+          (content.includes('<div id="song" class="song-link">') &&
+            !content.includes('<!-- div id="song" class="song-link">'));
 
         poemData.push({
           fileName,
