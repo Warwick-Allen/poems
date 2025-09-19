@@ -1,7 +1,7 @@
 {
-  "dependencies": {
-  },
+  "dependencies": {},
   "scripts": {
-    "start": "node tools/serve-static.js"
+    "start": "node tools/serve-static.js",
+    "stop": "for /f \"tokens=5\" %a in ('netstat -ano ^| findstr :8080') do taskkill /PID %a /F"
   }
 }

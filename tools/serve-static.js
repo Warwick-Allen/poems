@@ -95,6 +95,302 @@ function directoryExists(dirPath) {
   }
 }
 
+function generateDirectoryListing(dirPath, relativePath = "/") {
+  try {
+    const items = fs.readdirSync(dirPath, { withFileTypes: true });
+
+    const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directory Listing - ${relativePath}</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 40px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #333; margin-bottom: 30px; font-weight: 300; }
+        .path { color: #666; margin-bottom: 20px; font-family: monospace; background: #f8f8f8; padding: 8px 12px; border-radius: 4px; }
+        .item { padding: 8px 0; border-bottom: 1px solid #eee; display: flex; align-items: center; }
+        .item:last-child { border-bottom: none; }
+        .item:hover { background: #f9f9f9; margin: 0 -12px; padding: 8px 12px; border-radius: 4px; }
+        .icon { margin-right: 12px; width: 20px; text-align: center; }
+        .folder { color: #ff9500; }
+        .file { color: #666; }
+        a { text-decoration: none; color: #007AFF; flex: 1; }
+        a:hover { text-decoration: underline; }
+        .size { color: #999; font-size: 0.9em; margin-left: auto; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #007AFF; text-decoration: none; }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Directory Listing</h1>
+        <div class="path">${relativePath}</div>
+        ${
+          relativePath !== "/"
+            ? '<a href=".." class="back-link">← Parent Directory</a>'
+            : ""
+        }
+        ${
+          relativePath === "/"
+            ? '<a href="/all-poems" class="back-link">📖 View All Poems (Concatenated)</a>'
+            : ""
+        }
+        ${items
+          .map((item) => {
+            const isDir = item.isDirectory();
+            const href =
+              relativePath === "/" ? item.name : `${relativePath}/${item.name}`;
+            const icon = isDir ? "📁" : "📄";
+            const className = isDir ? "folder" : "file";
+
+            let size = "";
+            if (!isDir) {
+              try {
+                const stat = fs.statSync(path.join(dirPath, item.name));
+                size = formatFileSize(stat.size);
+              } catch (_) {
+                size = "";
+              }
+            }
+
+            return `<div class="item">
+            <span class="icon ${className}">${icon}</span>
+            <a href="${href}">${item.name}</a>
+            ${size ? `<span class="size">${size}</span>` : ""}
+          </div>`;
+          })
+          .join("")}
+    </div>
+</body>
+</html>`;
+
+    return html;
+  } catch (err) {
+    return `<!DOCTYPE html><html><body><h1>Error reading directory</h1><p>${err.message}</p></body></html>`;
+  }
+}
+
+function formatFileSize(bytes) {
+  if (bytes === 0) return "0 B";
+  const k = 1024;
+  const sizes = ["B", "KB", "MB", "GB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
+}
+
+function concatenateAllHtmlFiles(dirPath) {
+  try {
+    const items = fs.readdirSync(dirPath, { withFileTypes: true });
+    const htmlFiles = items
+      .filter(
+        (item) => item.isFile() && item.name.toLowerCase().endsWith(".html")
+      )
+      .sort(); // Sort alphabetically for consistent ordering
+
+    if (htmlFiles.length === 0) {
+      return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No HTML Files Found</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 40px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; }
+        h1 { color: #333; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>No HTML Files Found</h1>
+        <p>No HTML files were found in the directory.</p>
+    </div>
+</body>
+</html>`;
+    }
+
+    let concatenatedContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Poems - Concatenated View</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 30px; text-align: center; }
+        h1 { color: #333; margin: 0 0 10px 0; font-weight: 300; }
+        .subtitle { color: #666; margin: 0; }
+        .poem-section { background: white; margin-bottom: 30px; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .poem-title { color: #333; margin: 0 0 20px 0; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0; font-size: 1.5em; }
+        .poem-content { line-height: 1.6; color: #444; }
+        .toc { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        .toc h2 { color: #333; margin: 0 0 20px 0; }
+        .toc ul { list-style: none; padding: 0; margin: 0; }
+        .toc li { padding: 5px 0; }
+        .toc a { color: #007AFF; text-decoration: none; }
+        .toc a:hover { text-decoration: underline; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #007AFF; text-decoration: none; }
+        .back-link:hover { text-decoration: underline; }
+        
+        /* Custom CSS from template */
+        .poem-info {
+          color: gray;
+          font-size: 90%;
+          padding-bottom: 3ex;
+        }
+        
+        .poem-info #author::before {
+          content: "by ";
+        }
+        
+        .poem-info #title {
+          display: none;
+        }
+        
+        .song-segment {
+          color: gray;
+          font-size: 80%;
+          font-style: italic;
+        }
+        
+        .song-link {
+          color: gray;
+          font-style: italic;
+          padding-top: 4ex;
+        }
+        
+        .disclaimer {
+          color: gray;
+          font-size: 80%;
+          margin: 4ex 0;
+          padding: 2ex 0;
+          border-width: 1px;
+          border-color: purple;
+          border-style: solid;
+          border-right-style: none;
+          border-left-style: none;
+        }
+        
+        .disclaimer :first-child {
+          font-weight: bold;
+        }
+        
+        /* Analysis */
+        .analysis {
+          background-color: #ffeedd;
+          border: 1px solid #eeaa00;
+          border-radius: 5px;
+          color: #333;
+          line-height: 1.6;
+          margin: 2ex auto;
+          max-width: 800px;
+        }
+        
+        button.analysis {
+          display: block;
+          font-size: 90%;
+          font-weight: bold;
+          padding: 1ex 1em;
+        }
+        
+        button.analysis.hide {
+          background-color: #fff8ee;
+        }
+        
+        div.analysis {
+          display: none;
+          padding: 2ex 2em;
+        }
+        
+        .analysis h2 {
+          color: #2c3e50;
+          margin-bottom: 15px;
+        }
+        
+        .analysis h3 {
+          color: #34495e;
+          margin: 20px 0 10px;
+        }
+        
+        .analysis p {
+          margin-bottom: 15px;
+        }
+        
+        .analysis ul, .analysis ol {
+          margin: 10px 0 15px 20px;
+        }
+        
+        .analysis li {
+          margin-bottom: 10px;
+        }
+        
+        .analysis em {
+          font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>All Poems</h1>
+            <p class="subtitle">Concatenated view of all HTML files (${htmlFiles.length} files)</p>
+            <a href="/" class="back-link">← Back to Directory Listing</a>
+        </div>
+        
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>`;
+
+    // Add table of contents
+    htmlFiles.forEach((file, index) => {
+      const fileName = file.name.replace(".html", "");
+      const anchor = `poem-${index}`;
+      concatenatedContent += `<li><a href="#${anchor}">${fileName}</a></li>`;
+    });
+
+    concatenatedContent += `</ul></div>`;
+
+    // Add each HTML file content
+    htmlFiles.forEach((file, index) => {
+      const filePath = path.join(dirPath, file.name);
+      const fileName = file.name.replace(".html", "");
+      const anchor = `poem-${index}`;
+
+      try {
+        const content = fs.readFileSync(filePath, "utf8");
+
+        // Extract content between <body> tags, or use the entire content if no body tags
+        const bodyMatch = content.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+        const poemContent = bodyMatch ? bodyMatch[1] : content;
+
+        concatenatedContent += `
+        <div class="poem-section" id="${anchor}">
+            <h2 class="poem-title">${fileName}</h2>
+            <div class="poem-content">${poemContent}</div>
+        </div>`;
+      } catch (err) {
+        concatenatedContent += `
+        <div class="poem-section" id="${anchor}">
+            <h2 class="poem-title">${fileName}</h2>
+            <div class="poem-content"><p style="color: #999; font-style: italic;">Error reading file: ${err.message}</p></div>
+        </div>`;
+      }
+    });
+
+    concatenatedContent += `
+    </div>
+</body>
+</html>`;
+
+    return concatenatedContent;
+  } catch (err) {
+    return `<!DOCTYPE html><html><body><h1>Error reading directory</h1><p>${err.message}</p></body></html>`;
+  }
+}
+
 if (!directoryExists(ROOT_DIR)) {
   console.error(`Directory not found: ${ROOT_DIR}`);
   process.exit(1);
@@ -105,7 +401,54 @@ const server = http.createServer((req, res) => {
     const url = new URL(req.url, `http://${req.headers.host}`);
     let pathname = decodeURIComponent(url.pathname);
 
+    // Handle special concatenation endpoint
+    if (pathname === "/all-poems") {
+      const concatenatedContent = concatenateAllHtmlFiles(ROOT_DIR);
+
+      res.writeHead(200, {
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control":
+          "no-store, no-cache, must-revalidate, proxy-revalidate",
+        Pragma: "no-cache",
+        Expires: "0",
+        "Content-Type": "text/html; charset=utf-8",
+      });
+      res.end(concatenatedContent);
+      return;
+    }
+
+    // Handle directory listing requests
     if (pathname.endsWith("/")) {
+      let dirPath = safeJoin(ROOT_DIR, pathname);
+
+      // Prevent path traversal
+      if (!dirPath.startsWith(ROOT_DIR)) {
+        res.writeHead(403, { "Content-Type": "text/plain; charset=utf-8" });
+        res.end("Forbidden");
+        return;
+      }
+
+      // Check if it's a directory
+      if (directoryExists(dirPath)) {
+        const relativePath = pathname === "/" ? "/" : pathname.slice(0, -1);
+        const directoryListing = generateDirectoryListing(
+          dirPath,
+          relativePath
+        );
+
+        res.writeHead(200, {
+          "Access-Control-Allow-Origin": "*",
+          "Cache-Control":
+            "no-store, no-cache, must-revalidate, proxy-revalidate",
+          Pragma: "no-cache",
+          Expires: "0",
+          "Content-Type": "text/html; charset=utf-8",
+        });
+        res.end(directoryListing);
+        return;
+      }
+
+      // Try index.html for directory requests
       pathname += "index.html";
     }
 
