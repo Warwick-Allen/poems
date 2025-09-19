@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+  },
+  "scripts": {
+    "start": "node tools/serve-static.js"
+  }
+}
