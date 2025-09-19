@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Poems by Warwick Allen</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: #f5f5f5;
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .header {
+        background: white;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        text-align: center;
+      }
+      h1 {
+        color: #333;
+        margin: 0 0 10px 0;
+        font-weight: 300;
+        font-size: 2.5em;
+      }
+      .subtitle {
+        color: #666;
+        margin: 0 0 20px 0;
+        font-size: 1.2em;
+      }
+      .description {
+        color: #888;
+        margin: 0;
+        font-style: italic;
+      }
+      .nav-links {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 30px;
+      }
+      .nav-link {
+        display: inline-block;
+        padding: 12px 24px;
+        background: #007aff;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: background-color 0.2s;
+      }
+      .nav-link:hover {
+        background: #0056b3;
+        text-decoration: none;
+      }
+      .poems-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+      }
+      .poem-card {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      .poem-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      }
+      .poem-title {
+        color: #333;
+        margin: 0 0 10px 0;
+        font-size: 1.2em;
+        font-weight: 600;
+      }
+      .poem-link {
+        color: #007aff;
+        text-decoration: none;
+      }
+      .poem-link:hover {
+        text-decoration: underline;
+      }
+      .poem-preview {
+        color: #666;
+        font-size: 0.9em;
+        margin: 10px 0;
+        line-height: 1.4;
+      }
+      .poem-meta {
+        color: #999;
+        font-size: 0.8em;
+        margin-top: 10px;
+      }
+      .audio-indicator {
+        color: #ff6b35;
+        font-size: 1.2em;
+        margin-left: 5px;
+      }
+      @media (max-width: 768px) {
+        .nav-links {
+          flex-direction: column;
+          align-items: center;
+        }
+        .poems-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Poems by Warwick Allen</h1>
+        <p class="subtitle">Fragments & Unity</p>
+        <p class="description">
+          A collection of poetry exploring themes of faith, life, and the human
+          experience
+        </p>
+
+        <div class="nav-links">
+          <a href="all-poems.html" class="nav-link">📖 View All Poems</a>
+          <a href="https://warwick-allen.github.io/poems/" class="nav-link"
+            >🌐 GitHub Pages</a
+          >
+        </div>
+      </div>
+
+      <div class="poems-grid" id="poemsGrid">
+        <!-- Poems will be loaded here by JavaScript -->
+      </div>
+    </div>
+
+    <script>
+      // List of all poems with their metadata (excluding index.html and all-poems.html)
+      const allPoems = [
+        {
+          file: "a-sack-full-of-words.html",
+          title: "A Sack Full of Words",
+          hasAudio: false,
+        },
+        { file: "a-simple-man.html", title: "A Simple Man", hasAudio: false },
+        {
+          file: "a-word-from-me.html",
+          title: "A Word from Me",
+          hasAudio: false,
+        },
+        {
+          file: "all-is-well-with-my-soul.html",
+          title: "All is Well with My Soul",
+          hasAudio: false,
+        },
+        {
+          file: "amazing-man-of-god.html",
+          title: "Amazing Man of God",
+          hasAudio: false,
+        },
+        {
+          file: "anthem-of-the-redeemed.html",
+          title: "Anthem of the Redeemed",
+          hasAudio: false,
+        },
+        {
+          file: "at-the-end-of-myself.html",
+          title: "At the End of Myself",
+          hasAudio: false,
+        },
+        { file: "awakening.html", title: "Awakening", hasAudio: false },
+        { file: "blue-pen.html", title: "Blue Pen", hasAudio: false },
+        { file: "bounce.html", title: "Bounce", hasAudio: false },
+        {
+          file: "can-these-words-live.html",
+          title: "Can These Words Live",
+          hasAudio: false,
+        },
+        {
+          file: "chains-of-sorrow.html",
+          title: "Chains of Sorrow",
+          hasAudio: false,
+        },
+        { file: "chicken-air.html", title: "Chicken Air", hasAudio: false },
+        {
+          file: "dead-faith-breathe.html",
+          title: "Dead Faith Breathe",
+          hasAudio: false,
+        },
+        {
+          file: "dimly-lit-path.html",
+          title: "Dimly Lit Path",
+          hasAudio: false,
+        },
+        { file: "dissonance.html", title: "Dissonance", hasAudio: false },
+        {
+          file: "divide-and-lose.html",
+          title: "Divide and Lose",
+          hasAudio: false,
+        },
+        { file: "easter-joy.html", title: "Easter Joy", hasAudio: false },
+        { file: "ever-isle.html", title: "Ever Isle", hasAudio: false },
+        {
+          file: "floral-apostle.html",
+          title: "Floral Apostle",
+          hasAudio: false,
+        },
+        {
+          file: "glisten-and-divide.html",
+          title: "Glisten and Divide",
+          hasAudio: false,
+        },
+        { file: "gratitude.html", title: "Gratitude", hasAudio: false },
+        { file: "guilty.html", title: "Guilty", hasAudio: false },
+        { file: "hole.html", title: "Hole", hasAudio: false },
+        { file: "little-fox.html", title: "Little Fox", hasAudio: false },
+        {
+          file: "look-at-the-picture.html",
+          title: "Look at the Picture",
+          hasAudio: false,
+        },
+        {
+          file: "minstrel-of-summer.html",
+          title: "Minstrel of Summer",
+          hasAudio: false,
+        },
+        { file: "my-treasure.html", title: "My Treasure", hasAudio: false },
+        {
+          file: "old-order-disappeared.html",
+          title: "Old Order Disappeared",
+          hasAudio: false,
+        },
+        {
+          file: "ordinary-means-of-grace.html",
+          title: "Ordinary Means of Grace",
+          hasAudio: false,
+        },
+        { file: "precious.html", title: "Precious", hasAudio: false },
+        {
+          file: "rurus-first-call.html",
+          title: "Ruru's First Call",
+          hasAudio: false,
+        },
+        {
+          file: "sarawak-auntie.html",
+          title: "Sarawak Auntie",
+          hasAudio: false,
+        },
+        { file: "seeds-of-joy.html", title: "Seeds of Joy", hasAudio: false },
+        {
+          file: "simplicitys-virtue.html",
+          title: "Simplicity's Virtue",
+          hasAudio: false,
+        },
+        {
+          file: "sonnet-of-the-stone.html",
+          title: "Sonnet of the Stone",
+          hasAudio: false,
+        },
+        {
+          file: "sweet-melodies.html",
+          title: "Sweet Melodies",
+          hasAudio: false,
+        },
+        {
+          file: "tear-stained-sod.html",
+          title: "Tear-Stained Sod",
+          hasAudio: false,
+        },
+        { file: "thank-you.html", title: "Thank You", hasAudio: false },
+        { file: "the-valley.html", title: "The Valley", hasAudio: false },
+        { file: "to-be-me.html", title: "To Be Me", hasAudio: false },
+        {
+          file: "together-forever.html",
+          title: "Together Forever",
+          hasAudio: false,
+        },
+        {
+          file: "together-loving-a-perfect-day.html",
+          title: "Together Loving a Perfect Day",
+          hasAudio: false,
+        },
+        { file: "two.html", title: "Two", hasAudio: false },
+        { file: "unreal-riddle.html", title: "Unreal Riddle", hasAudio: false },
+        { file: "yeah-but.html", title: "Yeah But", hasAudio: false },
+      ];
+
+      // Filter out non-poem files (index.html and all-poems.html)
+      const poems = allPoems.filter(
+        (poem) => !["index.html", "all-poems.html"].includes(poem.file)
+      );
+
+      // Function to create poem cards
+      function createPoemCard(poem) {
+        const card = document.createElement("div");
+        card.className = "poem-card";
+
+        card.innerHTML = `
+                <h3 class="poem-title">
+                    <a href="${poem.file}" class="poem-link">${poem.title}</a>
+                    ${
+                      poem.hasAudio
+                        ? '<span class="audio-indicator">🎵</span>'
+                        : ""
+                    }
+                </h3>
+                <div class="poem-preview">Click to read the full poem...</div>
+                <div class="poem-meta">Individual poem</div>
+            `;
+
+        return card;
+      }
+
+      // Load and display poems
+      function loadPoems() {
+        const grid = document.getElementById("poemsGrid");
+
+        poems.forEach((poem) => {
+          const card = createPoemCard(poem);
+          grid.appendChild(card);
+        });
+      }
+
+      // Initialize the page
+      document.addEventListener("DOMContentLoaded", loadPoems);
+    </script>
+  </body>
+</html>
