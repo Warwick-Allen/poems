@@ -211,6 +211,42 @@ function concatenateAllHtmlFiles(dirPath) {
 </html>`;
     }
 
+    // Extract poem data from HTML files
+    const poemData = [];
+    htmlFiles.forEach((file, index) => {
+      const filePath = path.join(dirPath, file.name);
+      const fileName = file.name.replace(".html", "");
+      const anchor = `poem-${index}`;
+
+      try {
+        const content = fs.readFileSync(filePath, "utf8");
+
+        // Extract title from span id="title"
+        const titleMatch = content.match(/<span id="title">([^<]+)<\/span>/);
+        const title = titleMatch ? titleMatch[1] : fileName;
+
+        // Extract date from span id="date"
+        const dateMatch = content.match(/<span id="date">([^<]+)<\/span>/);
+        const date = dateMatch ? dateMatch[1] : "Unknown Date";
+
+        poemData.push({
+          fileName,
+          title,
+          date,
+          anchor,
+          filePath,
+        });
+      } catch (err) {
+        poemData.push({
+          fileName,
+          title: fileName,
+          date: "Unknown Date",
+          anchor,
+          filePath,
+        });
+      }
+    });
+
     let concatenatedContent = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -228,10 +264,16 @@ function concatenateAllHtmlFiles(dirPath) {
         .poem-content { line-height: 1.6; color: #444; }
         .toc { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 30px; }
         .toc h2 { color: #333; margin: 0 0 20px 0; }
-        .toc ul { list-style: none; padding: 0; margin: 0; }
-        .toc li { padding: 5px 0; }
-        .toc a { color: #007AFF; text-decoration: none; }
-        .toc a:hover { text-decoration: underline; }
+        .toc-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .toc-table th, .toc-table td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
+        .toc-table th { background: #f8f9fa; font-weight: 600; color: #333; cursor: pointer; user-select: none; }
+        .toc-table th:hover { background: #e9ecef; }
+        .toc-table th.sortable::after { content: " ↕"; opacity: 0.5; }
+        .toc-table th.sort-asc::after { content: " ↑"; opacity: 1; }
+        .toc-table th.sort-desc::after { content: " ↓"; opacity: 1; }
+        .toc-table tr:hover { background: #f8f9fa; }
+        .toc-table a { color: #007AFF; text-decoration: none; }
+        .toc-table a:hover { text-decoration: underline; }
         .back-link { display: inline-block; margin-bottom: 20px; color: #007AFF; text-decoration: none; }
         .back-link:hover { text-decoration: underline; }
         
@@ -342,39 +384,45 @@ function concatenateAllHtmlFiles(dirPath) {
         
         <div class="toc">
             <h2>Table of Contents</h2>
-            <ul>`;
+            <table class="toc-table" id="poemTable">
+                <thead>
+                    <tr>
+                        <th class="sortable" onclick="sortTable(0, 'title')">Poem Title</th>
+                        <th class="sortable" onclick="sortTable(1, 'date')">Poem Date</th>
+                    </tr>
+                </thead>
+                <tbody id="poemTableBody">`;
 
-    // Add table of contents
-    htmlFiles.forEach((file, index) => {
-      const fileName = file.name.replace(".html", "");
-      const anchor = `poem-${index}`;
-      concatenatedContent += `<li><a href="#${anchor}">${fileName}</a></li>`;
+    // Add table rows with poem data
+    poemData.forEach((poem) => {
+      concatenatedContent += `<tr>
+                        <td><a href="#${poem.anchor}">${poem.title}</a></td>
+                        <td>${poem.date}</td>
+                    </tr>`;
     });
 
-    concatenatedContent += `</ul></div>`;
+    concatenatedContent += `</tbody>
+            </table>
+        </div>`;
 
     // Add each HTML file content
-    htmlFiles.forEach((file, index) => {
-      const filePath = path.join(dirPath, file.name);
-      const fileName = file.name.replace(".html", "");
-      const anchor = `poem-${index}`;
-
+    poemData.forEach((poem) => {
       try {
-        const content = fs.readFileSync(filePath, "utf8");
+        const content = fs.readFileSync(poem.filePath, "utf8");
 
         // Extract content between <body> tags, or use the entire content if no body tags
         const bodyMatch = content.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
         const poemContent = bodyMatch ? bodyMatch[1] : content;
 
         concatenatedContent += `
-        <div class="poem-section" id="${anchor}">
-            <h2 class="poem-title">${fileName}</h2>
+        <div class="poem-section" id="${poem.anchor}">
+            <h2 class="poem-title">${poem.title}</h2>
             <div class="poem-content">${poemContent}</div>
         </div>`;
       } catch (err) {
         concatenatedContent += `
-        <div class="poem-section" id="${anchor}">
-            <h2 class="poem-title">${fileName}</h2>
+        <div class="poem-section" id="${poem.anchor}">
+            <h2 class="poem-title">${poem.title}</h2>
             <div class="poem-content"><p style="color: #999; font-style: italic;">Error reading file: ${err.message}</p></div>
         </div>`;
       }
@@ -382,6 +430,79 @@ function concatenateAllHtmlFiles(dirPath) {
 
     concatenatedContent += `
     </div>
+    
+    <script>
+        let currentSort = { column: -1, direction: 'asc' };
+        
+        function parseDate(dateStr) {
+            if (dateStr === "Unknown Date") return new Date(0);
+            
+            // Handle format: "Monday, 4 May 2015" or "Friday, 1 August 1997"
+            const months = {
+                'January': 0, 'February': 1, 'March': 2, 'April': 3, 'May': 4, 'June': 5,
+                'July': 6, 'August': 7, 'September': 8, 'October': 9, 'November': 10, 'December': 11
+            };
+            
+            const parts = dateStr.split(', ');
+            if (parts.length >= 2) {
+                const datePart = parts[1].split(' ');
+                if (datePart.length >= 3) {
+                    const day = parseInt(datePart[0]);
+                    const month = months[datePart[1]];
+                    const year = parseInt(datePart[2]);
+                    if (!isNaN(day) && month !== undefined && !isNaN(year)) {
+                        return new Date(year, month, day);
+                    }
+                }
+            }
+            return new Date(0); // fallback for invalid dates
+        }
+        
+        function sortTable(columnIndex, sortType) {
+            const table = document.getElementById('poemTable');
+            const tbody = document.getElementById('poemTableBody');
+            const rows = Array.from(tbody.getElementsByTagName('tr'));
+            
+            // Determine sort direction
+            if (currentSort.column === columnIndex) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.direction = 'asc';
+            }
+            currentSort.column = columnIndex;
+            
+            // Update header styling
+            const headers = table.getElementsByTagName('th');
+            for (let i = 0; i < headers.length; i++) {
+                headers[i].className = 'sortable';
+                if (i === columnIndex) {
+                    headers[i].className = currentSort.direction === 'asc' ? 'sort-asc' : 'sort-desc';
+                }
+            }
+            
+            // Sort rows
+            rows.sort((a, b) => {
+                const aVal = a.cells[columnIndex].textContent.trim();
+                const bVal = b.cells[columnIndex].textContent.trim();
+                
+                let comparison = 0;
+                
+                if (sortType === 'date') {
+                    const aDate = parseDate(aVal);
+                    const bDate = parseDate(bVal);
+                    comparison = aDate - bDate;
+                } else {
+                    // String comparison (for titles)
+                    comparison = aVal.localeCompare(bVal);
+                }
+                
+                return currentSort.direction === 'asc' ? comparison : -comparison;
+            });
+            
+            // Re-append sorted rows
+            rows.forEach(row => tbody.appendChild(row));
+        }
+    </script>
 </body>
 </html>`;
 
