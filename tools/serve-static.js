@@ -180,6 +180,35 @@ function formatFileSize(bytes) {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
 }
 
+function extractCustomCSSFromTemplate() {
+  try {
+    const templatePath = path.join(
+      process.cwd(),
+      "fragments-and-unity.template.html"
+    );
+    if (!fileExists(templatePath)) {
+      return "";
+    }
+
+    const templateContent = fs.readFileSync(templatePath, "utf8");
+    const customCSSMatch = templateContent.match(
+      /\/\* ~~ CUSTOM CSS START ~~ \*\/([\s\S]*?)\/\* ~~ CUSTOM CSS END ~~ \*\//
+    );
+
+    if (customCSSMatch && customCSSMatch[1]) {
+      return customCSSMatch[1].trim();
+    }
+
+    return "";
+  } catch (err) {
+    console.warn(
+      "Warning: Could not extract custom CSS from template:",
+      err.message
+    );
+    return "";
+  }
+}
+
 function concatenateAllHtmlFiles(dirPath) {
   try {
     const items = fs.readdirSync(dirPath, { withFileTypes: true });
@@ -306,6 +335,9 @@ function concatenateAllHtmlFiles(dirPath) {
       poem.anchor = `poem-${index}`;
     });
 
+    // Extract custom CSS from template
+    const customCSS = extractCustomCSSFromTemplate();
+
     let concatenatedContent = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -339,100 +371,7 @@ function concatenateAllHtmlFiles(dirPath) {
         .back-link:hover { text-decoration: underline; }
         
         /* Custom CSS from template */
-        .poem-info {
-          color: gray;
-          font-size: 90%;
-          padding-bottom: 3ex;
-        }
-        
-        .poem-info #author::before {
-          content: "by ";
-        }
-        
-        .poem-info #title {
-          display: none;
-        }
-        
-        .song-segment {
-          color: gray;
-          font-size: 80%;
-          font-style: italic;
-        }
-        
-        .song-link {
-          color: gray;
-          font-style: italic;
-          padding-top: 4ex;
-        }
-        
-        .disclaimer {
-          color: gray;
-          font-size: 80%;
-          margin: 4ex 0;
-          padding: 2ex 0;
-          border-width: 1px;
-          border-color: purple;
-          border-style: solid;
-          border-right-style: none;
-          border-left-style: none;
-        }
-        
-        .disclaimer :first-child {
-          font-weight: bold;
-        }
-        
-        /* Analysis */
-        .analysis {
-          background-color: #ffeedd;
-          border: 1px solid #eeaa00;
-          border-radius: 5px;
-          color: #333;
-          line-height: 1.6;
-          margin: 2ex auto;
-          max-width: 800px;
-        }
-        
-        button.analysis {
-          display: block;
-          font-size: 90%;
-          font-weight: bold;
-          padding: 1ex 1em;
-        }
-        
-        button.analysis.hide {
-          background-color: #fff8ee;
-        }
-        
-        div.analysis {
-          display: none;
-          padding: 2ex 2em;
-        }
-        
-        .analysis h2 {
-          color: #2c3e50;
-          margin-bottom: 15px;
-        }
-        
-        .analysis h3 {
-          color: #34495e;
-          margin: 20px 0 10px;
-        }
-        
-        .analysis p {
-          margin-bottom: 15px;
-        }
-        
-        .analysis ul, .analysis ol {
-          margin: 10px 0 15px 20px;
-        }
-        
-        .analysis li {
-          margin-bottom: 10px;
-        }
-        
-        .analysis em {
-          font-style: italic;
-        }
+        ${customCSS}
     </style>
 </head>
 <body>
