@@ -229,12 +229,18 @@ function concatenateAllHtmlFiles(dirPath) {
         const dateMatch = content.match(/<span id="date">([^<]+)<\/span>/);
         const date = dateMatch ? dateMatch[1] : "Unknown Date";
 
+        // Check for active song link (not commented out)
+        const hasSongLink =
+          content.includes('<div id="song" class="song-link">') &&
+          !content.includes('<!-- div id="song" class="song-link">');
+
         poemData.push({
           fileName,
           title,
           date,
           anchor,
           filePath,
+          hasSongLink,
         });
       } catch (err) {
         poemData.push({
@@ -243,6 +249,7 @@ function concatenateAllHtmlFiles(dirPath) {
           date: "Unknown Date",
           anchor,
           filePath,
+          hasSongLink: false,
         });
       }
     });
@@ -274,6 +281,8 @@ function concatenateAllHtmlFiles(dirPath) {
         .toc-table tr:hover { background: #f8f9fa; }
         .toc-table a { color: #007AFF; text-decoration: none; }
         .toc-table a:hover { text-decoration: underline; }
+        .audio-cell { text-align: center; font-size: 1.2em; }
+        .audio-cell:empty::after { content: "—"; color: #ccc; }
         .back-link { display: inline-block; margin-bottom: 20px; color: #007AFF; text-decoration: none; }
         .back-link:hover { text-decoration: underline; }
         
@@ -389,15 +398,18 @@ function concatenateAllHtmlFiles(dirPath) {
                     <tr>
                         <th class="sortable" onclick="sortTable(0, 'title')">Poem Title</th>
                         <th class="sortable" onclick="sortTable(1, 'date')">Poem Date</th>
+                        <th class="sortable" onclick="sortTable(2, 'audio')">🎵 Audio</th>
                     </tr>
                 </thead>
                 <tbody id="poemTableBody">`;
 
     // Add table rows with poem data
     poemData.forEach((poem) => {
+      const audioIcon = poem.hasSongLink ? "🎵" : "";
       concatenatedContent += `<tr>
                         <td><a href="#${poem.anchor}">${poem.title}</a></td>
                         <td>${poem.date}</td>
+                        <td class="audio-cell">${audioIcon}</td>
                     </tr>`;
     });
 
@@ -491,6 +503,11 @@ function concatenateAllHtmlFiles(dirPath) {
                     const aDate = parseDate(aVal);
                     const bDate = parseDate(bVal);
                     comparison = aDate - bDate;
+                } else if (sortType === 'audio') {
+                    // Audio sorting: songs first (🎵), then no audio
+                    const aHasAudio = aVal.includes('🎵');
+                    const bHasAudio = bVal.includes('🎵');
+                    comparison = bHasAudio - aHasAudio; // Songs first (1-0 = 1, 0-1 = -1)
                 } else {
                     // String comparison (for titles)
                     comparison = aVal.localeCompare(bVal);
