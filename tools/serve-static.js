@@ -251,16 +251,18 @@ function concatenateAllHtmlFiles(dirPath) {
         const content = fs.readFileSync(filePath, "utf8");
 
         // Extract title from span id="title--suffix" or fallback to id="title"
+        // Handle both single-line and multiline formats
         const titleMatch =
-          content.match(/<span id="title--[^"]*">([^<]+)<\/span>/) ||
-          content.match(/<span id="title">([^<]+)<\/span>/);
-        const title = titleMatch ? titleMatch[1] : fileName;
+          content.match(/<span id="title--[^"]*"[^>]*>([\s\S]*?)<\/span>/) ||
+          content.match(/<span id="title"[^>]*>([\s\S]*?)<\/span>/);
+        const title = titleMatch ? titleMatch[1].trim() : fileName;
 
         // Extract date from span id="date--suffix" or fallback to id="date"
+        // Handle both single-line and multiline formats
         const dateMatch =
-          content.match(/<span id="date--[^"]*">([^<]+)<\/span>/) ||
-          content.match(/<span id="date">([^<]+)<\/span>/);
-        const date = dateMatch ? dateMatch[1] : "Unknown Date";
+          content.match(/<span id="date--[^"]*"[^>]*>([\s\S]*?)<\/span>/) ||
+          content.match(/<span id="date"[^>]*>([\s\S]*?)<\/span>/);
+        const date = dateMatch ? dateMatch[1].trim() : "Unknown Date";
 
         // Check for active song link (not commented out) - handle both old and new ID formats
         const hasSongLink =
