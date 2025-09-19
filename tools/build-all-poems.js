@@ -43,6 +43,7 @@ function concatenateAllHtmlFiles(dirPath) {
       .filter(
         (item) => item.isFile() && item.name.toLowerCase().endsWith(".html")
       )
+      .filter((item) => !["index.html", "all-poems.html"].includes(item.name))
       .sort(); // Sort alphabetically for consistent ordering
 
     if (htmlFiles.length === 0) {

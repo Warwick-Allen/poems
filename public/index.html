@@ -142,8 +142,8 @@
     </div>
 
     <script>
-      // List of all poems with their metadata
-      const poems = [
+      // List of all poems with their metadata (excluding index.html and all-poems.html)
+      const allPoems = [
         {
           file: "a-sack-full-of-words.html",
           title: "A Sack Full of Words",
@@ -291,6 +291,11 @@
         { file: "unreal-riddle.html", title: "Unreal Riddle", hasAudio: false },
         { file: "yeah-but.html", title: "Yeah But", hasAudio: false },
       ];
+
+      // Filter out non-poem files (index.html and all-poems.html)
+      const poems = allPoems.filter(
+        (poem) => !["index.html", "all-poems.html"].includes(poem.file)
+      );
 
       // Function to create poem cards
       function createPoemCard(poem) {
