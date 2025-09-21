@@ -350,6 +350,82 @@ function concatenateAllHtmlFiles(dirPath) {
   }
 }
 
+function generateIndexHtml(publicDir) {
+  try {
+    const items = fs.readdirSync(publicDir, { withFileTypes: true });
+    const htmlFiles = items
+      .filter(
+        (item) => item.isFile() && item.name.toLowerCase().endsWith(".html")
+      )
+      .filter((item) => !["index.html", "all-poems.html"].includes(item.name))
+      .sort(); // Sort alphabetically for consistent ordering
+
+    // Extract poem data from HTML files
+    const poemData = [];
+    htmlFiles.forEach((file) => {
+      const filePath = path.join(publicDir, file.name);
+      const fileName = file.name;
+
+      try {
+        const content = fs.readFileSync(filePath, "utf8");
+
+        // Extract title from span id="title--suffix" or fallback to id="title"
+        const titleMatch =
+          content.match(/<span id="title--[^"]*"[^>]*>([\s\S]*?)<\/span>/) ||
+          content.match(/<span id="title"[^>]*>([\s\S]*?)<\/span>/);
+        const title = titleMatch
+          ? titleMatch[1].trim()
+          : fileName.replace(".html", "");
+
+        // Check for active song link (not commented out)
+        const hasSongLink =
+          (content.includes('<div id="song--') &&
+            !content.includes('<!-- div id="song--')) ||
+          (content.includes('<div id="song" class="song-link">') &&
+            !content.includes('<!-- div id="song" class="song-link">'));
+
+        poemData.push({
+          file: fileName,
+          title: title,
+          hasAudio: hasSongLink,
+        });
+      } catch (err) {
+        poemData.push({
+          file: fileName,
+          title: fileName.replace(".html", ""),
+          hasAudio: false,
+        });
+      }
+    });
+
+    // Read the current index.html file
+    const indexPath = path.join(publicDir, "index.html");
+    const indexContent = fs.readFileSync(indexPath, "utf8");
+
+    // Generate the JavaScript array for the poems
+    const poemArrayString = poemData
+      .map((poem) => {
+        return `        {
+          file: "${poem.file}",
+          title: "${poem.title.replace(/"/g, '\\"')}",
+          hasAudio: ${poem.hasAudio},
+        }`;
+      })
+      .join(",\n");
+
+    // Replace the existing poem array in the JavaScript
+    const updatedContent = indexContent.replace(
+      /const allPoems = \[[\s\S]*?\];/,
+      `const allPoems = [\n${poemArrayString}\n      ];`
+    );
+
+    return updatedContent;
+  } catch (err) {
+    console.warn("Warning: Could not update index.html:", err.message);
+    return null;
+  }
+}
+
 // Main execution
 function main() {
   const publicDir = path.join(process.cwd(), "public");
@@ -362,11 +438,23 @@ function main() {
   console.log("Building all-poems.html...");
 
   const concatenatedContent = concatenateAllHtmlFiles(publicDir);
-  const outputPath = path.join(publicDir, "all-poems.html");
+  const allPoemsOutputPath = path.join(publicDir, "all-poems.html");
 
-  fs.writeFileSync(outputPath, concatenatedContent, "utf8");
+  fs.writeFileSync(allPoemsOutputPath, concatenatedContent, "utf8");
 
-  console.log(`✅ Successfully generated ${outputPath}`);
+  console.log(`✅ Successfully generated ${allPoemsOutputPath}`);
+
+  console.log("Updating index.html...");
+
+  const updatedIndexContent = generateIndexHtml(publicDir);
+  if (updatedIndexContent) {
+    const indexPath = path.join(publicDir, "index.html");
+    fs.writeFileSync(indexPath, updatedIndexContent, "utf8");
+    console.log(`✅ Successfully updated ${indexPath}`);
+  } else {
+    console.log("⚠️  Skipped index.html update due to errors");
+  }
+
   console.log(
     `📊 Processed ${
       fs.readdirSync(publicDir).filter((f) => f.endsWith(".html")).length
@@ -378,4 +466,8 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { concatenateAllHtmlFiles, extractCustomCSSFromTemplate };
+module.exports = {
+  concatenateAllHtmlFiles,
+  extractCustomCSSFromTemplate,
+  generateIndexHtml,
+};
