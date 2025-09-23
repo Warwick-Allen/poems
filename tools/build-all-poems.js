@@ -398,10 +398,6 @@ function generateIndexHtml(publicDir) {
       }
     });
 
-    // Read the current index.html file
-    const indexPath = path.join(publicDir, "index.html");
-    const indexContent = fs.readFileSync(indexPath, "utf8");
-
     // Generate the JavaScript array for the poems
     const poemArrayString = poemData
       .map((poem) => {
@@ -413,13 +409,160 @@ function generateIndexHtml(publicDir) {
       })
       .join(",\n");
 
-    // Replace the existing poem array in the JavaScript
-    const updatedContent = indexContent.replace(
-      /const allPoems = \[[\s\S]*?\];/,
-      `const allPoems = [\n${poemArrayString}\n      ];`
-    );
+    const indexPath = path.join(publicDir, "index.html");
 
-    return updatedContent;
+    // Check if index.html exists, if not create a default template
+    let indexContent;
+    if (fs.existsSync(indexPath)) {
+      // Read the existing index.html file
+      indexContent = fs.readFileSync(indexPath, "utf8");
+
+      // Replace the existing poem array in the JavaScript
+      indexContent = indexContent.replace(
+        /const allPoems = \[[\s\S]*?\];/,
+        `const allPoems = [\n${poemArrayString}\n      ];`
+      );
+    } else {
+      // Create a default index.html template
+      indexContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poems Collection</title>
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            background: #f5f5f5; 
+            line-height: 1.6;
+        }
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
+        .header { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+            margin-bottom: 30px; 
+            text-align: center; 
+        }
+        h1 { 
+            color: #333; 
+            margin: 0 0 10px 0; 
+            font-weight: 300; 
+        }
+        .subtitle { 
+            color: #666; 
+            margin: 0 0 20px 0; 
+        }
+        .poem-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 20px; 
+            margin-bottom: 30px;
+        }
+        .poem-card { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+        .poem-card:hover { 
+            transform: translateY(-2px); 
+        }
+        .poem-title { 
+            color: #333; 
+            margin: 0 0 10px 0; 
+            font-size: 1.2em; 
+            font-weight: 600;
+        }
+        .poem-title a { 
+            color: inherit; 
+            text-decoration: none; 
+        }
+        .poem-title a:hover { 
+            text-decoration: underline; 
+        }
+        .audio-indicator { 
+            color: #007AFF; 
+            font-size: 1.2em; 
+        }
+        .links { 
+            text-align: center; 
+            margin-top: 30px;
+        }
+        .links a { 
+            color: #007AFF; 
+            text-decoration: none; 
+            margin: 0 15px;
+            padding: 10px 20px;
+            border: 1px solid #007AFF;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .links a:hover { 
+            background: #007AFF; 
+            color: white; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Poems Collection</h1>
+            <p class="subtitle">A collection of poems and writings</p>
+        </div>
+        
+        <div class="poem-grid" id="poemGrid">
+            <!-- Poems will be populated by JavaScript -->
+        </div>
+        
+        <div class="links">
+            <a href="all-poems.html">View All Poems</a>
+        </div>
+    </div>
+    
+    <script>
+        const allPoems = [
+${poemArrayString}
+        ];
+        
+        function renderPoems() {
+            const grid = document.getElementById('poemGrid');
+            grid.innerHTML = '';
+            
+            allPoems.forEach(poem => {
+                const card = document.createElement('div');
+                card.className = 'poem-card';
+                card.innerHTML = \`
+                    <div class="poem-title">
+                        <a href="\${poem.file}">\${poem.title}</a>
+                        \${poem.hasAudio ? '<span class="audio-indicator">🎵</span>' : ''}
+                    </div>
+                \`;
+                
+                card.addEventListener('click', () => {
+                    window.location.href = poem.file;
+                });
+                
+                grid.appendChild(card);
+            });
+        }
+        
+        // Initial render
+        renderPoems();
+    </script>
+</body>
+</html>`;
+    }
+
+    return indexContent;
   } catch (err) {
     console.warn("Warning: Could not update index.html:", err.message);
     return null;
