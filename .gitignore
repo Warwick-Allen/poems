@@ -1,2 +1,6 @@
 *.code-workspace
 ../*.s[wp]
+node_modules
+
+public/all-poems.html
+public/index.html
