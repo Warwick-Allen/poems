@@ -50,6 +50,7 @@ jobs:
       uses: actions/configure-pages@v4
       
     - name: Upload artifact
+      id: upload
       uses: actions/upload-pages-artifact@v3
       with:
         path: './public'
