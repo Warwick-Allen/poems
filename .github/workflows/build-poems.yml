@@ -2,9 +2,9 @@ name: Build and Deploy Poems
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -21,39 +21,54 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        
-    - name: Build poems
-      run: npm run build
-      
-    - name: Check for build artifacts
-      run: |
-        if [ ! -f "public/index.html" ]; then
-          echo "❌ public/index.html was not generated"
-          exit 1
-        fi
-        if [ ! -f "public/all-poems.html" ]; then
-          echo "❌ public/all-poems.html was not generated"
-          exit 1
-        fi
-        echo "✅ Both build artifacts generated successfully"
-        
-    - name: Setup Pages
-      uses: actions/configure-pages@v4
-      
-    - name: Upload artifact
-      id: upload
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: './public'
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Build poems
+        run: npm run build
+
+      - name: Check for build artifacts
+        run: |
+          echo "Checking for generated files..."
+          echo "Current directory contents:"
+          ls -la
+          echo "Public directory contents:"
+          ls -la public/
+          echo "File sizes:"
+          ls -lh public/index.html public/all-poems.html 2>/dev/null || echo "Files not found"
+          if [ ! -f "public/index.html" ]; then
+            echo "❌ public/index.html was not generated"
+            exit 1
+          fi
+          if [ ! -f "public/all-poems.html" ]; then
+            echo "❌ public/all-poems.html was not generated"
+            exit 1
+          fi
+          echo "✅ Both build artifacts generated successfully"
+          echo "File contents preview:"
+          head -5 public/index.html
+          echo "..."
+          head -5 public/all-poems.html
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        id: upload
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./public"
+
+      - name: Verify artifact upload
+        run: |
+          echo "✅ Artifact uploaded successfully"
 
   deploy:
     environment:
