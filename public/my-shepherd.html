@@ -1,0 +1,130 @@
+<div id="poem--my-shepherd">
+  <div class="poem-info">
+    <span id="title--my-shepherd" class="title">
+      My Shepherd
+    </span><br />
+    <span id="author--my-shepherd" class="author">
+      Warwick Allen
+    </span><br />
+    <span id="date--my-shepherd" class="date">
+      Sunday, 18 January 1998
+    </span><br />
+  </div>
+  <br />
+  <div class="poem-body">
+    Often I wander<br />
+    Often I stray<br />
+    From the path You&#39;ve chosen for me<br />
+    From Your blessed way<br />
+    <br />
+    Often I declare<br />
+    My love for You<br />
+    Yet that same love I deny<br />
+    In the things that I do<br />
+    <br />
+    But just when it seems I&#39;ve gone that little too far<br />
+    When my will differs from that of Your own<br />
+    When Your love isn&#39;t my guiding star<br />
+    When I try to go it alone<br />
+    <br />
+    You reach out Your hand<br />
+    You draw me near<br />
+    You wrap Your arms around me<br />
+    In a hug so dear<br />
+    <br />
+    And I know Your love<br />
+    A love so true<br />
+    And I wonder why I do<br />
+    Those things that don&#39;t please You<br />
+    <br />
+    Then You set me back down on my way<br />
+    The path that You&#39;d have me journey<br />
+    And gently squeeze my hand to say<br />
+    &ldquo;Child, all the way&mdash;it&#39;s you and Me.&rdquo;<br />
+  </div>
+  <!-- end poem-body -->
+  <!-- div id="song--my-shepherd" class="song-link">
+    <iframe
+      src="https://audiomack.com/embed/saltysojourner/song/my-shepherd"
+      scrolling="no"
+      width="100%"
+      height="252"
+      frameborder="0"
+      title="My Shepherd"
+    ></iframe
+    ><br />
+    (<a href="#" target="_blank"
+      >recording on Suno</a
+    >)
+  </div>
+  <!-- end song -->
+  <!-- begin analysis section  ->
+  <button
+    class="analysis show"
+    id="show-analysis--my-shepherd"
+    type="button"
+    onclick="
+    document.getElementById('analysis--my-shepherd').style.display = 'block';
+    document.getElementById('show-analysis--my-shepherd').style.display = 'none';
+  "
+  >
+    Show analysis
+  </button>
+  <div class="analysis" id="analysis--my-shepherd">
+    <button
+      class="analysis hide"
+      id="hide-analysis--my-shepherd"
+      type="button"
+      onclick="
+      document.getElementById('analysis--my-shepherd').style.display = 'none';
+      document.getElementById('show-analysis--my-shepherd').style.display = 'block';
+    "
+    >
+      Hide analysis
+    </button>
+    <div class="full-or-synopsis-selector">
+      <button
+        class="analysis selector selected"
+        id="analysis-select-syno--my-shepherd"
+        onclick="
+          el = name =>
+            document.getElementById('analysis-' + name + '--my-shepherd');
+          el('full').style.display = 'none';
+          el('syno').style.display = 'block';
+          el('select-full').classList.remove('selected');
+          el('select-syno').classList.add('selected');
+        "
+        type="button"
+      >
+        Synopsis
+      </button>
+      <button
+        class="analysis selector"
+        id="analysis-select-full--my-shepherd"
+        onclick="
+          el = name =>
+            document.getElementById('analysis-' + name + '--my-shepherd');
+          el('full').style.display = 'block';
+          el('syno').style.display = 'none';
+          el('select-full').classList.add('selected');
+          el('select-syno').classList.remove('selected');
+        "
+        type="button"
+      >
+        Full Analysis
+      </button>
+    </div>
+    <!-- end full-or-synopsis-selector  ->
+    <div id="analysis-syno--my-shepherd">
+      <h2>Analysis of <em>My Shepherd</em> (synopsis)</h2>
+    </div>
+    <!-- end analysis-syno--my-shepherd  ->
+    <div id="analysis-full--my-shepherd" style="display: none">
+      <h2>Analysis of <em>My Shepherd</em></h2>
+    </div>
+    <!-- end analysis-full--my-shepherd  ->
+  </div>
+  <!-- end analysis -->
+  <!-- end analysis section -->
+</div>
+<!-- end poem--my-shepherd -->
