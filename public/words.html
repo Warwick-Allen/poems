@@ -1,0 +1,106 @@
+<div id="poem--words">
+  <div class="poem-info">
+    <span id="title--words" class="title">
+      Words
+    </span><br />
+    <span id="author--words" class="author">
+      Warwick Allen
+    </span><br />
+    <span id="date--words" class="date">
+      Sunday, 10 December 2000
+    </span><br />
+  </div>
+  <br />
+  <div class="poem-body">
+    In a vague mist I seek security<br />
+    Hiding in the shadows of ambiguity<br />
+    I draw about myself a cloak of obscurity<br />
+    Revealing as much as prudence will allow of me<br />
+    And as little as words will betray of me<br />
+  </div>
+  <!-- end poem-body -->
+  <!-- div id="song--words" class="song-link">
+    <iframe
+      src="https://audiomack.com/embed/saltysojourner/song/words"
+      scrolling="no"
+      width="100%"
+      height="252"
+      frameborder="0"
+      title="Words"
+    ></iframe
+    ><br />
+    (<a href="#" target="_blank"
+      >recording on Suno</a
+    >)
+  </div>
+  <!-- end song -->
+  <!-- begin analysis section  ->
+  <button
+    class="analysis show"
+    id="show-analysis--words"
+    type="button"
+    onclick="
+    document.getElementById('analysis--words').style.display = 'block';
+    document.getElementById('show-analysis--words').style.display = 'none';
+  "
+  >
+    Show analysis
+  </button>
+  <div class="analysis" id="analysis--words">
+    <button
+      class="analysis hide"
+      id="hide-analysis--words"
+      type="button"
+      onclick="
+      document.getElementById('analysis--words').style.display = 'none';
+      document.getElementById('show-analysis--words').style.display = 'block';
+    "
+    >
+      Hide analysis
+    </button>
+    <div class="full-or-synopsis-selector">
+      <button
+        class="analysis selector selected"
+        id="analysis-select-syno--words"
+        onclick="
+          el = name =>
+            document.getElementById('analysis-' + name + '--words');
+          el('full').style.display = 'none';
+          el('syno').style.display = 'block';
+          el('select-full').classList.remove('selected');
+          el('select-syno').classList.add('selected');
+        "
+        type="button"
+      >
+        Synopsis
+      </button>
+      <button
+        class="analysis selector"
+        id="analysis-select-full--words"
+        onclick="
+          el = name =>
+            document.getElementById('analysis-' + name + '--words');
+          el('full').style.display = 'block';
+          el('syno').style.display = 'none';
+          el('select-full').classList.add('selected');
+          el('select-syno').classList.remove('selected');
+        "
+        type="button"
+      >
+        Full Analysis
+      </button>
+    </div>
+    <!-- end full-or-synopsis-selector  ->
+    <div id="analysis-syno--words">
+      <h2>Analysis of <em>Words</em> (synopsis)</h2>
+    </div>
+    <!-- end analysis-syno--words  ->
+    <div id="analysis-full--words" style="display: none">
+      <h2>Analysis of <em>Words</em></h2>
+    </div>
+    <!-- end analysis-full--words  ->
+  </div>
+  <!-- end analysis -->
+  <!-- end analysis section -->
+</div>
+<!-- end poem--words -->
