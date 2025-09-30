@@ -173,7 +173,7 @@ function concatenateAllHtmlFiles(dirPath) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Poems - Concatenated View</title>
+    <title>Fragments &#38; Unity &#8212; Concatenated View</title>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
         .container { max-width: 1200px; margin: 0 auto; }
@@ -207,8 +207,8 @@ function concatenateAllHtmlFiles(dirPath) {
 <body>
     <div class="container">
         <div class="header">
-            <h1>All Poems</h1>
-            <p class="subtitle">Concatenated view of all HTML files (${htmlFiles.length} files)</p>
+            <h1>Fragments &#38; Unity</h1>
+            <p class="subtitle">Concatenated view of all poems (${htmlFiles.length} files)</p>
             <a href="index.html" class="back-link">← Back to Main Page</a>
         </div>
         
@@ -429,7 +429,7 @@ function generateIndexHtml(publicDir) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poems Collection</title>
+    <title>Fragments &#38; Unity</title>
     <style>
         body { 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
@@ -515,8 +515,8 @@ function generateIndexHtml(publicDir) {
 <body>
     <div class="container">
         <div class="header">
-            <h1>Poems Collection</h1>
-            <p class="subtitle">A collection of poems and writings</p>
+            <h1>Fragments &#38; Unity</h1>
+            <p class="subtitle">Poems by Warwick Allen</p>
         </div>
         
         <div class="poem-grid" id="poemGrid">
