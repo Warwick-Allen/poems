@@ -1,4 +1,16 @@
 //- Template for individual poem HTML files
+
+//- Mixin to process lines and add <br /> tags
+mixin processLines(text)
+  if text
+    - const lines = text.split('\n')
+    - let index = 0
+    each line in lines
+      != line
+      if index < lines.length - 1
+        br
+      - index++
+
 div(id=`poem--${slug}`)
   div.poem-info
     span(id=`title--${slug}` class="title")= title
@@ -13,11 +25,11 @@ div(id=`poem--${slug}`)
       each segment in segments
         span.song-segment= segment.label
         br
-        != segment.lines
+        +processLines(segment.lines)
         if segment !== segments[segments.length - 1]
           br
     else
-      != body
+      +processLines(body)
   //- end poem-body
   
   if audio
