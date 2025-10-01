@@ -29,7 +29,9 @@ body: |
       The darkness scares me so<br />
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/thank-you
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/thank-you
+      active: true
 
 analysis:
   type: single

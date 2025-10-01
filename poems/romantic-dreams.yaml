@@ -20,7 +20,9 @@ body: |
       On the ground.<br />
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/romantic-dreams
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/romantic-dreams
+      active: true
 
 analysis:
   type: dual

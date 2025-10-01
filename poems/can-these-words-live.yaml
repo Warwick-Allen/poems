@@ -33,5 +33,9 @@ body: |
   Prophesy, prophesy, prophesy!<br />
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/can-these-words-live
-  suno: https://suno.com/song/#
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/can-these-words-live
+      active: true
+  suno:
+    - url: https://suno.com/song/#
+      active: true

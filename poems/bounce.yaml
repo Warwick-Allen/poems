@@ -15,5 +15,9 @@ body: |
   again
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/bounce
-  suno: https://suno.com/song/469f26d5-2dde-4fe4-8d82-075dfc2c2f73
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/bounce
+      active: true
+  suno:
+    - url: https://suno.com/song/469f26d5-2dde-4fe4-8d82-075dfc2c2f73
+      active: true

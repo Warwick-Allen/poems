@@ -23,5 +23,9 @@ body: |
   Will be heard<br />
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/a-sack-full-of-words
-  suno: https://suno.com/song/#
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/a-sack-full-of-words
+      active: true
+  suno:
+    - url: https://suno.com/song/#
+      active: true

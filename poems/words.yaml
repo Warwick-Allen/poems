@@ -11,7 +11,9 @@ body: |
       And as little as words will betray of me<br />
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/words
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/words
+      active: true
 
 analysis:
   type: dual

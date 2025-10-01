@@ -50,7 +50,9 @@ body: |
       love<br />
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/old-order-disappeared
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/old-order-disappeared
+      active: true
 
 analysis:
   type: single

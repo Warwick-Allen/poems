@@ -60,7 +60,9 @@ body: |
       And know there&#39;s no end to everyday<br />
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/everyday-prayer
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/everyday-prayer
+      active: true
 
 analysis:
   type: dual

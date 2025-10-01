@@ -38,7 +38,9 @@ body: |
       Build on the Rock and reach heavenward<br />
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/shadows-of-deceit
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/shadows-of-deceit
+      active: true
 
 analysis:
   type: dual

@@ -15,7 +15,9 @@ body: |
       Make me an &ldquo;amazing man of God&rdquo;.<br />
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/amazing-man-of-god
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/amazing-man-of-god
+      active: true
 
 analysis:
   type: single

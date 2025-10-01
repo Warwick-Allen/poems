@@ -59,8 +59,12 @@ segments:
       I need a new drug
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/chains-of-sorrow
-  suno: https://suno.com/s/NRL9PhaDfrKlkBJc
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/chains-of-sorrow
+      active: true
+  suno:
+    - url: https://suno.com/s/NRL9PhaDfrKlkBJc
+      active: true
 
 analysis:
   type: single

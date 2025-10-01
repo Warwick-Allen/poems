@@ -6,7 +6,9 @@ slug: unreal-riddle
 segments:
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/unreal-riddle
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/unreal-riddle
+      active: true
 
 analysis:
   type: single

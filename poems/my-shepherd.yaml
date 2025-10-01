@@ -35,7 +35,9 @@ body: |
       &ldquo;Child, all the way&mdash;it&#39;s you and Me.&rdquo;<br />
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/my-shepherd
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/my-shepherd
+      active: true
 
 analysis:
   type: dual

@@ -60,5 +60,9 @@ segments:
       Forever Yours, my song will be.
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/tear-stained-sod
-  suno: https://suno.com/song/b6b46088-510a-4ae5-9b20-68e5eedefa61
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/tear-stained-sod
+      active: true
+  suno:
+    - url: https://suno.com/song/b6b46088-510a-4ae5-9b20-68e5eedefa61
+      active: true

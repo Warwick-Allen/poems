@@ -65,7 +65,9 @@ segments:
           And You're always ready to forgive.
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/gratitude
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/gratitude
+      active: true
 
 analysis:
   type: single

@@ -61,8 +61,12 @@ segments:
       for his name&apos;s sake.
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/at-the-end-of-myself
-  suno: https://suno.com/s/AtpUMNeWQURww1f2
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/at-the-end-of-myself
+      active: true
+  suno:
+    - url: https://suno.com/s/AtpUMNeWQURww1f2
+      active: true
 
 analysis:
   type: single

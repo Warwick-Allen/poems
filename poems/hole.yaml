@@ -45,8 +45,12 @@ body: |
   Of this hole<br />
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/hole
-  suno: https://suno.com/s/0hCPV7lz14xrSOgq
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/hole
+      active: true
+  suno:
+    - url: https://suno.com/s/0hCPV7lz14xrSOgq
+      active: true
 
 analysis:
   type: single

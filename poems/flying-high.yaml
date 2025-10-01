@@ -79,7 +79,9 @@ segments:
           Oh, how I loathe the ground fowl.&rdquo;
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/flying-high
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/flying-high
+      active: true
 
 analysis:
   type: dual

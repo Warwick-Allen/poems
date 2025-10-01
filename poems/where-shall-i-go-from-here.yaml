@@ -29,7 +29,9 @@ body: |
       And you won&#39;t take from me any of that I hold so dear<br />
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/where-shall-i-go-from-here
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/where-shall-i-go-from-here
+      active: true
 
 analysis:
   type: dual

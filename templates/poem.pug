@@ -22,18 +22,20 @@ div(id=`poem--${slug}`)
   
   if audio
     div(id=`song--${slug}` class="song-link")
-      iframe(
-        src=audio.audiomack
-        scrolling="no"
-        width="100%"
-        height="252"
-        frameborder="0"
-        title=title
-      )
-      br
-      |  (
-      a(href=audio.suno target="_blank") recording on Suno
-      | )
+      if audio.audiomack && audio.audiomack[0] && audio.audiomack[0].active
+        iframe(
+          src=audio.audiomack[0].url
+          scrolling="no"
+          width="100%"
+          height="252"
+          frameborder="0"
+          title=title
+        )
+        br
+      if audio.suno && audio.suno[0] && audio.suno[0].active
+        |  (
+        a(href=audio.suno[0].url target="_blank") recording on Suno
+        | )
     //- end song
   
   if analysis

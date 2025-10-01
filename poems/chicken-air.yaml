@@ -9,5 +9,9 @@ body: |
   chicken salt<br />
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/chicken-air
-  suno: https://suno.com/song/#
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/chicken-air
+      active: true
+  suno:
+    - url: https://suno.com/song/#
+      active: true

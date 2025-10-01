@@ -52,7 +52,9 @@ segments:
           But I feel my grip weakening.
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/the-valley
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/the-valley
+      active: true
 
 analysis:
   type: single

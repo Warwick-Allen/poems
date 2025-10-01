@@ -6,4 +6,6 @@ slug: easter-joy
 segments:
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/easter-joy
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/easter-joy
+      active: true

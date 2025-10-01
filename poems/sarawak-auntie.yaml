@@ -23,5 +23,9 @@ body: |
   the One whom I adore<br />
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/sarawak-auntie
-  suno: https://suno.com/song/#
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/sarawak-auntie
+      active: true
+  suno:
+    - url: https://suno.com/song/#
+      active: true

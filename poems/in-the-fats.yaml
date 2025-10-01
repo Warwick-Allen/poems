@@ -24,7 +24,9 @@ body: |
       Always<br />
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/in-the-fats
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/in-the-fats
+      active: true
 
 analysis:
   type: dual

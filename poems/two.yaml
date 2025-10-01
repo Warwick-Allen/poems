@@ -22,8 +22,12 @@ segments:
           So let's go, let us dare, me with my lady fair.
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/two
-  suno: https://suno.com/s/AKCoMMaeQk571wXu
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/two
+      active: true
+  suno:
+    - url: https://suno.com/s/AKCoMMaeQk571wXu
+      active: true
 
 analysis:
   type: single

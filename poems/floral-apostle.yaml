@@ -77,8 +77,12 @@ segments:
       (&hellip;the endurance and faith of the saints.)
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/floral-apostle
-  suno: https://suno.com/s/vWx0ZKi8jW1VxnhQ
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/floral-apostle
+      active: true
+  suno:
+    - url: https://suno.com/s/vWx0ZKi8jW1VxnhQ
+      active: true
 
 analysis:
   type: single

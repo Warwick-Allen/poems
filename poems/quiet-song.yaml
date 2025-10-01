@@ -70,7 +70,9 @@ segments:
           We, in Him, can stand.<br />
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/quiet-song
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/quiet-song
+      active: true
 
 analysis:
   type: dual

@@ -20,5 +20,9 @@ body: |
   My life in Ever Isle<br />
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/ever-isle
-  suno: https://suno.com/song/daaa6282-f20e-4a09-be16-e8e076d55644
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/ever-isle
+      active: true
+  suno:
+    - url: https://suno.com/song/daaa6282-f20e-4a09-be16-e8e076d55644
+      active: true

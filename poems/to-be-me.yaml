@@ -25,5 +25,9 @@ body: |
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; to be me<br />
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/to-be-me
-  suno: https://suno.com/song/#
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/to-be-me
+      active: true
+  suno:
+    - url: https://suno.com/song/#
+      active: true

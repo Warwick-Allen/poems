@@ -41,8 +41,12 @@ segments:
           Yes, I'm just a simple man
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/a-simple-man
-  suno: https://suno.com/s/NFu1HOzfTDYCs0Au
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/a-simple-man
+      active: true
+  suno:
+    - url: https://suno.com/s/NFu1HOzfTDYCs0Au
+      active: true
 
 analysis:
   type: single

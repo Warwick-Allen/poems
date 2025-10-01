@@ -73,7 +73,11 @@ segments:
       there we see Your face.<br />
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/ordinary-means-of-grace
-  suno: https://suno.com/s/kAzP6QwvasoFaYMi
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/ordinary-means-of-grace
+      active: true
+  suno:
+    - url: https://suno.com/s/kAzP6QwvasoFaYMi
+      active: true
 
 

@@ -40,7 +40,9 @@ body: |
       Or float like a butterfly into my arms<br />
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/mysterious-star
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/mysterious-star
+      active: true
 
 analysis:
   type: dual

@@ -42,7 +42,9 @@ segments:
           We will walk, together, forever
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/together-forever
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/together-forever
+      active: true
 
 analysis:
   type: single

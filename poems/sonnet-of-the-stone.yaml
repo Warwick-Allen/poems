@@ -24,7 +24,9 @@ segments:
           And from my shoulders He will lift the weight.
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/sonnet-of-the-stone
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/sonnet-of-the-stone
+      active: true
 
 analysis:
   type: single

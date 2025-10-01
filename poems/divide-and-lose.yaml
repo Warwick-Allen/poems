@@ -34,7 +34,9 @@ segments:
           Do tell, will you heed the Prince who brings Peace?
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/divide-and-lose
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/divide-and-lose
+      active: true
 
 analysis:
   type: dual

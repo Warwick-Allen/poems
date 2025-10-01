@@ -17,7 +17,9 @@ body: |
       As I long for a piece of broken glass<br />
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/broken-glass
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/broken-glass
+      active: true
 
 analysis:
   type: dual

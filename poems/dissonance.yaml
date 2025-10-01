@@ -20,7 +20,11 @@ body: |
   Me be, so they fight<br />
 
 audio:
-  audiomack: https://audiomack.com/embed/saltysojourner/song/dissonance
-  suno: https://suno.com/song/bcf3ae13-2a9d-423d-9120-a2d90dac0bb7
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/dissonance
+      active: true
+  suno:
+    - url: https://suno.com/song/bcf3ae13-2a9d-423d-9120-a2d90dac0bb7
+      active: true
 
 
