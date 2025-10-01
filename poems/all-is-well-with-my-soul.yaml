@@ -12,8 +12,3 @@ audio:
   suno:
     - url: https://suno.com/s/C2nexcHKQP8F9Lt8
       active: true
-
-analysis:
-  type: single
-  content: |
-    <h2>Analysis of <em>All is Well with My Soul</em></h2>

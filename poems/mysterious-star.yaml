@@ -43,10 +43,3 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/mysterious-star
       active: false
-
-analysis:
-  type: dual
-  synopsis: |
-    <h2>Analysis of <em>Mysterious Star</em> (synopsis)</h2>
-  full: |
-    <h2>Analysis of <em>Mysterious Star</em></h2>

@@ -68,8 +68,3 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/gratitude
       active: true
-
-analysis:
-  type: single
-  content: |
-    <h2>Analysis of <em>Gratitude</em></h2>

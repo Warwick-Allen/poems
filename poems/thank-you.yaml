@@ -32,8 +32,3 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/thank-you
       active: true
-
-analysis:
-  type: single
-  content: |
-    <h2>Analysis of <em>Thank You</em></h2>

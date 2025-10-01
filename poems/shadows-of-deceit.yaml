@@ -41,10 +41,3 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/shadows-of-deceit
       active: false
-
-analysis:
-  type: dual
-  synopsis: |
-    <h2>Analysis of <em>Shadows of Deceit</em> (synopsis)</h2>
-  full: |
-    <h2>Analysis of <em>Shadows of Deceit</em></h2>

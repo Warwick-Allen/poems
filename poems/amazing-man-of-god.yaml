@@ -18,8 +18,3 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/amazing-man-of-god
       active: false
-
-analysis:
-  type: single
-  content: |
-    <h2>Analysis of <em>Amazing Man of God</em></h2>

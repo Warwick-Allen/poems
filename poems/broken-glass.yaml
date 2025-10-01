@@ -20,10 +20,3 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/broken-glass
       active: false
-
-analysis:
-  type: dual
-  synopsis: |
-    <h2>Analysis of <em>Broken Glass</em> (synopsis)</h2>
-  full: |
-    <h2>Analysis of <em>Broken Glass</em></h2>

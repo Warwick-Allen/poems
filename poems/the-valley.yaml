@@ -55,8 +55,3 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/the-valley
       active: true
-
-analysis:
-  type: single
-  content: |
-    <h2>Analysis of <em>The Valley</em></h2>

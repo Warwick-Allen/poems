@@ -73,10 +73,3 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/quiet-song
       active: true
-
-analysis:
-  type: dual
-  synopsis: |
-    <h2>Analysis of <em>Quiet Song</em> (synopsis)</h2>
-  full: |
-    <h2>Analysis of <em>Quiet Song</em></h2>

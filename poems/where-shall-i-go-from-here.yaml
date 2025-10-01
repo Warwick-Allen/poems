@@ -32,10 +32,3 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/where-shall-i-go-from-here
       active: false
-
-analysis:
-  type: dual
-  synopsis: |
-    <h2>Analysis of <em>Where Shall I Go from Here?</em> (synopsis)</h2>
-  full: |
-    <h2>Analysis of <em>Where Shall I Go from Here?</em></h2>

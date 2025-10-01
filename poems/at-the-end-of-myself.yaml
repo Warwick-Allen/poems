@@ -67,8 +67,3 @@ audio:
   suno:
     - url: https://suno.com/s/AtpUMNeWQURww1f2
       active: true
-
-analysis:
-  type: single
-  content: |
-    

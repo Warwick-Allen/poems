@@ -83,8 +83,3 @@ audio:
   suno:
     - url: https://suno.com/s/vWx0ZKi8jW1VxnhQ
       active: true
-
-analysis:
-  type: single
-  content: |
-    

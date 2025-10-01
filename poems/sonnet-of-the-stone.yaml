@@ -27,8 +27,3 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/sonnet-of-the-stone
       active: true
-
-analysis:
-  type: single
-  content: |
-    <h2>Analysis of <em>Sonnet of the Stone</em> (song arrangement)</h2>
