@@ -34,7 +34,7 @@ body: |
 audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/yeah-but
-      active: true
+      active: false
   suno:
     - url: https://suno.com/song/#
-      active: true
+      active: false

@@ -13,7 +13,7 @@ body: |
 audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/words
-      active: true
+      active: false
 
 analysis:
   type: dual

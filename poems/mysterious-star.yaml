@@ -42,7 +42,7 @@ body: |
 audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/mysterious-star
-      active: true
+      active: false
 
 analysis:
   type: dual

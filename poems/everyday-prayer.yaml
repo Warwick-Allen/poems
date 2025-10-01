@@ -62,7 +62,7 @@ body: |
 audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/everyday-prayer
-      active: true
+      active: false
 
 analysis:
   type: dual

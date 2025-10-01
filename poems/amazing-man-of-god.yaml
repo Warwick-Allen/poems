@@ -17,7 +17,7 @@ body: |
 audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/amazing-man-of-god
-      active: true
+      active: false
 
 analysis:
   type: single
