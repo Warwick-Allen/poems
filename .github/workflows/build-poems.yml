@@ -31,6 +31,9 @@ jobs:
         with:
           node-version: "18"
 
+      - name: Install dependencies
+        run: npm install
+
       - name: Build poems
         run: npm run build
 
@@ -42,7 +45,7 @@ jobs:
           echo "Public directory contents:"
           ls -la public/
           echo "File sizes:"
-          ls -lh public/index.html public/all-poems.html 2>/dev/null || echo "Files not found"
+          ls -lh public/index.html public/all-poems.html public/styles.css 2>/dev/null || echo "Files not found"
           if [ ! -f "public/index.html" ]; then
             echo "❌ public/index.html was not generated"
             exit 1
@@ -51,7 +54,11 @@ jobs:
             echo "❌ public/all-poems.html was not generated"
             exit 1
           fi
-          echo "✅ Both build artifacts generated successfully"
+          if [ ! -f "public/styles.css" ]; then
+            echo "❌ public/styles.css was not found"
+            exit 1
+          fi
+          echo "✅ All build artifacts generated successfully"
           echo "File contents preview:"
           head -5 public/index.html
           echo "..."

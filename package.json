@@ -1,9 +1,13 @@
 {
-  "dependencies": {},
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "pug": "^3.0.2"
+  },
   "scripts": {
     "start": "node tools/serve-static.js",
     "stop": "for /f \"tokens=5\" %a in ('netstat -ano ^| findstr :8080') do taskkill /PID %a /F",
-    "build": "node tools/build-all-poems.js",
+    "build:poems": "node tools/build-poems.js",
+    "build": "npm run build:poems && node tools/build-all-poems.js",
     "build:all": "npm run build && npm run start"
   }
 }

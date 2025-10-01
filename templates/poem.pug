@@ -1,0 +1,81 @@
+//- Template for individual poem HTML files
+div(id=`poem--${slug}`)
+  div.poem-info
+    span(id=`title--${slug}` class="title")= title
+    br
+    span(id=`author--${slug}` class="author")= author
+    br
+    span(id=`date--${slug}` class="date")= date
+    br
+  br
+  div.poem-body
+    if segments
+      each segment in segments
+        span.song-segment= segment.label
+        br
+        != segment.lines
+        if segment !== segments[segments.length - 1]
+          br
+    else
+      != body
+  //- end poem-body
+  
+  if audio
+    div(id=`song--${slug}` class="song-link")
+      iframe(
+        src=audio.audiomack
+        scrolling="no"
+        width="100%"
+        height="252"
+        frameborder="0"
+        title=title
+      )
+      br
+      |  (
+      a(href=audio.suno target="_blank") recording on Suno
+      | )
+    //- end song
+  
+  if analysis
+    //- begin analysis section
+    button.analysis.show(
+      id=`show-analysis--${slug}`
+      type="button"
+      onclick=`document.getElementById('analysis--${slug}').style.display = 'block'; document.getElementById('show-analysis--${slug}').style.display = 'none';`
+    ) Show analysis
+    
+    div.analysis(id=`analysis--${slug}`)
+      button.analysis.hide(
+        id=`hide-analysis--${slug}`
+        type="button"
+        onclick=`document.getElementById('analysis--${slug}').style.display = 'none'; document.getElementById('show-analysis--${slug}').style.display = 'block';`
+      ) Hide analysis
+      
+      if analysis.type === 'dual'
+        .full-or-synopsis-selector
+          button.analysis.selector.selected(
+            id=`analysis-select-syno--${slug}`
+            type="button"
+            onclick=`el = name => document.getElementById('analysis-' + name + '--${slug}'); el('full').style.display = 'none'; el('syno').style.display = 'block'; el('select-full').classList.remove('selected'); el('select-syno').classList.add('selected');`
+          ) Synopsis
+          button.analysis.selector(
+            id=`analysis-select-full--${slug}`
+            type="button"
+            onclick=`el = name => document.getElementById('analysis-' + name + '--${slug}'); el('full').style.display = 'block'; el('syno').style.display = 'none'; el('select-full').classList.add('selected'); el('select-syno').classList.remove('selected');`
+          ) Full Analysis
+        //- end full-or-synopsis-selector
+        
+        div(id=`analysis-syno--${slug}`)
+          != analysis.synopsis
+        //- end analysis-syno
+        
+        div(id=`analysis-full--${slug}` style="display: none")
+          != analysis.full
+        //- end analysis-full
+      else
+        != analysis.content
+    //- end analysis
+    //- end analysis section
+//- end poem
+
+
