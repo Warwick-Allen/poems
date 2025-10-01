@@ -38,6 +38,28 @@ function extractCustomCSSFromTemplate() {
   }
 }
 
+/**
+ * Check if a poem has any active audio files
+ */
+function hasActiveAudio(audioData) {
+  if (!audioData || typeof audioData !== 'object') {
+    return false;
+  }
+
+  // Check each audio platform (audiomack, suno, etc.)
+  for (const platform in audioData) {
+    const entries = audioData[platform];
+    if (Array.isArray(entries)) {
+      // Check if any entry has active: true
+      if (entries.some(entry => entry.active === true)) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
 function concatenateAllHtmlFiles(dirPath) {
   try {
     // Read YAML files from the poems directory for metadata
@@ -96,7 +118,7 @@ function concatenateAllHtmlFiles(dirPath) {
         const anchor = `poem-${index}`;
         const title = data.title || fileName;
         const date = data.date || "Unknown Date";
-        const hasSongLink = data.audio ? true : false;
+        const hasSongLink = hasActiveAudio(data.audio);
 
         poemData.push({
           fileName,
@@ -370,7 +392,7 @@ function generateIndexHtml(publicDir) {
         
         const fileName = `${slug}.html`;
         const title = data.title || slug;
-        const hasAudio = data.audio ? true : false;
+        const hasAudio = hasActiveAudio(data.audio);
 
         poemData.push({
           file: fileName,
