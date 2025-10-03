@@ -7,7 +7,7 @@
 const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
-const { buildAllPoems: buildIndividualPoems } = require("./build-poems.js");
+// Individual poems are already built by the previous step in npm script chain
 
 function extractCustomCSSFromTemplate() {
   try {
@@ -42,7 +42,7 @@ function extractCustomCSSFromTemplate() {
  * Check if a poem has any active audio files
  */
 function hasActiveAudio(audioData) {
-  if (!audioData || typeof audioData !== 'object') {
+  if (!audioData || typeof audioData !== "object") {
     return false;
   }
 
@@ -51,7 +51,7 @@ function hasActiveAudio(audioData) {
     const entries = audioData[platform];
     if (Array.isArray(entries)) {
       // Check if any entry has active: true
-      if (entries.some(entry => entry.active === true)) {
+      if (entries.some((entry) => entry.active === true)) {
         return true;
       }
     }
@@ -101,14 +101,14 @@ function concatenateAllHtmlFiles(dirPath) {
         const data = yaml.load(yamlContent);
 
         const fileName = data.slug;
-        
+
         // Skip index.html and all-poems.html
-        if (fileName === 'index' || fileName === 'all-poems') {
+        if (fileName === "index" || fileName === "all-poems") {
           return;
         }
-        
+
         const htmlPath = path.join(dirPath, `${fileName}.html`);
-        
+
         // Check if HTML file exists
         if (!fs.existsSync(htmlPath)) {
           console.warn(`Warning: HTML file not found for ${fileName}`);
@@ -250,7 +250,7 @@ function concatenateAllHtmlFiles(dirPath) {
     // Add each HTML file content (only individual poems, not index or all-poems)
     poemData.forEach((poem) => {
       // Skip index.html and all-poems.html
-      if (poem.fileName === 'index' || poem.fileName === 'all-poems') {
+      if (poem.fileName === "index" || poem.fileName === "all-poems") {
         return;
       }
 
@@ -384,12 +384,12 @@ function generateIndexHtml(publicDir) {
         const data = yaml.load(yamlContent);
 
         const slug = data.slug;
-        
+
         // Skip index and all-poems
-        if (slug === 'index' || slug === 'all-poems') {
+        if (slug === "index" || slug === "all-poems") {
           return;
         }
-        
+
         const fileName = `${slug}.html`;
         const title = data.title || slug;
         const hasAudio = hasActiveAudio(data.audio);
@@ -584,10 +584,7 @@ function main() {
     process.exit(1);
   }
 
-  console.log("Step 1: Building individual poem HTML files from YAML...\n");
-  buildIndividualPoems();
-
-  console.log("\nStep 2: Building all-poems.html...");
+  console.log("Step 1: Building all-poems.html...");
 
   const concatenatedContent = concatenateAllHtmlFiles(publicDir);
   const allPoemsOutputPath = path.join(publicDir, "all-poems.html");
@@ -596,7 +593,7 @@ function main() {
 
   console.log(`✅ Successfully generated ${allPoemsOutputPath}`);
 
-  console.log("\nStep 3: Updating index.html...");
+  console.log("\nStep 2: Updating index.html...");
 
   const updatedIndexContent = generateIndexHtml(publicDir);
   if (updatedIndexContent) {
