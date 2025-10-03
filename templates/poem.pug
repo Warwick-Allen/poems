@@ -21,13 +21,16 @@ div(id=`poem--${slug}`)
     br
   br
   div.poem-body
-    each segment in segments
-      if segment.label
-        span.song-segment= segment.label
-        br
-      +processLines(segment.lines)
-      if segment !== segments[segments.length - 1]
-        br
+    if segments && segments.length > 0
+      each segment in segments
+        if segment.label
+          span.song-segment= segment.label
+          br
+        +processLines(segment.lines)
+        if segment !== segments[segments.length - 1]
+          br
+    else
+      p(style="color: #999; font-style: italic;") No content available
   //- end poem-body
   
   if audio

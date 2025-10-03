@@ -94,6 +94,11 @@ function buildAllPoems() {
       return;
     }
 
+    // Check for empty segments and warn
+    if (!poemData.segments || poemData.segments.length === 0) {
+      console.warn(`⚠️  Warning: ${yamlFile} has empty segments block`);
+    }
+
     // Generate HTML
     const html = generatePoemHTML(poemData);
     if (!html) {
@@ -129,5 +134,3 @@ if (require.main === module) {
 }
 
 module.exports = { buildAllPoems };
-
-
