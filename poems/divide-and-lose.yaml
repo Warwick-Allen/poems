@@ -3,39 +3,40 @@ author: Warwick Allen
 date: Wednesday, 17 September 2025
 slug: divide-and-lose
 
-segments:
-  - label: "[Verse 1]"
-    lines: |
-      Aching in our hurting, it's a sad song
-      Just a fruitless searching, it is all gone
-      Just a fleeting sighting, but not for long
-      Aching for the righting, of all the wrong
+versions:
+  - segments:
+      - label: "[Verse 1]"
+        lines: |
+          Aching in our hurting, it's a sad song
+          Just a fruitless searching, it is all gone
+          Just a fleeting sighting, but not for long
+          Aching for the righting, of all the wrong
 
-  - label: "[Chorus]"
-    lines: |
-      We all build this wall of, of division
-      Wonder why all of this, this confusion
-      Wonder who is giving the instruction
-      We all race to, to our, our destruction
+      - label: "[Chorus]"
+        lines: |
+          We all build this wall of, of division
+          Wonder why all of this, this confusion
+          Wonder who is giving the instruction
+          We all race to, to our, our destruction
 
-  - label: "[Verse 2]"
-    lines: |
-      If you ever find it, do let us know
-      We all need to mind it, how we will go
-      We all need a leader, one who will show
-      If you find the Daystar, we will follow
+      - label: "[Verse 2]"
+        lines: |
+          If you ever find it, do let us know
+          We all need to mind it, how we will go
+          We all need a leader, one who will show
+          If you find the Daystar, we will follow
 
-  - label: "[Chorus]"
-    lines: |
-      We all build this wall of, of division
-      Wonder why all of this, this confusion
-      Wonder who is giving the instruction
-      We all race to, to our, our destruction
+      - label: "[Chorus]"
+        lines: |
+          We all build this wall of, of division
+          Wonder why all of this, this confusion
+          Wonder who is giving the instruction
+          We all race to, to our, our destruction
 
-  - label: "[Coda]"
-    lines: |
-      Do tell if you know Him, the Prince of Peace
-      Do tell, will you heed the Prince who brings Peace?
+      - label: "[Coda]"
+        lines: |
+          Do tell if you know Him, the Prince of Peace
+          Do tell, will you heed the Prince who brings Peace?
 
 audio:
   audiomack:

@@ -3,41 +3,42 @@ author: Warwick Allen
 date: Wednesday, 7 June 2017
 slug: dead-faith-breathe
 
-segments:
-- lines: |
-    You've no qualm
-    Recite your psalm
-    On the corner
-    Don't ignore her
-    She's hurting
-    You look
+versions:
+  - segments:
+    - lines: |
+        You've no qualm
+        Recite your psalm
+        On the corner
+        Don't ignore her
+        She's hurting
+        You look
 
-- lines: |
-    Words cavernous
-    Now disastrous
-    She will hear
-    You don't care
-    She's hurting
-    You ask
+    - lines: |
+        Words cavernous
+        Now disastrous
+        She will hear
+        You don't care
+        She's hurting
+        You ask
 
-- lines: |
-    Pontificate
-    Form of hate
-    You say grace
-    See her face
-    She's hurting
-    You know
+    - lines: |
+        Pontificate
+        Form of hate
+        You say grace
+        See her face
+        She's hurting
+        You know
 
-- lines: |
-    <em>&hellip; breathe &hellip;</em>
+    - lines: |
+        <em>&hellip; breathe &hellip;</em>
 
-- lines: |
-    Words substantial
-    Being filled
-    In the doing
-    Lives combining
-    She's waiting
-    For you
+    - lines: |
+        Words substantial
+        Being filled
+        In the doing
+        Lives combining
+        She's waiting
+        For you
 
 audio:
   audiomack:

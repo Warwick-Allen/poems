@@ -3,13 +3,14 @@ author: Warwick Allen
 date: Sunday, 10 December 2000
 slug: words
 
-segments:
-  - lines: |
-      In a vague mist I seek security
-      Hiding in the shadows of ambiguity
-      I draw about myself a cloak of obscurity
-      Revealing as much as prudence will allow of me
-      And as little as words will betray of me
+versions:
+  - segments:
+      - lines: |
+          In a vague mist I seek security
+          Hiding in the shadows of ambiguity
+          I draw about myself a cloak of obscurity
+          Revealing as much as prudence will allow of me
+          And as little as words will betray of me
 
 audio:
   audiomack:

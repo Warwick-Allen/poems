@@ -3,39 +3,40 @@ author: Warwick Allen
 date: Thursday, 14 May 2015
 slug: yeah-but
 
-segments:
-  - lines: |
-      On behalf of the voiceless:
+versions:
+  - segments:
+      - lines: |
+          On behalf of the voiceless:
 
-  - lines: |
-      please
+      - lines: |
+          please
 
-  - lines: |
-      On behalf of the heartless:
+      - lines: |
+          On behalf of the heartless:
 
-  - lines: |
-      yeah, but
-      &nbsp; we provide quality
-      &nbsp; not quantity
-      yeah, but
-      &nbsp; all of these
-      &nbsp; just too many
-      yeah, but
-      &nbsp; 750 already
-      &nbsp; our good deed
-      yeah, but
-      &nbsp; mouths to feed
-      &nbsp; we have plenty
-      yeah, but
-      &nbsp; we are tiny
-      &nbsp; can't you see
+      - lines: |
+          yeah, but
+          &nbsp; we provide quality
+          &nbsp; not quantity
+          yeah, but
+          &nbsp; all of these
+          &nbsp; just too many
+          yeah, but
+          &nbsp; 750 already
+          &nbsp; our good deed
+          yeah, but
+          &nbsp; mouths to feed
+          &nbsp; we have plenty
+          yeah, but
+          &nbsp; we are tiny
+          &nbsp; can't you see
 
-  - lines: |
-      anyway (this is plain to see)
-      there's no way (that we can help)
-      because (this is plain to see)
-      we have lost
-      our way
+      - lines: |
+          anyway (this is plain to see)
+          there's no way (that we can help)
+          because (this is plain to see)
+          we have lost
+          our way
 
 audio:
   audiomack:

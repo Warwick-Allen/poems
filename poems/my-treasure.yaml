@@ -3,51 +3,52 @@ author: Warwick Allen
 date: Thursday, 26 March 2015
 slug: my-treasure
 
-segments:
-  - lines: |
-      I see you still
-      in the squall
-      in the still
-      through it all
+versions:
+  - segments:
+      - lines: |
+          I see you still
+          in the squall
+          in the still
+          through it all
 
-  - lines: |
-      I hold you still
-      Sure you know
-      Never will
-      Let you go
+      - lines: |
+          I hold you still
+          Sure you know
+          Never will
+          Let you go
 
-  - lines: |
-      Love you my Love
-      Ever do
-      All my love
-      Always you
+      - lines: |
+          Love you my Love
+          Ever do
+          All my love
+          Always you
 
-  - lines: |
-      Not faltering
-      My desire
-      Soul yearning
-      My treasure
+      - lines: |
+          Not faltering
+          My desire
+          Soul yearning
+          My treasure
 
-  - lines: |
-      You still hold me
-      Don't let it
-      Be loosely
-      Loose to slip
+      - lines: |
+          You still hold me
+          Don't let it
+          Be loosely
+          Loose to slip
 
-  - lines: |
-      Us together
-      Always is
-      Forever
-      How it is
+      - lines: |
+          Us together
+          Always is
+          Forever
+          How it is
 
-  - lines: |
-      Future bright'ning
-      We walk on
-      Love strength'ning
-      We are strong
+      - lines: |
+          Future bright'ning
+          We walk on
+          Love strength'ning
+          We are strong
 
-  - lines: |
-      Love is strong
+      - lines: |
+          Love is strong
 
 audio:
   audiomack:

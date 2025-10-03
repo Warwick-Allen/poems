@@ -3,36 +3,37 @@ author: Warwick Allen
 date: Sunday, 13 February 2005
 slug: a-word-from-me
 
-segments:
-- lines: |
-    I have a word
-    I have two
-    I have a thought
-    A thought of you
+versions:
+  - segments:
+    - lines: |
+        I have a word
+        I have two
+        I have a thought
+        A thought of you
 
-- lines: |
-    My thought is pleasant
-    My thought is fond
-    My thought is glad
-    Of our bond
+    - lines: |
+        My thought is pleasant
+        My thought is fond
+        My thought is glad
+        Of our bond
 
-- lines: |
-    A thought's a breath
-    A fleeting dew
-    A recurring breath
-    My thought of you
+    - lines: |
+        A thought's a breath
+        A fleeting dew
+        A recurring breath
+        My thought of you
 
-- lines: |
-    A thought preserved
-    A thought to hold
-    A thought of you
-    I give you now
+    - lines: |
+        A thought preserved
+        A thought to hold
+        A thought of you
+        I give you now
 
-- lines: |
-    A small token
-    A word from me
-    A preservation
-    Offered humbly
+    - lines: |
+        A small token
+        A word from me
+        A preservation
+        Offered humbly
 
 audio:
   audiomack:

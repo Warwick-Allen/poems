@@ -3,30 +3,31 @@ author: Warwick Allen
 date: Wednesday, 1 February 2022
 slug: dimly-lit-path
 
-segments:
-- lines: |
-    Eggshells narrowly escape
-    feet awkwardly crash between
-    And the load shouldered
-    precious, fragile, teetering
+versions:
+  - segments:
+    - lines: |
+        Eggshells narrowly escape
+        feet awkwardly crash between
+        And the load shouldered
+        precious, fragile, teetering
 
-- lines: |
-    New terrain, strangely familiar
-    strange turns
-    through pit holes and trenches
-    gradually climbing
+    - lines: |
+        New terrain, strangely familiar
+        strange turns
+        through pit holes and trenches
+        gradually climbing
 
-- lines: |
-    A torch for the feet
-    a necessary comfort
-    The direction unknown
-    just press on up
+    - lines: |
+        A torch for the feet
+        a necessary comfort
+        The direction unknown
+        just press on up
 
-- lines: |
-    The terrain is rugged
-    But the load shouldered
-    precious, fragile, balanced
-    Is not shouldered alone
+    - lines: |
+        The terrain is rugged
+        But the load shouldered
+        precious, fragile, balanced
+        Is not shouldered alone
 
 audio:
   audiomack:

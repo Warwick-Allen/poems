@@ -8,24 +8,33 @@ This document describes the YAML schema for poem files.
 - `author`: String - The author's name
 - `date`: String - The date in format "DayOfWeek, DD Month YYYY"
 - `slug`: String - URL-friendly identifier (used for HTML filename and IDs)
+- `versions`: Array - List of poem versions, each containing segments
 
 ## Content Fields
 
-### Segments Format
+### Versions Format
 ```yaml
-segments:
-  - label: "[Verse 1]"  # Optional: omit for unlabelled segments
-    lines: |
-      Poem text with HTML markup where needed
-      Line breaks preserved
-  - lines: |
-      Unlabelled segment text
-  - label: "[Chorus]"
-    lines: |
-      More text
+versions:
+  - label: "Original poem (2015)"  # Optional: omit for unlabelled versions
+    segments:
+      - label: "[Verse 1]"  # Optional: omit for unlabelled segments
+        lines: |
+          Poem text with HTML markup where needed
+          Line breaks preserved
+      - lines: |
+          Unlabelled segment text
+      - label: "[Chorus]"
+        lines: |
+          More text
+  - segments:  # Version without label
+      - lines: |
+          Another version's content
 ```
 
-**Note:** The `label` field is optional. When omitted, the segment will be rendered without a label.
+**Notes:**
+- The version `label` field is optional. When omitted, the version will be rendered without a label.
+- The segment `label` field is optional. When omitted, the segment will be rendered without a label.
+- Each version contains its own `segments` list.
 
 ## Optional Fields
 

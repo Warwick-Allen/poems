@@ -3,70 +3,71 @@ author: Warwick Allen
 date: Monday, 19 May 1997
 slug: chains-of-sorrow
 
-segments:
-  - label: "[Verse 1]"
-    lines: |
-      Why so downcast, oh my soul?
-      Do thou knowest not
-      Joy is thine to hold?
+versions:
+  - segments:
+      - label: "[Verse 1]"
+        lines: |
+          Why so downcast, oh my soul?
+          Do thou knowest not
+          Joy is thine to hold?
 
-  - label: "[Verse 2]"
-    lines: |
-      Needlessly you ache
-      You wear the coat of despair
-      But it is warm, no coat is needed
+      - label: "[Verse 2]"
+        lines: |
+          Needlessly you ache
+          You wear the coat of despair
+          But it is warm, no coat is needed
 
-  - label: "[Verse 3]"
-    lines: |
-      Joy for you was bought
-      At the price of innocent blood
-      Shed upon a cross
+      - label: "[Verse 3]"
+        lines: |
+          Joy for you was bought
+          At the price of innocent blood
+          Shed upon a cross
 
-  - label: "[Verse 4]"
-    lines: |
-      Do you not know
-      That you deny His blood
-      By holding on to sorrow?
+      - label: "[Verse 4]"
+        lines: |
+          Do you not know
+          That you deny His blood
+          By holding on to sorrow?
 
-  - label: "[Chorus 1]"
-    lines: |
-      For sorrow is the devil's tool
-      And melancholy Satan's friend
+      - label: "[Chorus 1]"
+        lines: |
+          For sorrow is the devil's tool
+          And melancholy Satan's friend
 
-  - label: "[Verse 5]"
-    lines: |
-      &ldquo;Cast away your woes
-      And lay them upon Me&rdquo;
-      My saviour says
+      - label: "[Verse 5]"
+        lines: |
+          &ldquo;Cast away your woes
+          And lay them upon Me&rdquo;
+          My saviour says
 
-  - label: "[Verse 6]"
-    lines: |
-      Oh, but were it that easy
-      I hold my sadness tight
-      In a fist that I can't open
+      - label: "[Verse 6]"
+        lines: |
+          Oh, but were it that easy
+          I hold my sadness tight
+          In a fist that I can't open
 
-  - label: "[Chorus 2]"
-    lines: |
-      For sorrow is my drug
-      And time my needle
+      - label: "[Chorus 2]"
+        lines: |
+          For sorrow is my drug
+          And time my needle
 
-  - label: "[Bridge]"
-    lines: |
-      How soothing it is here
-      Where a slice of fantasy breaks through the reality
-      And reality into the fantasy
+      - label: "[Bridge]"
+        lines: |
+          How soothing it is here
+          Where a slice of fantasy breaks through the reality
+          And reality into the fantasy
 
-  - label: "[Verse 7]"
-    lines: |
-      Still I am aware
-      That the moment is but fleeting
-      &mdash;A sigh among the screams
+      - label: "[Verse 7]"
+        lines: |
+          Still I am aware
+          That the moment is but fleeting
+          &mdash;A sigh among the screams
 
-  - label: "[Verse 8]"
-    lines: |
-      I wish the needle would be broken
-      But I'm not ready for that
-      I need a new drug
+      - label: "[Verse 8]"
+        lines: |
+          I wish the needle would be broken
+          But I'm not ready for that
+          I need a new drug
 
 audio:
   audiomack:

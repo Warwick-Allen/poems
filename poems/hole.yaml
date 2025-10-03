@@ -3,56 +3,57 @@ author: Warwick Allen
 date: Thursday, 14 March 1996
 slug: hole
 
-segments:
-  - lines: |
-      Am I falling
-      Or am I jumping
-      I think I jumped
+versions:
+  - segments:
+      - lines: |
+          Am I falling
+          Or am I jumping
+          I think I jumped
 
-  - lines: |
-      This hole is too big for me
-      I cannot see the top
-      I haven't yet hit the bottom
+      - lines: |
+          This hole is too big for me
+          I cannot see the top
+          I haven't yet hit the bottom
 
-  - lines: |
-      Did I jump
-      Or was I pushed
-      I think I jumped
+      - lines: |
+          Did I jump
+          Or was I pushed
+          I think I jumped
 
-  - lines: |
-      If only I had a rope
-      Maybe I could climb the rope
-      At least I would stop going down
+      - lines: |
+          If only I had a rope
+          Maybe I could climb the rope
+          At least I would stop going down
 
-  - lines: |
-      I'm still falling
-      I don't like falling
-      I think I jumped
+      - lines: |
+          I'm still falling
+          I don't like falling
+          I think I jumped
 
-  - lines: |
-      Will you be my rope
-      You are strong
-      You won't break when I climb
+      - lines: |
+          Will you be my rope
+          You are strong
+          You won't break when I climb
 
-  - lines: |
-      I did jump
-      But I had help
-      Why did I jump
+      - lines: |
+          I did jump
+          But I had help
+          Why did I jump
 
-  - lines: |
-      My Lord be my rope
-      So I won't fall
-      I can climb I won't jump
+      - lines: |
+          My Lord be my rope
+          So I won't fall
+          I can climb I won't jump
 
-  - lines: |
-      They said they wouldn't let me slip
-      But they pushed
-      I think I jumped
+      - lines: |
+          They said they wouldn't let me slip
+          But they pushed
+          I think I jumped
 
-  - lines: |
-      I will see the light
-      When I reach the top
-      Of this hole
+      - lines: |
+          I will see the light
+          When I reach the top
+          Of this hole
 
 audio:
   audiomack:

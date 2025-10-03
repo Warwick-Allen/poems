@@ -3,11 +3,12 @@ author: Warwick Allen
 date: Tuesday, 12 May 2015
 slug: glisten-and-divide
 
-segments:
-  - lines: |
-      sun glisten
-      granite rain-drop
-      stands between
+versions:
+  - segments:
+      - lines: |
+          sun glisten
+          granite rain-drop
+          stands between
 
 audio:
   audiomack:

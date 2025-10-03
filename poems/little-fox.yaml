@@ -3,35 +3,36 @@ author: Warwick Allen
 date: Wednesday, 30 September 2015
 slug: little-fox
 
-segments:
-  - lines: |
-      The whites in your eyes,
-      The dim mirror hides.
+versions:
+  - segments:
+      - lines: |
+          The whites in your eyes,
+          The dim mirror hides.
 
-  - lines: |
-      So close, out of shot;
-      So much, not a lot.
+      - lines: |
+          So close, out of shot;
+          So much, not a lot.
 
-  - lines: |
-      Let's talk about this,
-      Little fox, my nemesis.
+      - lines: |
+          Let's talk about this,
+          Little fox, my nemesis.
 
-  - lines: |
-      The thief is out there.
-      The thief is in here.
+      - lines: |
+          The thief is out there.
+          The thief is in here.
 
-  - lines: |
-      Tell me, who are you?
-      I know, already knew.
+      - lines: |
+          Tell me, who are you?
+          I know, already knew.
 
-  - lines: |
-      Saw through cheap disguise;
-      The soul in your eyes...
+      - lines: |
+          Saw through cheap disguise;
+          The soul in your eyes...
 
-  - lines: |
-      Is gone, do you miss it?
-      But mine, you won't get it.
-      But mine, it's well kept.
+      - lines: |
+          Is gone, do you miss it?
+          But mine, you won't get it.
+          But mine, it's well kept.
 
 audio:
   audiomack:

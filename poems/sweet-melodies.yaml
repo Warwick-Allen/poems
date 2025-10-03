@@ -3,20 +3,21 @@ author: Warwick Allen
 date: Friday, 15 May 2015
 slug: sweet-melodies
 
-segments:
-  - lines: |
-      love notes of sweet melodies
-      shoot from deep-green leaves
-      swayed by gentle breeze
-      tenderly caressing me
-      snuggling into the sun
-      a lullaby softly hummed
-      innocence fills my lungs
-      a thousand yesterdays
-      cleansed with sea spray
-      exhaled and put away
-      sweep the floor of today
-      space for my soul to play
+versions:
+  - segments:
+      - lines: |
+          love notes of sweet melodies
+          shoot from deep-green leaves
+          swayed by gentle breeze
+          tenderly caressing me
+          snuggling into the sun
+          a lullaby softly hummed
+          innocence fills my lungs
+          a thousand yesterdays
+          cleansed with sea spray
+          exhaled and put away
+          sweep the floor of today
+          space for my soul to play
 
 audio:
   audiomack:
