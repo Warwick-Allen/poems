@@ -3,21 +3,24 @@ author: Warwick Allen
 date: Saturday, 3 March 2018
 slug: minstrel-of-summer
 
-body: |
-  How wonderful to listen
-  To that minstrel of summer
-  What sweeter sound to bask in
-  Than the song of the cicada?
+segments:
+  - lines: |
+      How wonderful to listen
+      To that minstrel of summer
+      What sweeter sound to bask in
+      Than the song of the cicada?
 
-  Never-failing evangelist
-  Faithful herald of the sun
-  &ldquo;Foul weather is banquished&rdquo;
-  Announces cicada's hum
+  - lines: |
+      Never-failing evangelist
+      Faithful herald of the sun
+      &ldquo;Foul weather is banquished&rdquo;
+      Announces cicada's hum
 
-  Don't go quiet on me
-  Keep singing little friend
-  Keep humming in your tree
-  Don't let the summer end
+  - lines: |
+      Don't go quiet on me
+      Keep singing little friend
+      Keep humming in your tree
+      Don't let the summer end
 
 audio:
   audiomack:

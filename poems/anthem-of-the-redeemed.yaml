@@ -14,6 +14,7 @@ segments:
       Marked by heaven&apos;s holy hand,
       Through tribulation&apos;s darkened tide,
       They rise to glory at His side.</span>
+
   - label: "[Chorus]"
     lines: |
       Glory <span class="ai">to our God on high,
@@ -25,7 +26,8 @@ segments:
       Deepest praise, thanks and honour,
       Unto our God, Yeshua
 
-      <span class="song-segment">[Verse 2]</span>
+  - label: "[Verse 2]"
+    lines: |
       <span class="ai">The angels bow, the elders fall,
       A mighty chorus fills the hall,
       The One who sits upon the throne,
@@ -34,6 +36,7 @@ segments:
       Their God <span class="ai">will</span> dry their every tear,
       <span class="ai">By living springs of joy they stand,</span>
       In the majesty of the Lamb.
+
   - label: "[Chorus]"
     lines: |
       Glory <span class="ai">to our God on high,
@@ -44,6 +47,7 @@ segments:
       Blessing and power where glory dwells,</span>
       Deepest praise, thanks and honour,
       Unto our God, Yeshua
+
   - label: "[Verse 3]"
     lines: |
       <span class="ai">Twelve times twelve, the</span> thousands called,
@@ -54,6 +58,7 @@ segments:
       A praise that never, never ends,
       For He who</span> created <span class="ai">with His breath,
       Has conquered sin and vanquished death.</span>
+
   - label: "[Chorus]"
     lines: |
       Glory <span class="ai">to our God on high,
@@ -65,7 +70,8 @@ segments:
       Deepest praise, thanks and honour,
       Unto our God, Yeshua
 
-      <span class="song-segment">[Verse 4]</span>
+  - label: "[Verse 4]"
+    lines: |
       The bright Morning Star is coming,
       His just reward, He is bringing.
       Blessed are those who&apos;ve washed their robe,
@@ -74,6 +80,7 @@ segments:
       To eat fruit of the tree of life.
       And the Spirit and bride invite
       To drink of the water of life.
+
   - label: "[Chorus]"
     lines: |
       Glory <span class="ai">to our God on high,
@@ -84,6 +91,7 @@ segments:
       Blessing and power where glory dwells,</span>
       Deepest praise, thanks and honour,
       Unto our God, Yeshua
+
   - label: "[Outro]"
     lines: |
       <span class="ai">Forevermore, the throne we see,

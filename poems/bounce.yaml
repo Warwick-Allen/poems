@@ -3,16 +3,17 @@ author: Warwick Allen
 date: Tuesday, 12 May 2015
 slug: bounce
 
-body: |
-  in my head
-  rubber ball
-  milky way
-  calms it all
-  look away
-  rubber ball
-  in my head
-  ...
-  again
+segments:
+  - lines: |
+      in my head
+      rubber ball
+      milky way
+      calms it all
+      look away
+      rubber ball
+      in my head
+      &hellip;
+      again
 
 audio:
   audiomack:

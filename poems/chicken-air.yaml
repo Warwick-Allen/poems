@@ -3,10 +3,11 @@ author: Warwick Allen
 date: Tuesday, 12 May 2015
 slug: chicken-air
 
-body: |
-  sun welcome
-  air permeated
-  chicken salt
+segments:
+  - lines: |
+      sun welcome
+      air permeated
+      chicken salt
 
 audio:
   audiomack:

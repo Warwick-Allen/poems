@@ -3,34 +3,39 @@ author: Warwick Allen
 date: Wednesday, 13 May 2015
 slug: seeds-of-joy
 
-body: |
-  seeds of joy
-  &nbsp; fling
-  from tiny hands
-  &nbsp; as you spin
+segments:
+  - lines: |
+      seeds of joy
+      &nbsp; fling
+      from tiny hands
+      &nbsp; as you spin
 
-  tired eyes
-  &nbsp; brighten
-  over soft smiles
-  &nbsp; as you spin
+  - lines: |
+      tired eyes
+      &nbsp; brighten
+      over soft smiles
+      &nbsp; as you spin
 
-  hearts warm and
-  &nbsp; connect
-  with warmed hearts
-  &nbsp; as you spin
+  - lines: |
+      hearts warm and
+      &nbsp; connect
+      with warmed hearts
+      &nbsp; as you spin
 
-  your joy, my lovelies
-  is the world's pleasure
-  your pleasure, my angels
-  is the world's delight
-  your delight, princesses
-  is my solace
+  - lines: |
+      your joy, my lovelies
+      is the world's pleasure
+      your pleasure, my angels
+      is the world's delight
+      your delight, princesses
+      is my solace
 
-  keep dancing, my beauties
-  dynamos of blessing
-  keep dancing, cherubim
-  you're ushering
-  Heaven in
+  - lines: |
+      keep dancing, my beauties
+      dynamos of blessing
+      keep dancing, cherubim
+      you're ushering
+      Heaven in
 
 audio:
   audiomack:

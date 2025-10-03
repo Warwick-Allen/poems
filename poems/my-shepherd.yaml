@@ -3,32 +3,38 @@ author: Warwick Allen
 date: Sunday, 18 January 1998
 slug: my-shepherd
 
-body: |
-  Often I wander
+segments:
+  - lines: |
+      Often I wander
       Often I stray
       From the path You&#39;ve chosen for me
       From Your blessed way
 
+  - lines: |
       Often I declare
       My love for You
       Yet that same love I deny
       In the things that I do
 
+  - lines: |
       But just when it seems I&#39;ve gone that little too far
       When my will differs from that of Your own
       When Your love isn&#39;t my guiding star
       When I try to go it alone
 
+  - lines: |
       You reach out Your hand
       You draw me near
       You wrap Your arms around me
       In a hug so dear
 
+  - lines: |
       And I know Your love
       A love so true
       And I wonder why I do
       Those things that don&#39;t please You
 
+  - lines: |
       Then You set me back down on my way
       The path that You&#39;d have me journey
       And gently squeeze my hand to say

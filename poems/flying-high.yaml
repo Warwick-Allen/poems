@@ -7,76 +7,87 @@ segments:
   - label: "[Verse 1]"
     lines: |
       The eagle it soars, with such might
-          Above the clouds in noble flight
-          And it does, from that lofty height
-          To the ground below cast its sight
+      Above the clouds in noble flight
+      And it does, from that lofty height
+      To the ground below cast its sight
+
   - label: "[Verse 2]"
     lines: |
       On the creatures down low it stares
-          With scorn and derision it sneers
-          To itself and what ever hears
-          And with bitter contempt declares:
+      With scorn and derision it sneers
+      To itself and what ever hears
+      And with bitter contempt declares:
   - label: "[Verse 3]"
     lines: |
       &ldquo;Shame to all those birds low flying
-          Sparrows, finches, all those choosing
-          Low to stay, near the ground to sing
-          And never actually trying
+      Sparrows, finches, all those choosing
+      Low to stay, near the ground to sing
+      And never actually trying
+
   - label: "[Verse 4]"
     lines: |
       &ldquo;For if their wings they would bother
-          To stretch that little bit wider
-          Set their sights a little higher
-          And try that little bit harder
+      To stretch that little bit wider
+      Set their sights a little higher
+      And try that little bit harder
+
   - label: "[Chorus 1]"
     lines: |
       &ldquo;They too might know
-          The glory and the majesty
-          Of flying high
+      The glory and the majesty
+      Of flying high
+
   - label: "[Verse 5]"
     lines: |
       &ldquo;&apos;Twas not without effort that I
-          Managed to climb so very high
-          My wings I did spread wide, and my
-          Sights I did set high in the sky
+      Managed to climb so very high
+      My wings I did spread wide, and my
+      Sights I did set high in the sky
+
   - label: "[Chorus 2]"
     lines: |
       &ldquo;It&apos;s through my own efforts that I know
-          The glory and the majesty
-          Of flying high
+      The glory and the majesty
+      Of flying high
+
   - label: "[Verse 6]"
     lines: |
       &ldquo;As for those creatures who must stay
-          On the earth forever as they
-          Have no feathers, no wings, no way
-          Of flying. Pity them, I say
+      On the earth forever as they
+      Have no feathers, no wings, no way
+      Of flying. Pity them, I say
+
   - label: "[Verse 7]"
     lines: |
       &ldquo;But it&apos;s the ground fowl I can&apos;t stand
-          He has wings, as I understand
-          Feathers too, but he dwells on land
-          Not in the sky, so high and grand
+      He has wings, as I understand
+      Feathers too, but he dwells on land
+      Not in the sky, so high and grand
+
   - label: "[Verse 8]"
     lines: |
       &ldquo;Why does he choose this way to live
-          When the blue skies he could have if
-          His wings he would flap, and then, with
-          Some effort, the skies would be his
+      When the blue skies he could have if
+      His wings he would flap, and then, with
+      Some effort, the skies would be his
+
   - label: "[Chorus 3]"
     lines: |
       &ldquo;And then he too might know
-          The glory and the majesty
-          Of flying high
+      The glory and the majesty
+      Of flying high
+
   - label: "[Verse 9]"
     lines: |
       &ldquo;But no, he makes a decision
-          To live in humiliation
-          And shame; an abomination
-          To all the birds of creation
+      To live in humiliation
+      And shame; an abomination
+      To all the birds of creation
+
   - label: "[Coda]"
     lines: |
       &ldquo;If only he tried
-          Oh, how I loathe the ground fowl.&rdquo;
+      Oh, how I loathe the ground fowl.&rdquo;
 
 audio:
   audiomack:

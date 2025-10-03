@@ -3,17 +3,20 @@ author: Warwick Allen
 date: Sunday, 10 December 2000
 slug: romantic-dreams
 
-body: |
-  Ah, the downfall of the romantic:
+segments:
+  - lines: |
+      Ah, the downfall of the romantic:
       When fanciful dreaming strays far from reality
       And returns with empty promises&mdash;
       Gains that are really losses.
 
+  - lines: |
       O, but what a refreshing tonic,
       To fly on the wings of fantasy,
       From time to time,
       Uplifting for soul and mind.
 
+  - lines: |
       But remember it&#39;s also good,
       Or so I&#39;ve found,
       To keep at least one foot

@@ -3,37 +3,44 @@ author: Warwick Allen
 date: Saturday, 12 December 1998
 slug: mysterious-star
 
-body: |
-  Upon the starts I gaze
+segments:
+  - lines: |
+      Upon the starts I gaze
       Into the heavens I stare
       I find some comfort there
       Though star seem so far away
 
+  - lines: |
       I&#39;ve been here for sometime
       Staring, watching, waiting
       Praying, always hoping
       A bright star might be mine
 
+  - lines: |
       Past me, sometimes, a star will fly
       A beautiful, radiant shooting star
       Travelling by me not so far
       For my heart to singe as it passes by
 
+  - lines: |
       I see a new star now coming towards me
       From the others, somehow different
       More intensely radiant
       With a light greater than its own, for all to see
 
+  - lines: |
       With that light, I&#39;m quite familiar
       That holy, pure light
       Potent enough to pierce the darkest night
       My heart this light does lure
 
+  - lines: |
       Never before has a star of this nature
       Glowing with holy radiance
       Shinning with natural brilliance
       Never before has one come so near
 
+  - lines: |
       Will this star come close enough for harm
       Burn my soul and then depart
       Fly harmlessly into the distance, or crash into my heart

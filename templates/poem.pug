@@ -21,15 +21,13 @@ div(id=`poem--${slug}`)
     br
   br
   div.poem-body
-    if segments
-      each segment in segments
+    each segment in segments
+      if segment.label
         span.song-segment= segment.label
         br
-        +processLines(segment.lines)
-        if segment !== segments[segments.length - 1]
-          br
-    else
-      +processLines(body)
+      +processLines(segment.lines)
+      if segment !== segments[segments.length - 1]
+        br
   //- end poem-body
   
   if audio

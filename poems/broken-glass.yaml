@@ -3,16 +3,20 @@ author: Warwick Allen
 date: Wednesday, 1 October 1997
 slug: broken-glass
 
-body: |
-  I am given silver
+segments:
+  - lines: |
+      I am given silver
       But I want pewter
 
+  - lines: |
       I have gold but yet
       I yearn for brass
 
+  - lines: |
       And quartz it seems I prefer
       To my diamonds with their glitter
 
+  - lines: |
       And all my pearls I forgot
       As I long for a piece of broken glass
 

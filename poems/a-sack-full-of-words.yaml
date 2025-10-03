@@ -3,24 +3,25 @@ author: Warwick Allen
 date: Monday, 4 May 2015
 slug: a-sack-full-of-words
 
-body: |
-  A sack full of kittens
-  My words
-  Rescued
-  Come tumbling out
-  Falling over each other
-  Tripping on themselves
-  Emancipated
-  Weak
-  Uncoordinated
-  My words
-  Feed them the milk that they need
-  Not that they deserve
-  Feed them with meat
-  To make them grow
-  My words
-  The Lion&apos;s roar
-  Will be heard
+segments:
+  - lines: |
+      A sack full of kittens
+      My words
+      Rescued
+      Come tumbling out
+      Falling over each other
+      Tripping on themselves
+      Emancipated
+      Weak
+      Uncoordinated
+      My words
+      Feed them the milk that they need
+      Not that they deserve
+      Feed them with meat
+      To make them grow
+      My words
+      The Lion&apos;s roar
+      Will be heard
 
 audio:
   audiomack:

@@ -7,71 +7,83 @@ segments:
   - label: "[Verse 1]"
     lines: |
       Winter daffodil
-          Stalwart sentinel
-          Guardian of hope
-          Humble antidote
-          To our brumal ill
+      Stalwart sentinel
+      Guardian of hope
+      Humble antidote
+      To our brumal ill
+
   - label: "[Refrain 1]"
     lines: |
       (Here is a call for the endurance&hellip;)
+
   - label: "[Chorus 1]"
     lines: |
       Your golden bloom
-          Under skies cold and grey
-          Pierces dark and gloom
-          Speaks of a better day
+      Under skies cold and grey
+      Pierces dark and gloom
+      Speaks of a better day
+
   - label: "[Verse 2]"
     lines: |
       Though storm battered
-          And snow covered
-          Indomitable yellow
-          A bright foreshadow
-          Of sun assured
+      And snow covered
+      Indomitable yellow
+      A bright foreshadow
+      Of sun assured
+
   - label: "[Refrain 2]"
     lines: |
       (Here is a call for the endurance&hellip;)
+
   - label: "[Chorus 2]"
     lines: |
       Your steadfast constant cheer
-          Banishes our dismay
-          Leaves no space for despair
-          Shows us the better day
+      Banishes our dismay
+      Leaves no space for despair
+      Shows us the better day
+
   - label: "[Verse 3]"
     lines: |
       Winter may linger
-          Last many a year
-          Floral apostle
-          Will you then please tell
-          What we need to hear
+      Last many a year
+      Floral apostle
+      Will you then please tell
+      What we need to hear
+
   - label: "[Refrain 3]"
     lines: |
       (Here is a call for the endurance&hellip;)
+
   - label: "[Chorus 3]"
     lines: |
       Your resolute message
-          The sure hope you relay
-          Sweetens bitter passage
-          Towards that better day
+      The sure hope you relay
+      Sweetens bitter passage
+      Towards that better day
+
   - label: "[Bridge]"
     lines: |
       Of this we are sure
-          Remind our hearts again
-          If we will endure
-          With Him we will reign
+      Remind our hearts again
+      If we will endure
+      With Him we will reign
+
   - label: "[Verse 4]"
     lines: |
       Show Jerusalem
-          The city to come
-          City where the dark
-          Can&#39;t stay, cannot park
-          It&#39;s lit by the Son
+      The city to come
+      City where the dark
+      Can&#39;t stay, cannot park
+      It&#39;s lit by the Son
+
   - label: "[Verse 4 repeated]"
     lines: |
       Show Jerusalem
-          The city to come
-          City where the dark
-          Can&#39;t stay, cannot park
-          It&#39;s lit by the Son
+      The city to come
+      City where the dark
+      Can&#39;t stay, cannot park
+      It&#39;s lit by the Son
+
   - label: "[Refrain 4]"
     lines: |
       (&hellip;the endurance and faith of the saints.)

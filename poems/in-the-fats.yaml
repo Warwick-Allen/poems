@@ -3,22 +3,26 @@ author: Warwick Allen
 date: Thursday, 14 August 1997
 slug: in-the-fats
 
-body: |
-  Who said that this would happen?
+segments:
+  - lines: |
+      Who said that this would happen?
       Who dictated that life would
       Become as it had once been?
 
+  - lines: |
       This is not what is written for me
       In the Book
       I am more
       Well, I can be more
       Than this
 
+  - lines: |
       I am somebody
       More than that
       I am a child of God
       A servant of the Almighty
 
+  - lines: |
       He has plans for me
       This I must remember
       Always

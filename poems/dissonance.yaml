@@ -3,21 +3,24 @@ author: Warwick Allen
 date: Sunday, 18 October 2015
 slug: dissonance
 
-body: |
-  I take my soul for a stroll
-  Along the crumbling edge
-  Cliff face, to face
-  Imagined and the real
+segments:
+- lines: |
+    I take my soul for a stroll
+    Along the crumbling edge
+    Cliff face, to face
+    Imagined and the real
 
-  I see my world dissolve
-  In an unread history book
-  My space, marked place
-  Recorded but never told
+- lines: |
+    I see my world dissolve
+    In an unread history book
+    My space, marked place
+    Recorded but never told
 
-  I watch and sigh as they divide
-  My soul and body cannot decide
-  Can't agree who'll they'll have
-  Me be, so they fight
+- lines: |
+    I watch and sigh as they divide
+    My soul and body cannot decide
+    Can&apos;t agree who&apos;ll they&apos;ll have
+    Me be, so they fight
 
 audio:
   audiomack:
@@ -26,5 +29,3 @@ audio:
   suno:
     - url: https://suno.com/song/bcf3ae13-2a9d-423d-9120-a2d90dac0bb7
       active: true
-
-

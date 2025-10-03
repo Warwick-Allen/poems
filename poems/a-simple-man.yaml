@@ -7,24 +7,27 @@ segments:
   - label: "[Verse 1]"
     lines: |
       I'm just a simple man
-          In the morning sun, I'll recline
-          With a cup of tea in hand
-          I think that's just fine
-          Yes, I'm just a simple man
+      In the morning sun, I'll recline
+      With a cup of tea in hand
+      I think that's just fine
+      Yes, I'm just a simple man
+
   - label: "[Verse 2]"
     lines: |
       I'm just a simple chap
-          I like food and I like wine
-          With good friends, I'll sit and chat
-          Together as we dine
-          Yes, I'm just a simple chap
+      I like food and I like wine
+      With good friends, I'll sit and chat
+      Together as we dine
+      Yes, I'm just a simple chap
+
   - label: "[Verse 3]"
     lines: |
       I'm just a simple fellow
-          I like to be at peace all the time
-          To keep life relaxed and mellow
-          To not have much trouble on my mind
-          Yes, I'm just a simple fellow
+      I like to be at peace all the time
+      To keep life relaxed and mellow
+      To not have much trouble on my mind
+      Yes, I'm just a simple fellow
+
   - label: "[Verse 4]"
     lines: |
       I'm just a simple guy
@@ -32,6 +35,7 @@ segments:
           I'll be doing well, so I'll always try
           Praying only the simple truth will leave these lips of mine
           Yes, I'm just a simple guy
+
   - label: "[Verse 5]"
     lines: |
       I'm just a simple man

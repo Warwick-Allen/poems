@@ -3,28 +3,31 @@ author: Warwick Allen
 date: Tuesday, 30 July 2017
 slug: rurus-first-call
 
-body: |
-  Ruru wakens
-  Heart hastens
-  Is it really
-  No, can&apos;t be
-  That time again?
-  Again
+segments:
+  - lines: |
+      Ruru wakens
+      Heart hastens
+      Is it really
+      No, can&apos;t be
+      That time again?
+      Again
 
-  Day&apos;s been
-  Done somethin&apos;
-  Much not done
-  Racing the sun
-  The sun won
-  Again
+  - lines: |
+      Day&apos;s been
+      Done somethin&apos;
+      Much not done
+      Racing the sun
+      The sun won
+      Again
 
-  Race fail
-  But my battle
-  &mdash;Important one
-  It is won
-  When I say &ldquo;yes&rdquo;
-  When I ask
-  &ldquo;Did I love?&rdquo;
+  - lines: |
+      Race fail
+      But my battle
+      &mdash;Important one
+      It is won
+      When I say &ldquo;yes&rdquo;
+      When I ask
+      &ldquo;Did I love?&rdquo;
 
 audio:
   audiomack:

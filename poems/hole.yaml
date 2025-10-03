@@ -3,46 +3,56 @@ author: Warwick Allen
 date: Thursday, 14 March 1996
 slug: hole
 
-body: |
-  Am I falling
-  Or am I jumping
-  I think I jumped
+segments:
+  - lines: |
+      Am I falling
+      Or am I jumping
+      I think I jumped
 
-  This hole is too big for me
-  I cannot see the top
-  I haven&apos;t yet hit the bottom
+  - lines: |
+      This hole is too big for me
+      I cannot see the top
+      I haven&apos;t yet hit the bottom
 
-  Did I jump
-  Or was I pushed
-  I think I jumped
+  - lines: |
+      Did I jump
+      Or was I pushed
+      I think I jumped
 
-  If only I had a rope
-  Maybe I could climb the rope
-  At least I would stop going down
+  - lines: |
+      If only I had a rope
+      Maybe I could climb the rope
+      At least I would stop going down
 
-  I&apos;m still falling
-  I don&apos;t like falling
-  I think I jumped
+  - lines: |
+      I&apos;m still falling
+      I don&apos;t like falling
+      I think I jumped
 
-  Will you be my rope
-  You are strong
-  You won&apos;t break when I climb
+  - lines: |
+      Will you be my rope
+      You are strong
+      You won&apos;t break when I climb
 
-  I did jump
-  But I had help
-  Why did I jump
+  - lines: |
+      I did jump
+      But I had help
+      Why did I jump
 
-  My Lord be my rope
-  So I won&apos;t fall
-  I can climb I won&apos;t jump
+  - lines: |
+      My Lord be my rope
+      So I won&apos;t fall
+      I can climb I won&apos;t jump
 
-  They said they wouldn&apos;t let me slip
-  But they pushed
-  I think I jumped
+  - lines: |
+      They said they wouldn&apos;t let me slip
+      But they pushed
+      I think I jumped
 
-  I will see the light
-  When I reach the top
-  Of this hole
+  - lines: |
+      I will see the light
+      When I reach the top
+      Of this hole
 
 audio:
   audiomack:

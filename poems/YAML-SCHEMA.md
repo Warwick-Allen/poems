@@ -9,25 +9,23 @@ This document describes the YAML schema for poem files.
 - `date`: String - The date in format "DayOfWeek, DD Month YYYY"
 - `slug`: String - URL-friendly identifier (used for HTML filename and IDs)
 
-## Content Fields (choose one)
+## Content Fields
 
-### Option 1: Plain body (no song segments)
-```yaml
-body: |
-  Poem text with HTML markup where needed<br />
-  Line breaks preserved<br />
-```
-
-### Option 2: Segmented body (with song segments)
+### Segments Format
 ```yaml
 segments:
-  - label: "[Verse 1]"
+  - label: "[Verse 1]"  # Optional: omit for unlabelled segments
     lines: |
-      Poem text<br />
+      Poem text with HTML markup where needed
+      Line breaks preserved
+  - lines: |
+      Unlabelled segment text
   - label: "[Chorus]"
     lines: |
-      More text<br />
+      More text
 ```
+
+**Note:** The `label` field is optional. When omitted, the segment will be rendered without a label.
 
 ## Optional Fields
 

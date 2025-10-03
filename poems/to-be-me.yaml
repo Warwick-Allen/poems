@@ -3,26 +3,31 @@ author: Warwick Allen
 date: Friday, 12 August 2016
 slug: to-be-me
 
-body: |
-  white whiskers
-  whisper
-  of my folly
+segments:
+  - lines: |
+      white whiskers
+      whisper
+      of my folly
 
-  muscles strained
-  well trained
-  of my weakness
+  - lines: |
+      muscles strained
+      well trained
+      of my weakness
 
-  learned brain
-  exclaims
-  my ignorance
+  - lines: |
+      learned brain
+      exclaims
+      my ignorance
 
-  a beast without Your mind
-  a babe without Your strength
-  a fool without Your word
+  - lines: |
+      a beast without Your mind
+      a babe without Your strength
+      a fool without Your word
 
-  I need You
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if I am
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; to be me
+  - lines: |
+      I need You
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if I am
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; to be me
 
 audio:
   audiomack:

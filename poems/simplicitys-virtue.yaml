@@ -3,49 +3,56 @@ author: Warwick Allen
 date: Wednesday, 3 December 2024
 slug: simplicitys-virtue
 
-body: |
-  never thought I could
-  never thought I would
-  &apos;o no no no n&apos; no no no
-  it&apos;s not what you said
-  just some old bones
-  rattling in my head
+segments:
+  - lines: |
+      never thought I could
+      never thought I would
+      &apos;o no no no n&apos; no no no
+      it&apos;s not what you said
+      just some old bones
+      rattling in my head
 
-  so I journey
-  never through the heart
-  can&apos;t you see
-  that is where
-  the trouble starts
+  - lines: |
+      so I journey
+      never through the heart
+      can&apos;t you see
+      that is where
+      the trouble starts
 
-  got out of control
-  got to take a hold
-  &apos;o so so so s&apos; so so so
-  just ashes and dust
-  trying on my own<br />t
-  hought that I must
+  - lines: |
+      got out of control
+      got to take a hold
+      &apos;o so so so s&apos; so so so
+      just ashes and dust
+      trying on my own<br />t
+      hought that I must
 
-  so I wander
-  never through the heart
-  stop and ponder
-  that is where
-  the trouble starts
+  - lines: |
+      so I wander
+      never through the heart
+      stop and ponder
+      that is where
+      the trouble starts
 
-  got to reach you
-  got to run from you
-  got to reach you
-  tearing me in two
+  - lines: |
+      got to reach you
+      got to run from you
+      got to reach you
+      tearing me in two
 
-  simplicity&apos;s virtue
-  such I teach you
-  &apos;ou you you you y&apos; you you you
-  it&apos;s all I got
-  but it&apos;s a lot
+  - lines: |
+      simplicity&apos;s virtue
+      such I teach you
+      &apos;ou you you you y&apos; you you you
+      it&apos;s all I got
+      but it&apos;s a lot
 
-  so I travel (got to reach you)
-  never through the heart (got to run from you)
-  can&apos;t you tell
-  that is where
-  the trouble starts (tearing me in two)
+  - lines: |
+      so I travel (got to reach you)
+      never through the heart (got to run from you)
+      can&apos;t you tell
+      that is where
+      the trouble starts (tearing me in two)
 
 audio:
   audiomack:
