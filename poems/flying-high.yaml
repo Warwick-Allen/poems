@@ -39,14 +39,14 @@ segments:
 
   - label: "[Verse 5]"
     lines: |
-      &ldquo;&apos;Twas not without effort that I
+      &ldquo;'Twas not without effort that I
       Managed to climb so very high
       My wings I did spread wide, and my
       Sights I did set high in the sky
 
   - label: "[Chorus 2]"
     lines: |
-      &ldquo;It&apos;s through my own efforts that I know
+      &ldquo;It's through my own efforts that I know
       The glory and the majesty
       Of flying high
 
@@ -59,7 +59,7 @@ segments:
 
   - label: "[Verse 7]"
     lines: |
-      &ldquo;But it&apos;s the ground fowl I can&apos;t stand
+      &ldquo;But it's the ground fowl I can't stand
       He has wings, as I understand
       Feathers too, but he dwells on land
       Not in the sky, so high and grand
