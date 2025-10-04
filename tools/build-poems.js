@@ -94,9 +94,9 @@ function buildAllPoems() {
       return;
     }
 
-    // Check for empty segments and warn
-    if (!poemData.segments || poemData.segments.length === 0) {
-      console.warn(`⚠️  Warning: ${yamlFile} has empty segments block`);
+    // Check for empty versions and warn
+    if (!poemData.versions || poemData.versions.length === 0) {
+      console.warn(`⚠️  Warning: ${yamlFile} has empty versions block`);
     }
 
     // Generate HTML

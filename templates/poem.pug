@@ -21,13 +21,20 @@ div(id=`poem--${slug}`)
     br
   br
   div.poem-body
-    if segments && segments.length > 0
-      each segment in segments
-        if segment.label
-          span.song-segment= segment.label
-          br
-        +processLines(segment.lines)
-        if segment !== segments[segments.length - 1]
+    if versions && versions.length > 0
+      each version, versionIndex in versions
+        if version.label
+          hr
+          div.poem-info= version.label
+        if version.segments && version.segments.length > 0
+          each segment in version.segments
+            if segment.label
+              span.song-segment= segment.label
+              br
+            +processLines(segment.lines)
+            if segment !== version.segments[version.segments.length - 1]
+              br
+        if versionIndex < versions.length - 1
           br
     else
       p(style="color: #999; font-style: italic;") No content available
