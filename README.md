@@ -22,6 +22,7 @@ npm install
 
 ### Building Poems
 
+#### On Windows
 ```bash
 # Build all HTML files from YAML sources
 npm run build
@@ -31,6 +32,21 @@ npm run build:all
 
 # View at http://localhost:8080
 ```
+
+#### On Linux/WSL
+If you encounter issues with npm using Windows binaries, use the setup script:
+
+```bash
+# Build all HTML files from YAML sources
+./setup-linux.sh npm run build
+
+# Build and start local development server
+./setup-linux.sh npm run build:all
+
+# View at http://localhost:8080
+```
+
+The `setup-linux.sh` script ensures the correct Linux Node.js and npm versions are used.
 
 ### Adding a New Poem
 
