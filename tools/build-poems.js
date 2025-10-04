@@ -78,7 +78,7 @@ function buildAllPoems() {
   let errorCount = 0;
 
   // Process each YAML file
-  yamlFiles.forEach((yamlFile) => {
+  for (const yamlFile of yamlFiles) {
     const yamlPath = path.join(POEMS_DIR, yamlFile);
     const poemData = readPoemFile(yamlPath);
 
@@ -106,17 +106,25 @@ function buildAllPoems() {
       return;
     }
 
-    // Write HTML file
+    // Prettify and write HTML file
     const outputFile = path.join(PUBLIC_DIR, `${poemData.slug}.html`);
     try {
-      fs.writeFileSync(outputFile, html, "utf8");
+      const beautify = require("js-beautify");
+      const prettifiedHtml = beautify.html(html, {
+        indent_size: 2,
+        wrap_line_length: 80,
+        preserve_newlines: false,
+        max_preserve_newlines: 1,
+        wrap_attributes: "auto"
+      });
+      fs.writeFileSync(outputFile, prettifiedHtml, "utf8");
       console.log(`✅ Generated ${poemData.slug}.html`);
       successCount++;
     } catch (err) {
       console.error(`Error writing ${outputFile}:`, err.message);
       errorCount++;
     }
-  });
+  }
 
   console.log(
     `\n📊 Build complete: ${successCount} successful, ${errorCount} errors`

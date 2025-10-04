@@ -7,6 +7,7 @@
 const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
+const beautify = require("js-beautify");
 // Individual poems are already built by the previous step in npm script chain
 
 function extractCustomCSSFromTemplate() {
@@ -589,7 +590,14 @@ function main() {
   const concatenatedContent = concatenateAllHtmlFiles(publicDir);
   const allPoemsOutputPath = path.join(publicDir, "all-poems.html");
 
-  fs.writeFileSync(allPoemsOutputPath, concatenatedContent, "utf8");
+  const prettifiedContent = beautify.html(concatenatedContent, {
+    indent_size: 2,
+    wrap_line_length: 80,
+    preserve_newlines: false,
+    max_preserve_newlines: 1,
+    wrap_attributes: "auto"
+  });
+  fs.writeFileSync(allPoemsOutputPath, prettifiedContent, "utf8");
 
   console.log(`✅ Successfully generated ${allPoemsOutputPath}`);
 
@@ -598,7 +606,14 @@ function main() {
   const updatedIndexContent = generateIndexHtml(publicDir);
   if (updatedIndexContent) {
     const indexPath = path.join(publicDir, "index.html");
-    fs.writeFileSync(indexPath, updatedIndexContent, "utf8");
+    const prettifiedIndexContent = beautify.html(updatedIndexContent, {
+      indent_size: 2,
+      wrap_line_length: 80,
+      preserve_newlines: false,
+      max_preserve_newlines: 1,
+      wrap_attributes: "auto"
+    });
+    fs.writeFileSync(indexPath, prettifiedIndexContent, "utf8");
     console.log(`✅ Successfully updated ${indexPath}`);
   } else {
     console.log("⚠️  Skipped index.html update due to errors");
