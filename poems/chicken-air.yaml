@@ -1,0 +1,19 @@
+title: Chicken Air
+author: Warwick Allen
+date: Tuesday, 12 May 2015
+slug: chicken-air
+
+versions:
+  - segments:
+      - lines: |
+          sun welcome
+          air permeated
+          chicken salt
+
+audio:
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/chicken-air
+      active: false
+  suno:
+    - url: https://suno.com/song/#
+      active: false

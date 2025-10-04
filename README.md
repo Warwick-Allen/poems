@@ -1,8 +1,73 @@
 # Poems by Warwick Allen
 
-These are shared publicly at [Fragments &
-Unity](https://fragments-and-unity.blogspot.com/).
+These are shared publicly at [Fragments & Unity](https://fragments-and-unity.blogspot.com/) and [GitHub Pages](https://warwick-allen.github.io/poems/).
+
+## Repository Structure
+
+This repository uses a YAML-based build system to generate HTML files:
+
+- **`poems/`** - Source YAML files for all poems (one file per poem)
+- **`public/`** - Generated HTML files and assets
+- **`templates/`** - Pug template for rendering poems
+- **`tools/`** - Build scripts
+- **`.github/workflows/`** - GitHub Actions for automated deployment
+
+## Development
+
+### Prerequisites
+
+```bash
+npm install
+```
+
+### Building Poems
+
+#### On Windows
+```bash
+# Build all HTML files from YAML sources
+npm run build
+
+# Build and start local development server
+npm run build:all
+
+# View at http://localhost:8080
+```
+
+#### On Linux/WSL
+If you encounter issues with npm using Windows binaries, use the setup script:
+
+```bash
+# Build all HTML files from YAML sources
+./setup-linux.sh npm run build
+
+# Build and start local development server
+./setup-linux.sh npm run build:all
+
+# View at http://localhost:8080
+```
+
+The `setup-linux.sh` script ensures the correct Linux Node.js and npm versions are used.
+
+### Adding a New Poem
+
+1. Create a new YAML file in the `poems/` directory (see `poems/YAML-SCHEMA.md` for format)
+2. Run `npm run build` to generate the HTML
+3. Commit both the YAML source and generated HTML files
+
+### Editing an Existing Poem
+
+1. Edit the YAML file in the `poems/` directory
+2. Run `npm run build` to regenerate the HTML
+3. Commit the changes
 
 ## Local Viewing
 
-To view the poems locally, open [`public/index.html`](public/index.html) in your web browser.
+To view the poems locally without building:
+1. Open [`public/index.html`](public/index.html) in your web browser
+2. Or run `npm start` to start a local server at http://localhost:8080
+
+## Documentation
+
+- **`poems/YAML-SCHEMA.md`** - Detailed schema for poem YAML files
+- **`REFACTORING-SUMMARY.md`** - Technical details about the build system
+- **`BUILD.md`** - GitHub Pages deployment information

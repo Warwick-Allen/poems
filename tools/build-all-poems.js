@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 /**
- * Build script to generate all-poems.html for GitHub Pages
- * Extracts the concatenation logic from serve-static.js
+ * Build script to generate all-poems.html and index.html for GitHub Pages
+ * First builds individual poems from YAML, then generates concatenated view
  */
 
 const fs = require("fs");
 const path = require("path");
+const yaml = require("js-yaml");
+const beautify = require("js-beautify");
+// Individual poems are already built by the previous step in npm script chain
 
 function extractCustomCSSFromTemplate() {
   try {
@@ -36,23 +39,44 @@ function extractCustomCSSFromTemplate() {
   }
 }
 
+/**
+ * Check if a poem has any active audio files
+ */
+function hasActiveAudio(audioData) {
+  if (!audioData || typeof audioData !== "object") {
+    return false;
+  }
+
+  // Check each audio platform (audiomack, suno, etc.)
+  for (const platform in audioData) {
+    const entries = audioData[platform];
+    if (Array.isArray(entries)) {
+      // Check if any entry has active: true
+      if (entries.some((entry) => entry.active === true)) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
 function concatenateAllHtmlFiles(dirPath) {
   try {
-    const items = fs.readdirSync(dirPath, { withFileTypes: true });
-    const htmlFiles = items
-      .filter(
-        (item) => item.isFile() && item.name.toLowerCase().endsWith(".html")
-      )
-      .filter((item) => !["index.html", "all-poems.html"].includes(item.name))
-      .sort(); // Sort alphabetically for consistent ordering
+    // Read YAML files from the poems directory for metadata
+    const poemsDir = path.join(process.cwd(), "poems");
+    const yamlFiles = fs
+      .readdirSync(poemsDir)
+      .filter((file) => file.endsWith(".yaml") || file.endsWith(".yml"))
+      .filter((file) => !file.startsWith("YAML-SCHEMA"));
 
-    if (htmlFiles.length === 0) {
+    if (yamlFiles.length === 0) {
       return `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>No HTML Files Found</title>
+    <title>No Poems Found</title>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 40px; background: #f5f5f5; }
         .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; }
@@ -61,61 +85,52 @@ function concatenateAllHtmlFiles(dirPath) {
 </head>
 <body>
     <div class="container">
-        <h1>No HTML Files Found</h1>
-        <p>No HTML files were found in the directory.</p>
+        <h1>No Poems Found</h1>
+        <p>No YAML files were found in the poems directory.</p>
     </div>
 </body>
 </html>`;
     }
 
-    // Extract poem data from HTML files
+    // Extract poem data from YAML files
     const poemData = [];
-    htmlFiles.forEach((file, index) => {
-      const filePath = path.join(dirPath, file.name);
-      const fileName = file.name.replace(".html", "");
-      const anchor = `poem-${index}`;
+    yamlFiles.forEach((file, index) => {
+      const yamlPath = path.join(poemsDir, file);
 
       try {
-        const content = fs.readFileSync(filePath, "utf8");
+        const yamlContent = fs.readFileSync(yamlPath, "utf8");
+        const data = yaml.load(yamlContent);
 
-        // Extract title from span id="title--suffix" or fallback to id="title"
-        // Handle both single-line and multiline formats
-        const titleMatch =
-          content.match(/<span id="title--[^"]*"[^>]*>([\s\S]*?)<\/span>/) ||
-          content.match(/<span id="title"[^>]*>([\s\S]*?)<\/span>/);
-        const title = titleMatch ? titleMatch[1].trim() : fileName;
+        const fileName = data.slug;
 
-        // Extract date from span id="date--suffix" or fallback to id="date"
-        // Handle both single-line and multiline formats
-        const dateMatch =
-          content.match(/<span id="date--[^"]*"[^>]*>([\s\S]*?)<\/span>/) ||
-          content.match(/<span id="date"[^>]*>([\s\S]*?)<\/span>/);
-        const date = dateMatch ? dateMatch[1].trim() : "Unknown Date";
+        // Skip index.html and all-poems.html
+        if (fileName === "index" || fileName === "all-poems") {
+          return;
+        }
 
-        // Check for active song link (not commented out) - handle both old and new ID formats
-        const hasSongLink =
-          (content.includes('<div id="song--') &&
-            !content.includes('<!-- div id="song--')) ||
-          (content.includes('<div id="song" class="song-link">') &&
-            !content.includes('<!-- div id="song" class="song-link">'));
+        const htmlPath = path.join(dirPath, `${fileName}.html`);
+
+        // Check if HTML file exists
+        if (!fs.existsSync(htmlPath)) {
+          console.warn(`Warning: HTML file not found for ${fileName}`);
+          return;
+        }
+
+        const anchor = `poem-${index}`;
+        const title = data.title || fileName;
+        const date = data.date || "Unknown Date";
+        const hasSongLink = hasActiveAudio(data.audio);
 
         poemData.push({
           fileName,
           title,
           date,
           anchor,
-          filePath,
+          filePath: htmlPath,
           hasSongLink,
         });
       } catch (err) {
-        poemData.push({
-          fileName,
-          title: fileName,
-          date: "Unknown Date",
-          anchor,
-          filePath,
-          hasSongLink: false,
-        });
+        console.warn(`Warning: Could not read ${file}:`, err.message);
       }
     });
 
@@ -165,15 +180,13 @@ function concatenateAllHtmlFiles(dirPath) {
       poem.anchor = `poem-${index}`;
     });
 
-    // Extract custom CSS from template
-    const customCSS = extractCustomCSSFromTemplate();
-
     let concatenatedContent = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fragments &#38; Unity &#8212; Concatenated View</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
         .container { max-width: 1200px; margin: 0 auto; }
@@ -199,16 +212,13 @@ function concatenateAllHtmlFiles(dirPath) {
         .audio-cell:empty::after { content: "—"; color: #ccc; }
         .back-link { display: inline-block; margin-bottom: 20px; color: #007AFF; text-decoration: none; }
         .back-link:hover { text-decoration: underline; }
-        
-        /* Custom CSS from template */
-        ${customCSS}
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>Fragments &#38; Unity</h1>
-            <p class="subtitle">Concatenated view of all poems (${htmlFiles.length} files)</p>
+            <p class="subtitle">Concatenated view of all poems (${poemData.length} poems)</p>
             <a href="index.html" class="back-link">← Back to Main Page</a>
         </div>
         
@@ -238,8 +248,13 @@ function concatenateAllHtmlFiles(dirPath) {
             </table>
         </div>`;
 
-    // Add each HTML file content
+    // Add each HTML file content (only individual poems, not index or all-poems)
     poemData.forEach((poem) => {
+      // Skip index.html and all-poems.html
+      if (poem.fileName === "index" || poem.fileName === "all-poems") {
+        return;
+      }
+
       try {
         const content = fs.readFileSync(poem.filePath, "utf8");
 
@@ -352,49 +367,41 @@ function concatenateAllHtmlFiles(dirPath) {
 
 function generateIndexHtml(publicDir) {
   try {
-    const items = fs.readdirSync(publicDir, { withFileTypes: true });
-    const htmlFiles = items
-      .filter(
-        (item) => item.isFile() && item.name.toLowerCase().endsWith(".html")
-      )
-      .filter((item) => !["index.html", "all-poems.html"].includes(item.name))
+    // Read YAML files from the poems directory for metadata
+    const poemsDir = path.join(process.cwd(), "poems");
+    const yamlFiles = fs
+      .readdirSync(poemsDir)
+      .filter((file) => file.endsWith(".yaml") || file.endsWith(".yml"))
+      .filter((file) => !file.startsWith("YAML-SCHEMA"))
       .sort(); // Sort alphabetically for consistent ordering
 
-    // Extract poem data from HTML files
+    // Extract poem data from YAML files
     const poemData = [];
-    htmlFiles.forEach((file) => {
-      const filePath = path.join(publicDir, file.name);
-      const fileName = file.name;
+    yamlFiles.forEach((yamlFile) => {
+      const yamlPath = path.join(poemsDir, yamlFile);
 
       try {
-        const content = fs.readFileSync(filePath, "utf8");
+        const yamlContent = fs.readFileSync(yamlPath, "utf8");
+        const data = yaml.load(yamlContent);
 
-        // Extract title from span id="title--suffix" or fallback to id="title"
-        const titleMatch =
-          content.match(/<span id="title--[^"]*"[^>]*>([\s\S]*?)<\/span>/) ||
-          content.match(/<span id="title"[^>]*>([\s\S]*?)<\/span>/);
-        const title = titleMatch
-          ? titleMatch[1].trim()
-          : fileName.replace(".html", "");
+        const slug = data.slug;
 
-        // Check for active song link (not commented out)
-        const hasSongLink =
-          (content.includes('<div id="song--') &&
-            !content.includes('<!-- div id="song--')) ||
-          (content.includes('<div id="song" class="song-link">') &&
-            !content.includes('<!-- div id="song" class="song-link">'));
+        // Skip index and all-poems
+        if (slug === "index" || slug === "all-poems") {
+          return;
+        }
+
+        const fileName = `${slug}.html`;
+        const title = data.title || slug;
+        const hasAudio = hasActiveAudio(data.audio);
 
         poemData.push({
           file: fileName,
           title: title,
-          hasAudio: hasSongLink,
+          hasAudio: hasAudio,
         });
       } catch (err) {
-        poemData.push({
-          file: fileName,
-          title: fileName.replace(".html", ""),
-          hasAudio: false,
-        });
+        console.warn(`Warning: Could not read ${yamlFile}:`, err.message);
       }
     });
 
@@ -578,28 +585,42 @@ function main() {
     process.exit(1);
   }
 
-  console.log("Building all-poems.html...");
+  console.log("Step 1: Building all-poems.html...");
 
   const concatenatedContent = concatenateAllHtmlFiles(publicDir);
   const allPoemsOutputPath = path.join(publicDir, "all-poems.html");
 
-  fs.writeFileSync(allPoemsOutputPath, concatenatedContent, "utf8");
+  const prettifiedContent = beautify.html(concatenatedContent, {
+    indent_size: 2,
+    wrap_line_length: 80,
+    preserve_newlines: false,
+    max_preserve_newlines: 1,
+    wrap_attributes: "auto"
+  });
+  fs.writeFileSync(allPoemsOutputPath, prettifiedContent, "utf8");
 
   console.log(`✅ Successfully generated ${allPoemsOutputPath}`);
 
-  console.log("Updating index.html...");
+  console.log("\nStep 2: Updating index.html...");
 
   const updatedIndexContent = generateIndexHtml(publicDir);
   if (updatedIndexContent) {
     const indexPath = path.join(publicDir, "index.html");
-    fs.writeFileSync(indexPath, updatedIndexContent, "utf8");
+    const prettifiedIndexContent = beautify.html(updatedIndexContent, {
+      indent_size: 2,
+      wrap_line_length: 80,
+      preserve_newlines: false,
+      max_preserve_newlines: 1,
+      wrap_attributes: "auto"
+    });
+    fs.writeFileSync(indexPath, prettifiedIndexContent, "utf8");
     console.log(`✅ Successfully updated ${indexPath}`);
   } else {
     console.log("⚠️  Skipped index.html update due to errors");
   }
 
   console.log(
-    `📊 Processed ${
+    `\n📊 Processed ${
       fs.readdirSync(publicDir).filter((f) => f.endsWith(".html")).length
     } HTML files`
   );

@@ -1,0 +1,32 @@
+title: Minstrel of Summer
+author: Warwick Allen
+date: Saturday, 3 March 2018
+slug: minstrel-of-summer
+
+versions:
+  - segments:
+      - lines: |
+          How wonderful to listen
+          To that minstrel of summer
+          What sweeter sound to bask in
+          Than the song of the cicada?
+
+      - lines: |
+          Never-failing evangelist
+          Faithful herald of the sun
+          &ldquo;Foul weather is banquished&rdquo;
+          Announces cicada's hum
+
+      - lines: |
+          Don't go quiet on me
+          Keep singing little friend
+          Keep humming in your tree
+          Don't let the summer end
+
+audio:
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/minstrel-of-summer
+      active: true
+  suno:
+    - url: https://suno.com/song/a4135253-616e-42a4-aa51-d4330d9d9217
+      active: true

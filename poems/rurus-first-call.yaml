@@ -1,0 +1,39 @@
+title: Ruru's First Call
+author: Warwick Allen
+date: Tuesday, 30 July 2017
+slug: rurus-first-call
+
+versions:
+  - segments:
+      - lines: |
+          Ruru wakens
+          Heart hastens
+          Is it really
+          No, can't be
+          That time again?
+          Again
+
+      - lines: |
+          Day's been
+          Done somethin'
+          Much not done
+          Racing the sun
+          The sun won
+          Again
+
+      - lines: |
+          Race fail
+          But my battle
+          &mdash;Important one
+          It is won
+          When I say &ldquo;yes&rdquo;
+          When I ask
+          &ldquo;Did I love?&rdquo;
+
+audio:
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/rurus-first-call
+      active: true
+  suno:
+    - url: https://suno.com/song/22eda121-2264-48e4-a769-182cbacef2bb
+      active: true

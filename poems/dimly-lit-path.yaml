@@ -1,0 +1,38 @@
+title: Dimly-Lit Path
+author: Warwick Allen
+date: Wednesday, 1 February 2022
+slug: dimly-lit-path
+
+versions:
+  - segments:
+    - lines: |
+        Eggshells narrowly escape
+        feet awkwardly crash between
+        And the load shouldered
+        precious, fragile, teetering
+
+    - lines: |
+        New terrain, strangely familiar
+        strange turns
+        through pit holes and trenches
+        gradually climbing
+
+    - lines: |
+        A torch for the feet
+        a necessary comfort
+        The direction unknown
+        just press on up
+
+    - lines: |
+        The terrain is rugged
+        But the load shouldered
+        precious, fragile, balanced
+        Is not shouldered alone
+
+audio:
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/dimly-lit-path
+      active: true
+  suno:
+    - url: https://suno.com/song/0250f135-ca5a-488a-a69d-f3521e71ecbb
+      active: true

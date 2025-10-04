@@ -1,0 +1,32 @@
+title: Ever Isle
+author: Warwick Allen
+date: Sunday, 18 October 2015
+slug: ever-isle
+
+versions:
+  - segments:
+      - lines:
+          Every day I breathe a while
+          Throw my thoughts on a pile
+          Up there on the top
+          My dream of Ever Isle
+
+      - lines:
+          Every day I run a while
+          Chasing an ephemeral smile
+          Many-coloured gold-in-pot
+          My dream of Ever Isle
+
+      - lines:
+          Every day I stop a while
+          Resting with easy smile
+          I know what I've got
+          My life in Ever Isle
+
+audio:
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/ever-isle
+      active: true
+  suno:
+    - url: https://suno.com/song/daaa6282-f20e-4a09-be16-e8e076d55644
+      active: true

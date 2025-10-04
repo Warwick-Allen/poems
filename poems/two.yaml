@@ -1,0 +1,40 @@
+title: Two
+author: Warwick Allen
+date: Wednesday, 29 January 2003
+slug: two
+
+versions:
+  - segments:
+      - label: "[Verse 1]"
+        lines: |
+          Me plus you, that makes two
+          So two we'll be: you plus me.
+          What'll we do, us who are two?
+          We'll cross the sea, and go to Italy!
+          Vino Italiano for me and you.
+
+      - label: "[Verse 2]"
+        lines: |
+          What'll be there, how will we fare
+          Two who are one, under the Roman sun?
+          I know not my dear, but this I'll share:
+          No ill will come, where'er we run.
+          There's naught to  fear, for we're in the care
+          Of Father, Ghost and Son&mdash;Three who are One!
+          So let's go, let us dare, me with my lady fair.
+
+audio:
+  audiomack:
+    - url: https://audiomack.com/embed/saltysojourner/song/two
+      active: true
+  suno:
+    - url: https://suno.com/s/AKCoMMaeQk571wXu
+      active: true
+
+analysis:
+  type: single
+  content: |
+    <h2>Analysis of <em>Two</em> Lyrics</h2>
+        <h3 id="pastoral-idealism-and-the-rhetoric-of-contentment--two">
+          Pastoral Idealism and the Rhetoric of Contentment
+        </h3>

@@ -1,0 +1,126 @@
+/* Custom CSS extracted from fragments-and-unity.template.html */
+
+.poem-info {
+  color: gray;
+  font-size: 90%;
+  padding-bottom: 3ex;
+}
+
+.poem-info .author::before,
+.poem-info #author::before {
+  content: "by ";
+}
+
+.poem-info .title,
+.poem-info #title {
+  display: none;
+}
+
+.song-segment {
+  color: gray;
+  font-size: 80%;
+  font-style: italic;
+}
+
+.song-link {
+  color: gray;
+  font-style: italic;
+  padding-top: 4ex;
+}
+
+.disclaimer {
+  color: gray;
+  font-size: 80%;
+  margin: 4ex 0;
+  padding: 2ex 0;
+  border-width: 1px;
+  border-color: purple;
+  border-style: solid;
+  border-right-style: none;
+  border-left-style: none;
+}
+
+.disclaimer :first-child {
+  font-weight: bold;
+}
+
+/* Analysis */
+
+.analysis {
+  background-color: #ffeedd;
+  border: 1px solid #eeaa00;
+  border-radius: 5px;
+  color: #333;
+  line-height: 1.6;
+  margin: 2ex auto;
+  max-width: 800px;
+}
+
+button.analysis {
+  display: block;
+  font-size: 90%;
+  font-weight: bold;
+  padding: 1ex 1em;
+}
+
+button.analysis.hide {
+  background-color: #fff8ee;
+}
+
+.full-or-synopsis-selector {
+  display: flex;
+  justify-content: space-around;
+  margin-top: -2ex;
+}
+
+button.analysis.selector {
+  border-radius: 3px;
+  display: inline-block;
+  font-size: 80%;
+  font-weight: normal;
+  line-height: 1.2;
+  margin: 1ex auto;
+}
+
+button.selected {
+  background-color: #fff8ee;
+}
+
+div.analysis {
+  display: none;
+  padding: 2ex 2em;
+}
+
+.analysis h2 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.analysis h3 {
+  color: #34495e;
+  margin: 20px 0 10px;
+}
+
+.analysis h4 {
+  color: #34495e;
+  margin: 15px 0 8px;
+}
+
+.analysis p {
+  margin-bottom: 15px;
+}
+
+.analysis ul,
+.analysis ol {
+  margin: 10px 0 15px 20px;
+}
+
+.analysis li {
+  margin-bottom: 10px;
+}
+
+.analysis em {
+  font-style: italic;
+}
+
+
