@@ -76,6 +76,7 @@ jobs:
           # Also copy the files to the root for direct access
           cp public/index.html deployment/
           cp public/all-poems.html deployment/
+          cp public/styles.css deployment/
           echo "Deployment structure created:"
           ls -la deployment/
           ls -la deployment/public/
