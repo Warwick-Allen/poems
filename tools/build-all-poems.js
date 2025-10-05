@@ -116,7 +116,7 @@ function concatenateAllHtmlFiles(dirPath) {
           return;
         }
 
-        const anchor = `poem-${index}`;
+        const anchor = `poem-${fileName}`;
         const title = data.title || fileName;
         const date = data.date || "Unknown Date";
         const hasSongLink = hasActiveAudio(data.audio);
@@ -177,7 +177,7 @@ function concatenateAllHtmlFiles(dirPath) {
 
     // Regenerate anchors based on sorted order
     poemData.forEach((poem, index) => {
-      poem.anchor = `poem-${index}`;
+      poem.anchor = `poem-${poem.fileName}`;
     });
 
     let concatenatedContent = `<!DOCTYPE html>
