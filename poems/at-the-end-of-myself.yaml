@@ -85,11 +85,11 @@ postscript:
       <label for="hide-ai-checkbox">Hide AI-generated content.</label>
       <script>
         document
-          .getElementById('poem--at-the-end-of-myself')
+          .getElementById('poem--${slug}')
           .getElementsByTagName('input')[0]
           .addEventListener('change', function(event) {
             const ai_elements = document
-              .getElementById('poem--at-the-end-of-myself')
+              .getElementById('poem--${slug}')
               .getElementsByClassName("ai");
             const visibility = event.target.checked ? 'hidden' : 'visible';
             for (var i=0; i < ai_elements.length; i++) {
