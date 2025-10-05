@@ -1,5 +1,21 @@
 # Shared elements for poems
 # This file contains common elements that can be referenced by individual poem files
+#
+# Usage:
+#   To reference an element in a poem YAML file, use:
+#   postscript:
+#     - $ref: "shared.yaml#/disclaimer"
+#
+#   The format is: $ref: "filename#/path/to/element"
+#   - filename: relative path from the poem file to this shared file
+#   - path: JSON pointer style path to the specific element (starts with /)
+#
+# Adding new shared elements:
+#   1. Add the element to this file under a descriptive key
+#   2. Reference it in poem files using the $ref syntax above
+#   3. The build system will automatically resolve and include the content
+#
+# Note: Changes to shared elements will affect all poems that reference them
 
 disclaimer:
   label: Disclaimer

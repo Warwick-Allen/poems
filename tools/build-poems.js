@@ -13,7 +13,33 @@ const PUBLIC_DIR = path.join(process.cwd(), "public");
 const TEMPLATE_FILE = path.join(process.cwd(), "templates", "poem.pug");
 
 /**
- * Resolve $ref references in YAML data
+ * Cache for resolved references to improve build performance
+ */
+const refCache = new Map();
+
+/**
+ * Validate that a referenced element exists in the loaded data
+ */
+function validateReferencedElement(data, jsonPath, refPath) {
+  if (!jsonPath) return true;
+  
+  const pathParts = jsonPath.split('/').filter(part => part !== '');
+  let current = data;
+  
+  for (const part of pathParts) {
+    if (!current || typeof current !== 'object' || !(part in current)) {
+      console.error(`Error: Referenced element '${jsonPath}' not found in ${refPath}`);
+      console.error(`Available keys: ${Object.keys(current || {}).join(', ')}`);
+      return false;
+    }
+    current = current[part];
+  }
+  
+  return true;
+}
+
+/**
+ * Resolve $ref references in YAML data with validation and caching
  */
 function resolveRefs(data, basePath = POEMS_DIR) {
   if (typeof data !== 'object' || data === null) {
@@ -29,23 +55,49 @@ function resolveRefs(data, basePath = POEMS_DIR) {
     const [filePath, jsonPath] = data.$ref.split('#');
     const fullPath = path.resolve(basePath, filePath);
     
+    // Create cache key
+    const cacheKey = `${fullPath}#${jsonPath || ''}`;
+    
+    // Check cache first
+    if (refCache.has(cacheKey)) {
+      return resolveRefs(refCache.get(cacheKey), path.dirname(fullPath));
+    }
+    
     try {
+      // Validate file exists
+      if (!fs.existsSync(fullPath)) {
+        console.error(`Error: Referenced file not found: ${fullPath}`);
+        console.error(`Reference: ${data.$ref}`);
+        return data;
+      }
+      
       const refContent = fs.readFileSync(fullPath, 'utf8');
       const refData = yaml.load(refContent);
       
+      // Validate the referenced element exists
+      if (!validateReferencedElement(refData, jsonPath, fullPath)) {
+        return data;
+      }
+      
+      let result;
       if (jsonPath) {
         // Navigate to the specific path (e.g., "/disclaimer")
         const pathParts = jsonPath.split('/').filter(part => part !== '');
-        let result = refData;
+        result = refData;
         for (const part of pathParts) {
           result = result[part];
         }
-        return resolveRefs(result, path.dirname(fullPath));
       } else {
-        return resolveRefs(refData, path.dirname(fullPath));
+        result = refData;
       }
+      
+      // Cache the resolved reference
+      refCache.set(cacheKey, result);
+      
+      return resolveRefs(result, path.dirname(fullPath));
     } catch (err) {
       console.error(`Error resolving reference ${data.$ref}:`, err.message);
+      console.error(`File: ${fullPath}`);
       return data;
     }
   }
@@ -91,9 +143,18 @@ function generatePoemHTML(poemData) {
 }
 
 /**
+ * Clear the reference cache at the start of each build
+ */
+function clearRefCache() {
+  refCache.clear();
+}
+
+/**
  * Process all YAML files in the poems directory
  */
 function buildAllPoems() {
+  // Clear cache at the start of each build
+  clearRefCache();
   // Ensure directories exist
   if (!fs.existsSync(POEMS_DIR)) {
     console.error(`Error: Poems directory not found: ${POEMS_DIR}`);
@@ -178,6 +239,11 @@ function buildAllPoems() {
   console.log(
     `\n📊 Build complete: ${successCount} successful, ${errorCount} errors`
   );
+  
+  // Log cache statistics
+  if (refCache.size > 0) {
+    console.log(`💾 Reference cache: ${refCache.size} entries cached`);
+  }
 
   if (errorCount > 0) {
     process.exit(1);
