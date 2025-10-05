@@ -1,5 +1,14 @@
 //- Template for individual poem HTML files
 
+//- JavaScript function to slugify text
+- function slugify(text) {
+-   text = text.toLowerCase()
+-   text = text.replace(/[^a-z0-9]/g, '-')
+-   text = text.replace(/-+/g, '-')
+-   text = text.replace(/^-|-$/g, '');
+-   return text;
+- }
+
 //- Mixin to process lines and add <br /> tags
 mixin processLines(text)
   if text
@@ -57,6 +66,18 @@ div(id=`poem--${slug}`)
         a(href=audio.suno[0].url target="_blank") recording on Suno
         | )
     //- end song
+
+  if postscript && postscript.length > 0
+    each postscriptItem in postscript
+      div(
+        id=`postscript-${slugify(postscriptItem.label)}--${slug}`
+        class="postscript"
+      )
+        if postscriptItem.label
+          div.postscript-label= postscriptItem.label
+        != postscriptItem.content
+    //- end postscript
+  //- end postscript section
   
   if analysis
     //- begin analysis section

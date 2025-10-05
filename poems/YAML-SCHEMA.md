@@ -45,6 +45,14 @@ audio:
   suno: https://suno.com/s/...
 ```
 
+### Postscript Notes
+```yaml
+postscript:
+  - label: "Disclaimer"
+    content: |
+      <p>HTML content.</p>
+```
+
 ### Analysis (3 scenarios)
 
 #### No Analysis

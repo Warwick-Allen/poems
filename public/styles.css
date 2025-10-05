@@ -28,7 +28,7 @@
   padding-top: 4ex;
 }
 
-.disclaimer {
+.postscript {
   color: gray;
   font-size: 80%;
   margin: 4ex 0;
@@ -40,7 +40,7 @@
   border-left-style: none;
 }
 
-.disclaimer :first-child {
+.postscript :first-child {
   font-weight: bold;
 }
 
