@@ -13,13 +13,61 @@ const PUBLIC_DIR = path.join(process.cwd(), "public");
 const TEMPLATE_FILE = path.join(process.cwd(), "templates", "poem.pug");
 
 /**
+ * Resolve $ref references in YAML data
+ */
+function resolveRefs(data, basePath = POEMS_DIR) {
+  if (typeof data !== 'object' || data === null) {
+    return data;
+  }
+
+  if (Array.isArray(data)) {
+    return data.map(item => resolveRefs(item, basePath));
+  }
+
+  // Handle $ref at the top level of an object
+  if (data.$ref && typeof data.$ref === 'string') {
+    const [filePath, jsonPath] = data.$ref.split('#');
+    const fullPath = path.resolve(basePath, filePath);
+    
+    try {
+      const refContent = fs.readFileSync(fullPath, 'utf8');
+      const refData = yaml.load(refContent);
+      
+      if (jsonPath) {
+        // Navigate to the specific path (e.g., "/disclaimer")
+        const pathParts = jsonPath.split('/').filter(part => part !== '');
+        let result = refData;
+        for (const part of pathParts) {
+          result = result[part];
+        }
+        return resolveRefs(result, path.dirname(fullPath));
+      } else {
+        return resolveRefs(refData, path.dirname(fullPath));
+      }
+    } catch (err) {
+      console.error(`Error resolving reference ${data.$ref}:`, err.message);
+      return data;
+    }
+  }
+
+  // Recursively process all properties
+  const result = {};
+  for (const [key, value] of Object.entries(data)) {
+    result[key] = resolveRefs(value, basePath);
+  }
+  
+  return result;
+}
+
+/**
  * Read and parse a YAML poem file
  */
 function readPoemFile(filePath) {
   try {
     const content = fs.readFileSync(filePath, "utf8");
     const data = yaml.load(content);
-    return data;
+    const resolvedData = resolveRefs(data, path.dirname(filePath));
+    return resolvedData;
   } catch (err) {
     console.error(`Error reading ${filePath}:`, err.message);
     return null;
@@ -65,7 +113,8 @@ function buildAllPoems() {
   const yamlFiles = fs
     .readdirSync(POEMS_DIR)
     .filter((file) => file.endsWith(".yaml") || file.endsWith(".yml"))
-    .filter((file) => !file.startsWith("YAML-SCHEMA"));
+    .filter((file) => !file.startsWith("YAML-SCHEMA"))
+    .filter((file) => file !== "shared.yaml"); // Skip shared.yaml as it's not a poem
 
   if (yamlFiles.length === 0) {
     console.warn(`Warning: No YAML files found in ${POEMS_DIR}`);

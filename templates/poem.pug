@@ -70,13 +70,14 @@ div(id=`poem--${slug}`)
   if postscript && postscript.length > 0
     each postscriptItem in postscript
       div(
-        id=`postscript-${slugify(postscriptItem.label)}--${slug}`
+        id=`postscript-${postscriptItem.label ? slugify(postscriptItem.label) : 'item'}--${slug}`
         class="postscript"
       )
         if postscriptItem.label
           div.postscript-label= postscriptItem.label
-        - const processedContent = postscriptItem.content.replace(/\$\{slug\}/g, slug)
-        != processedContent
+        if postscriptItem.content
+          - const processedContent = postscriptItem.content.replace(/\$\{slug\}/g, slug)
+          != processedContent
     //- end postscript
   //- end postscript section
   

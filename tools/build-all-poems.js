@@ -68,7 +68,8 @@ function concatenateAllHtmlFiles(dirPath) {
     const yamlFiles = fs
       .readdirSync(poemsDir)
       .filter((file) => file.endsWith(".yaml") || file.endsWith(".yml"))
-      .filter((file) => !file.startsWith("YAML-SCHEMA"));
+      .filter((file) => !file.startsWith("YAML-SCHEMA"))
+      .filter((file) => file !== "shared.yaml"); // Skip shared.yaml as it's not a poem
 
     if (yamlFiles.length === 0) {
       return `<!DOCTYPE html>
@@ -373,6 +374,7 @@ function generateIndexHtml(publicDir) {
       .readdirSync(poemsDir)
       .filter((file) => file.endsWith(".yaml") || file.endsWith(".yml"))
       .filter((file) => !file.startsWith("YAML-SCHEMA"))
+      .filter((file) => file !== "shared.yaml") // Skip shared.yaml as it's not a poem
       .sort(); // Sort alphabetically for consistent ordering
 
     // Extract poem data from YAML files
