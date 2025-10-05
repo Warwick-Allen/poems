@@ -30,11 +30,3 @@ audio:
   suno:
     - url: https://suno.com/s/AKCoMMaeQk571wXu
       active: true
-
-analysis:
-  type: single
-  content: |
-    <h2>Analysis of <em>Two</em> Lyrics</h2>
-        <h3 id="pastoral-idealism-and-the-rhetoric-of-contentment--two">
-          Pastoral Idealism and the Rhetoric of Contentment
-        </h3>
