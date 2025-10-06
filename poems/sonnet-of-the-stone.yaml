@@ -29,3 +29,6 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/sonnet-of-the-stone
       active: true
+  suno:
+    - url: https://suno.com/s/hDQ4UTYEuitBaK5a
+      active: true
