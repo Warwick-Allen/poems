@@ -11,29 +11,22 @@ const { slugify } = require("./slugify");
 const beautify = require("js-beautify");
 // Individual poems are already built by the previous step in npm script chain
 
-function extractCustomCSSFromTemplate() {
+function extractCustomCSSFromStyles() {
   try {
-    const templatePath = path.join(
+    const stylesPath = path.join(
       process.cwd(),
-      "fragments-and-unity.template.html"
+      "public",
+      "styles.css"
     );
-    if (!fs.existsSync(templatePath)) {
+    if (!fs.existsSync(stylesPath)) {
       return "";
     }
 
-    const templateContent = fs.readFileSync(templatePath, "utf8");
-    const customCSSMatch = templateContent.match(
-      /\/\* ~~ CUSTOM CSS START ~~ \*\/([\s\S]*?)\/\* ~~ CUSTOM CSS END ~~ \*\//
-    );
-
-    if (customCSSMatch && customCSSMatch[1]) {
-      return customCSSMatch[1].trim();
-    }
-
-    return "";
+    const stylesContent = fs.readFileSync(stylesPath, "utf8");
+    return stylesContent.trim();
   } catch (err) {
     console.warn(
-      "Warning: Could not extract custom CSS from template:",
+      "Warning: Could not read CSS from styles.css:",
       err.message
     );
     return "";
@@ -656,6 +649,6 @@ if (require.main === module) {
 
 module.exports = {
   concatenateAllHtmlFiles,
-  extractCustomCSSFromTemplate,
+  extractCustomCSSFromStyles,
   generateIndexHtml,
 };

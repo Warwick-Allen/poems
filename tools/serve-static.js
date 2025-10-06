@@ -180,29 +180,22 @@ function formatFileSize(bytes) {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
 }
 
-function extractCustomCSSFromTemplate() {
+function extractCustomCSSFromStyles() {
   try {
-    const templatePath = path.join(
+    const stylesPath = path.join(
       process.cwd(),
-      "fragments-and-unity.template.html"
+      "public",
+      "styles.css"
     );
-    if (!fileExists(templatePath)) {
+    if (!fileExists(stylesPath)) {
       return "";
     }
 
-    const templateContent = fs.readFileSync(templatePath, "utf8");
-    const customCSSMatch = templateContent.match(
-      /\/\* ~~ CUSTOM CSS START ~~ \*\/([\s\S]*?)\/\* ~~ CUSTOM CSS END ~~ \*\//
-    );
-
-    if (customCSSMatch && customCSSMatch[1]) {
-      return customCSSMatch[1].trim();
-    }
-
-    return "";
+    const stylesContent = fs.readFileSync(stylesPath, "utf8");
+    return stylesContent.trim();
   } catch (err) {
     console.warn(
-      "Warning: Could not extract custom CSS from template:",
+      "Warning: Could not read CSS from styles.css:",
       err.message
     );
     return "";
@@ -337,8 +330,8 @@ function concatenateAllHtmlFiles(dirPath) {
       poem.anchor = `poem-${index}`;
     });
 
-    // Extract custom CSS from template
-    const customCSS = extractCustomCSSFromTemplate();
+    // Extract custom CSS from styles.css
+    const customCSS = extractCustomCSSFromStyles();
 
     let concatenatedContent = `<!DOCTYPE html>
 <html lang="en">
