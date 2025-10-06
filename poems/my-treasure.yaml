@@ -54,5 +54,4 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/my-treasure
       active: true
-  suno:
-    - url: https://suno.com/song/16ea596f-31a6-4079-b064-98b8c951ea9a
+  suno: https://suno.com/song/16ea596f-31a6-4079-b064-98b8c951ea9a

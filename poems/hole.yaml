@@ -59,8 +59,7 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/hole
       active: true
-  suno:
-    - url: https://suno.com/s/0hCPV7lz14xrSOgq
+  suno: https://suno.com/s/0hCPV7lz14xrSOgq
 
 analysis:
   type: single

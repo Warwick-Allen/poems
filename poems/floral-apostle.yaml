@@ -93,8 +93,7 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/floral-apostle
       active: true
-  suno:
-    - url: https://suno.com/s/vWx0ZKi8jW1VxnhQ
+  suno: https://suno.com/s/vWx0ZKi8jW1VxnhQ
 
 analysis:
   type: single

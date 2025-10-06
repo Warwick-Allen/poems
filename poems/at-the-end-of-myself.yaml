@@ -73,8 +73,7 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/at-the-end-of-myself
       active: true
-  suno:
-    - url: https://suno.com/s/AtpUMNeWQURww1f2
+  suno: https://suno.com/s/AtpUMNeWQURww1f2
 
 postscript:
   - $ref: "_shared.yaml#/disclaimer"

@@ -27,5 +27,4 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/two
       active: true
-  suno:
-    - url: https://suno.com/s/AKCoMMaeQk571wXu
+  suno: https://suno.com/s/AKCoMMaeQk571wXu

@@ -94,5 +94,4 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/flying-high
       active: true
-  suno:
-    - url: https://suno.com/s/ZgCMrjeAWWMCqcpi
+  suno: https://suno.com/s/ZgCMrjeAWWMCqcpi

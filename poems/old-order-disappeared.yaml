@@ -63,8 +63,7 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/old-order-disappeared
       active: true
-  suno:
-    - url: https://suno.com/s/XDah0ukp7FePGBKZ
+  suno: https://suno.com/s/XDah0ukp7FePGBKZ
 
 analysis:
   type: single

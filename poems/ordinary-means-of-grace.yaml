@@ -85,7 +85,6 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/ordinary-means-of-grace
       active: true
-  suno:
-    - url: https://suno.com/s/kAzP6QwvasoFaYMi
+  suno: https://suno.com/s/kAzP6QwvasoFaYMi
 
 

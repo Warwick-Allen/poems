@@ -73,8 +73,7 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/chains-of-sorrow
       active: true
-  suno:
-    - url: https://suno.com/s/NRL9PhaDfrKlkBJc
+  suno: https://suno.com/s/NRL9PhaDfrKlkBJc
 
 analysis:
   type: single

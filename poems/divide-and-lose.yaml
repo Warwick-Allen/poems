@@ -42,8 +42,7 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/divide-and-lose
       active: true
-  suno:
-    - url: https://suno.com/s/pbEL8k47lgTLgeXg
+  suno: https://suno.com/s/pbEL8k47lgTLgeXg
 
 analysis:
   type: dual

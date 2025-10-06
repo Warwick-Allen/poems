@@ -50,17 +50,15 @@ function hasActiveAudio(audioData) {
   // Check each audio platform (audiomack, suno, etc.)
   for (const platform in audioData) {
     const entries = audioData[platform];
-    if (Array.isArray(entries)) {
-      // For suno: presence of url indicates active
+    if (platform === 'suno') {
+      // For suno: direct URL string indicates active
+      if (typeof entries === 'string' && entries.trim()) {
+        return true;
+      }
+    } else if (Array.isArray(entries)) {
       // For audiomack: check active field
-      if (platform === 'suno') {
-        if (entries.some((entry) => entry.url)) {
-          return true;
-        }
-      } else {
-        if (entries.some((entry) => entry.active === true)) {
-          return true;
-        }
+      if (entries.some((entry) => entry.active === true)) {
+        return true;
       }
     }
   }

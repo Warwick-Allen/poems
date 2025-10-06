@@ -60,8 +60,7 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/guilty
       active: true
-  suno:
-    - url: https://suno.com/s/UMfzfEHFJWEIvH2L
+  suno: https://suno.com/s/UMfzfEHFJWEIvH2L
 
 analysis:
   type: single

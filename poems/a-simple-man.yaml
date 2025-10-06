@@ -49,8 +49,7 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/a-simple-man
       active: true
-  suno:
-    - url: https://suno.com/s/NFu1HOzfTDYCs0Au
+  suno: https://suno.com/s/NFu1HOzfTDYCs0Au
 
 analysis:
   type: single
