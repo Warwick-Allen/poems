@@ -82,3 +82,6 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/quiet-song
       active: true
+  suno:
+    - url: https://suno.com/s/afEPyOhaKua9taD7
+      active: true

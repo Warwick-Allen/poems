@@ -163,6 +163,9 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/unreal-riddle
       active: true
+  suno:
+    - url: https://suno.com/s/MYqeWV1oeICs2ufk
+      active: true
 
 analysis:
   type: single
