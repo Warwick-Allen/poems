@@ -31,6 +31,9 @@ npm run build
 # Build and start local development server
 npm run build:all
 
+# Inject CSS into Blogger template
+npm run build:blogger
+
 # View at http://localhost:8080
 ```
 
@@ -43,6 +46,9 @@ If you encounter issues with npm using Windows binaries, use the setup script:
 
 # Build and start local development server
 ./setup-linux.sh npm run build:all
+
+# Inject CSS into Blogger template
+./setup-linux.sh npm run build:blogger
 
 # View at http://localhost:8080
 ```
@@ -66,6 +72,22 @@ The `setup-linux.sh` script ensures the correct Linux Node.js and npm versions a
 To view the poems locally without building:
 1. Open [`public/index.html`](public/index.html) in your web browser
 2. Or run `npm start` to start a local server at http://localhost:8080
+
+## Blogger Template Integration
+
+The repository includes functionality to inject custom CSS into a Blogger template for the [Fragments & Unity blog](https://fragments-and-unity.blogspot.com/):
+
+```bash
+npm run build:blogger
+```
+
+This script:
+- Reads CSS from `public/styles.css`
+- Injects it into `public/fragments-and-unity.template.html`
+- Replaces content between `/* ~~ CUSTOM CSS START ~~ */` and `/* ~~ CUSTOM CSS END ~~ */` delimiters
+- Provides error handling for missing files or delimiters
+
+The updated template can then be uploaded to Blogger to apply the custom styling.
 
 ## Documentation
 
