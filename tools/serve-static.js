@@ -371,7 +371,7 @@ function concatenateAllHtmlFiles(dirPath) {
         .audio-cell:empty::after { content: "—"; color: #ccc; }
         .back-link { display: inline-block; margin-bottom: 20px; color: #007AFF; text-decoration: none; }
         .back-link:hover { text-decoration: underline; }
-        
+
         /* Custom CSS from template */
         ${customCSS}
     </style>
@@ -383,7 +383,7 @@ function concatenateAllHtmlFiles(dirPath) {
             <p class="subtitle">Concatenated view of all HTML files (${htmlFiles.length} files)</p>
             <a href="/" class="back-link">← Back to Directory Listing</a>
         </div>
-        
+
         <div class="toc">
             <h2>Table of Contents</h2>
             <table class="toc-table" id="poemTable">
@@ -435,19 +435,19 @@ function concatenateAllHtmlFiles(dirPath) {
 
     concatenatedContent += `
     </div>
-    
+
     <script>
         let currentSort = { column: -1, direction: 'asc' };
-        
+
         function parseDate(dateStr) {
             if (dateStr === "Unknown Date") return new Date(0);
-            
+
             // Handle format: "Monday, 4 May 2015" or "Friday, 1 August 1997"
             const months = {
                 'January': 0, 'February': 1, 'March': 2, 'April': 3, 'May': 4, 'June': 5,
                 'July': 6, 'August': 7, 'September': 8, 'October': 9, 'November': 10, 'December': 11
             };
-            
+
             const parts = dateStr.split(', ');
             if (parts.length >= 2) {
                 const datePart = parts[1].split(' ');
@@ -462,12 +462,12 @@ function concatenateAllHtmlFiles(dirPath) {
             }
             return new Date(0); // fallback for invalid dates
         }
-        
+
         function sortTable(columnIndex, sortType) {
             const table = document.getElementById('poemTable');
             const tbody = document.getElementById('poemTableBody');
             const rows = Array.from(tbody.getElementsByTagName('tr'));
-            
+
             // Determine sort direction
             if (currentSort.column === columnIndex) {
                 currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
@@ -475,7 +475,7 @@ function concatenateAllHtmlFiles(dirPath) {
                 currentSort.direction = 'asc';
             }
             currentSort.column = columnIndex;
-            
+
             // Update header styling
             const headers = table.getElementsByTagName('th');
             for (let i = 0; i < headers.length; i++) {
@@ -484,14 +484,14 @@ function concatenateAllHtmlFiles(dirPath) {
                     headers[i].className = currentSort.direction === 'asc' ? 'sort-asc' : 'sort-desc';
                 }
             }
-            
+
             // Sort rows
             rows.sort((a, b) => {
                 const aVal = a.cells[columnIndex].textContent.trim();
                 const bVal = b.cells[columnIndex].textContent.trim();
-                
+
                 let comparison = 0;
-                
+
                 if (sortType === 'date') {
                     const aDate = parseDate(aVal);
                     const bDate = parseDate(bVal);
@@ -505,10 +505,10 @@ function concatenateAllHtmlFiles(dirPath) {
                     // String comparison (for titles)
                     comparison = aVal.localeCompare(bVal);
                 }
-                
+
                 return currentSort.direction === 'asc' ? comparison : -comparison;
             });
-            
+
             // Re-append sorted rows
             rows.forEach(row => tbody.appendChild(row));
         }

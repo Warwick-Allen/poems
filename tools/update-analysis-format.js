@@ -15,7 +15,7 @@ const POEMS_DIR = path.join(process.cwd(), "poems");
  */
 function processAnalysisText(text) {
   if (!text) return text;
-  
+
   // First, add blank lines before HTML tags that come after </p>
   let processed = text
     .replace(/<\/p>\s*<h3/g, '\n\n<h3') // Add blank line before h3 tags
@@ -26,7 +26,7 @@ function processAnalysisText(text) {
     .replace(/<p>\s*/g, '')  // Remove opening <p> tags
     .replace(/\s*<\/p>/g, '') // Remove closing </p> tags
     .replace(/\n{3,}/g, '\n\n'); // Replace multiple newlines with double newlines
-  
+
   return processed;
 }
 
@@ -37,9 +37,9 @@ function processFile(filePath) {
   try {
     const content = fs.readFileSync(filePath, "utf8");
     const data = yaml.load(content);
-    
+
     let modified = false;
-    
+
     // Process analysis.full if it exists
     if (data.analysis && data.analysis.full) {
       const originalFull = data.analysis.full;
@@ -49,7 +49,7 @@ function processFile(filePath) {
         modified = true;
       }
     }
-    
+
     // Process analysis.synopsis if it exists
     if (data.analysis && data.analysis.synopsis) {
       const originalSynopsis = data.analysis.synopsis;
@@ -59,7 +59,7 @@ function processFile(filePath) {
         modified = true;
       }
     }
-    
+
     if (modified) {
       // Write back the modified content
       const newContent = yaml.dump(data, {
@@ -71,7 +71,7 @@ function processFile(filePath) {
       fs.writeFileSync(filePath, newContent, "utf8");
       return true;
     }
-    
+
     return false;
   } catch (err) {
     console.error(`Error processing ${filePath}:`, err.message);
@@ -88,16 +88,16 @@ function main() {
     .filter(file => file.endsWith(".yaml") || file.endsWith(".yml"))
     .filter(file => !file.startsWith("_"))
     .filter(file => file !== "divide-and-lose.yaml"); // Skip already updated file
-  
+
   console.log(`Found ${yamlFiles.length} YAML files to process...`);
-  
+
   let processedCount = 0;
   let errorCount = 0;
-  
+
   for (const yamlFile of yamlFiles) {
     const filePath = path.join(POEMS_DIR, yamlFile);
     console.log(`Processing ${yamlFile}...`);
-    
+
     try {
       const wasModified = processFile(filePath);
       if (wasModified) {
@@ -111,7 +111,7 @@ function main() {
       errorCount++;
     }
   }
-  
+
   console.log(`\n📊 Processing complete: ${processedCount} files updated, ${errorCount} errors`);
 }
 

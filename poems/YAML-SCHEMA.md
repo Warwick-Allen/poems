@@ -68,9 +68,9 @@ Omit the `analysis` field entirely.
 analysis:
   full: |
     <h2>Analysis Title</h2>
-    
+
     Analysis content with HTML markup. Use blank lines to separate paragraphs instead of <p> tags.
-    
+
     The system will automatically convert blank lines to <p> tags in the final HTML.
 ```
 
@@ -79,17 +79,17 @@ analysis:
 analysis:
   synopsis: |
     <h2>Synopsis Title</h2>
-    
+
     Synopsis content. Use blank lines for paragraph breaks.
-    
+
     No need for <p> tags in the YAML source.
   full: |
     <h2>Full Analysis Title</h2>
-    
+
     Full analysis content with proper paragraph separation.
-    
+
     HTML tags like <h3>, <h4> are preserved as-is.
-    
+
     Only plain text paragraphs need blank line separation.
 ```
 
@@ -102,13 +102,13 @@ The analysis system now uses blank lines instead of `<p>` tags for paragraph sep
 analysis:
   full: |
     <h3>Section Title</h3>
-    
+
     This is paragraph one. No <p> tags needed.
-    
+
     This is paragraph two. Just use blank lines.
-    
+
     <h3>Another Section</h3>
-    
+
     More content here.
 ```
 

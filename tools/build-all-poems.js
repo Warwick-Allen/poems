@@ -239,7 +239,7 @@ function concatenateAllHtmlFiles(dirPath) {
             <p class="subtitle">Concatenated view of all poems (${poemData.length} poems)</p>
             <a href="index.html" class="back-link">← Back to Main Page</a>
         </div>
-        
+
         <div class="toc">
             <h2>Table of Contents</h2>
             <table class="toc-table" id="poemTable">
@@ -296,19 +296,19 @@ function concatenateAllHtmlFiles(dirPath) {
 
     concatenatedContent += `
     </div>
-    
+
     <script>
         let currentSort = { column: -1, direction: 'asc' };
-        
+
         function parseDate(dateStr) {
             if (dateStr === "Unknown Date") return new Date(0);
-            
+
             // Handle format: "Monday, 4 May 2015" or "Friday, 1 August 1997"
             const months = {
                 'January': 0, 'February': 1, 'March': 2, 'April': 3, 'May': 4, 'June': 5,
                 'July': 6, 'August': 7, 'September': 8, 'October': 9, 'November': 10, 'December': 11
             };
-            
+
             const parts = dateStr.split(', ');
             if (parts.length >= 2) {
                 const datePart = parts[1].split(' ');
@@ -323,12 +323,12 @@ function concatenateAllHtmlFiles(dirPath) {
             }
             return new Date(0); // fallback for invalid dates
         }
-        
+
         function sortTable(columnIndex, sortType) {
             const table = document.getElementById('poemTable');
             const tbody = document.getElementById('poemTableBody');
             const rows = Array.from(tbody.getElementsByTagName('tr'));
-            
+
             // Determine sort direction
             if (currentSort.column === columnIndex) {
                 currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
@@ -336,7 +336,7 @@ function concatenateAllHtmlFiles(dirPath) {
                 currentSort.direction = 'asc';
             }
             currentSort.column = columnIndex;
-            
+
             // Update header styling
             const headers = table.getElementsByTagName('th');
             for (let i = 0; i < headers.length; i++) {
@@ -345,14 +345,14 @@ function concatenateAllHtmlFiles(dirPath) {
                     headers[i].className = currentSort.direction === 'asc' ? 'sort-asc' : 'sort-desc';
                 }
             }
-            
+
             // Sort rows
             rows.sort((a, b) => {
                 const aVal = a.cells[columnIndex].textContent.trim();
                 const bVal = b.cells[columnIndex].textContent.trim();
-                
+
                 let comparison = 0;
-                
+
                 if (sortType === 'date') {
                     const aDate = parseDate(aVal);
                     const bDate = parseDate(bVal);
@@ -366,10 +366,10 @@ function concatenateAllHtmlFiles(dirPath) {
                     // String comparison (for titles)
                     comparison = aVal.localeCompare(bVal);
                 }
-                
+
                 return currentSort.direction === 'asc' ? comparison : -comparison;
             });
-            
+
             // Re-append sorted rows
             rows.forEach(row => tbody.appendChild(row));
         }
@@ -462,84 +462,84 @@ function generateIndexHtml(publicDir) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fragments &#38; Unity</title>
     <style>
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            margin: 0; 
-            padding: 20px; 
-            background: #f5f5f5; 
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
             line-height: 1.6;
         }
-        .container { 
-            max-width: 1200px; 
-            margin: 0 auto; 
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        .header { 
-            background: white; 
-            padding: 30px; 
-            border-radius: 8px; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
-            margin-bottom: 30px; 
-            text-align: center; 
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: center;
         }
-        h1 { 
-            color: #333; 
-            margin: 0 0 10px 0; 
-            font-weight: 300; 
+        h1 {
+            color: #333;
+            margin: 0 0 10px 0;
+            font-weight: 300;
         }
-        .subtitle { 
-            color: #666; 
-            margin: 0 0 20px 0; 
+        .subtitle {
+            color: #666;
+            margin: 0 0 20px 0;
         }
-        .poem-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-            gap: 20px; 
+        .poem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
             margin-bottom: 30px;
         }
-        .poem-card { 
-            background: white; 
-            padding: 20px; 
-            border-radius: 8px; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+        .poem-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             transition: transform 0.2s ease;
             cursor: pointer;
         }
-        .poem-card:hover { 
-            transform: translateY(-2px); 
+        .poem-card:hover {
+            transform: translateY(-2px);
         }
-        .poem-title { 
-            color: #333; 
-            margin: 0 0 10px 0; 
-            font-size: 1.2em; 
+        .poem-title {
+            color: #333;
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
             font-weight: 600;
         }
-        .poem-title a { 
-            color: inherit; 
-            text-decoration: none; 
+        .poem-title a {
+            color: inherit;
+            text-decoration: none;
         }
-        .poem-title a:hover { 
-            text-decoration: underline; 
+        .poem-title a:hover {
+            text-decoration: underline;
         }
-        .audio-indicator { 
-            color: #007AFF; 
-            font-size: 1.2em; 
+        .audio-indicator {
+            color: #007AFF;
+            font-size: 1.2em;
         }
-        .links { 
-            text-align: center; 
+        .links {
+            text-align: center;
             margin-top: 30px;
         }
-        .links a { 
-            color: #007AFF; 
-            text-decoration: none; 
+        .links a {
+            color: #007AFF;
+            text-decoration: none;
             margin: 0 15px;
             padding: 10px 20px;
             border: 1px solid #007AFF;
             border-radius: 5px;
             display: inline-block;
         }
-        .links a:hover { 
-            background: #007AFF; 
-            color: white; 
+        .links a:hover {
+            background: #007AFF;
+            color: white;
         }
     </style>
 </head>
@@ -549,25 +549,25 @@ function generateIndexHtml(publicDir) {
             <h1>Fragments &#38; Unity</h1>
             <p class="subtitle">Poems by Warwick Allen</p>
         </div>
-        
+
         <div class="poem-grid" id="poemGrid">
             <!-- Poems will be populated by JavaScript -->
         </div>
-        
+
         <div class="links">
             <a href="all-poems.html">View All Poems</a>
         </div>
     </div>
-    
+
     <script>
         const allPoems = [
 ${poemArrayString}
         ];
-        
+
         function renderPoems() {
             const grid = document.getElementById('poemGrid');
             grid.innerHTML = '';
-            
+
             allPoems.forEach(poem => {
                 const card = document.createElement('div');
                 card.className = 'poem-card';
@@ -577,15 +577,15 @@ ${poemArrayString}
                         \${poem.hasAudio ? '<span class="audio-indicator">🎵</span>' : ''}
                     </div>
                 \`;
-                
+
                 card.addEventListener('click', () => {
                     window.location.href = poem.file;
                 });
-                
+
                 grid.appendChild(card);
             });
         }
-        
+
         // Initial render
         renderPoems();
     </script>

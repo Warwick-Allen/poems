@@ -23,10 +23,10 @@ const refCache = new Map();
  */
 function validateReferencedElement(data, jsonPath, refPath) {
   if (!jsonPath) return true;
-  
+
   const pathParts = jsonPath.split('/').filter(part => part !== '');
   let current = data;
-  
+
   for (const part of pathParts) {
     if (!current || typeof current !== 'object' || !(part in current)) {
       console.error(`Error: Referenced element '${jsonPath}' not found in ${refPath}`);
@@ -35,7 +35,7 @@ function validateReferencedElement(data, jsonPath, refPath) {
     }
     current = current[part];
   }
-  
+
   return true;
 }
 
@@ -55,15 +55,15 @@ function resolveRefs(data, basePath = POEMS_DIR) {
   if (data.$ref && typeof data.$ref === 'string') {
     const [filePath, jsonPath] = data.$ref.split('#');
     const fullPath = path.resolve(basePath, filePath);
-    
+
     // Create cache key
     const cacheKey = `${fullPath}#${jsonPath || ''}`;
-    
+
     // Check cache first
     if (refCache.has(cacheKey)) {
       return resolveRefs(refCache.get(cacheKey), path.dirname(fullPath));
     }
-    
+
     try {
       // Validate file exists
       if (!fs.existsSync(fullPath)) {
@@ -71,15 +71,15 @@ function resolveRefs(data, basePath = POEMS_DIR) {
         console.error(`Reference: ${data.$ref}`);
         return data;
       }
-      
+
       const refContent = fs.readFileSync(fullPath, 'utf8');
       const refData = yaml.load(refContent);
-      
+
       // Validate the referenced element exists
       if (!validateReferencedElement(refData, jsonPath, fullPath)) {
         return data;
       }
-      
+
       let result;
       if (jsonPath) {
         // Navigate to the specific path (e.g., "/disclaimer")
@@ -91,10 +91,10 @@ function resolveRefs(data, basePath = POEMS_DIR) {
       } else {
         result = refData;
       }
-      
+
       // Cache the resolved reference
       refCache.set(cacheKey, result);
-      
+
       return resolveRefs(result, path.dirname(fullPath));
     } catch (err) {
       console.error(`Error resolving reference ${data.$ref}:`, err.message);
@@ -108,7 +108,7 @@ function resolveRefs(data, basePath = POEMS_DIR) {
   for (const [key, value] of Object.entries(data)) {
     result[key] = resolveRefs(value, basePath);
   }
-  
+
   return result;
 }
 
@@ -243,7 +243,7 @@ function buildAllPoems() {
   console.log(
     `\n📊 Build complete: ${successCount} successful, ${errorCount} errors`
   );
-  
+
   // Log cache statistics
   if (refCache.size > 0) {
     console.log(`💾 Reference cache: ${refCache.size} entries cached`);
