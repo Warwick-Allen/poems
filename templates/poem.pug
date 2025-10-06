@@ -8,6 +8,26 @@
 -   return text;
 - }
 
+//- Function to process analysis text - convert blank lines to paragraph breaks
+- function processAnalysisText(text) {
+-   // Split by blank lines to get paragraphs
+-   const paragraphs = text.split(/\n\s*\n/).map(para => para.trim()).filter(para => para.length > 0);
+-
+-   // Process each paragraph
+-   const processedParagraphs = paragraphs.map(para => {
+-     // Check if the paragraph contains HTML tags
+-     if (para.includes('<') && para.includes('>')) {
+-       // This paragraph contains HTML, return as-is
+-       return para;
+-     } else {
+-       // This is plain text, wrap in p tags
+-       return '<p>' + para + '</p>';
+-     }
+-   });
+-
+-  return processedParagraphs.join('');
+- }
+
 //- Mixin to process lines and add <br /> tags
 mixin processLines(text)
   if text
@@ -47,7 +67,7 @@ div(id=`poem--${slug}`)
     else
       p(style="color: #999; font-style: italic;") No content available
   //- end poem-body
-  
+
   if audio
     div(id=`song--${slug}` class="song-link")
       if audio.audiomack === true
@@ -79,7 +99,7 @@ div(id=`poem--${slug}`)
           != processedContent
     //- end postscript
   //- end postscript section
-  
+
   if analysis
     //- begin analysis section
     button.analysis.show(
@@ -87,14 +107,14 @@ div(id=`poem--${slug}`)
       type="button"
       onclick=`document.getElementById('analysis--${slug}').style.display = 'block'; document.getElementById('show-analysis--${slug}').style.display = 'none';`
     ) Show analysis
-    
+
     div.analysis(id=`analysis--${slug}`)
       button.analysis.hide(
         id=`hide-analysis--${slug}`
         type="button"
         onclick=`document.getElementById('analysis--${slug}').style.display = 'none'; document.getElementById('show-analysis--${slug}').style.display = 'block';`
       ) Hide analysis
-      
+
       if analysis.synopsis && analysis.full
         .full-or-synopsis-selector
           button.analysis.selector.selected(
@@ -108,19 +128,22 @@ div(id=`poem--${slug}`)
             onclick=`el = name => document.getElementById('analysis-' + name + '--${slug}'); el('full').style.display = 'block'; el('syno').style.display = 'none'; el('select-full').classList.add('selected'); el('select-syno').classList.remove('selected');`
           ) Full Analysis
         //- end full-or-synopsis-selector
-        
+
         div(id=`analysis-syno--${slug}`)
           h2 Analysis of <em>#{title}</em> (synopsis)
-          != analysis.synopsis
+          - const processedSynopsis = processAnalysisText(analysis.synopsis)
+          != processedSynopsis
         //- end analysis-syno
-        
+
         div(id=`analysis-full--${slug}` style="display: none")
           h2 Analysis of <em>#{title}</em>
-          != analysis.full
+          - const processedFull = processAnalysisText(analysis.full)
+          != processedFull
         //- end analysis-full
       else
         h2 Analysis of <em>#{title}</em>
-        != analysis.full
+        - const processedFull = processAnalysisText(analysis.full)
+        != processedFull
     //- end analysis
     //- end analysis section
 //- end poem
