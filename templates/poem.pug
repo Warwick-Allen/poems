@@ -110,13 +110,16 @@ div(id=`poem--${slug}`)
         //- end full-or-synopsis-selector
         
         div(id=`analysis-syno--${slug}`)
+          h2 Analysis of <em>#{title}</em> (synopsis)
           != analysis.synopsis
         //- end analysis-syno
         
         div(id=`analysis-full--${slug}` style="display: none")
+          h2 Analysis of <em>#{title}</em>
           != analysis.full
         //- end analysis-full
       else
+        h2 Analysis of <em>#{title}</em>
         != analysis.full
     //- end analysis
     //- end analysis section
