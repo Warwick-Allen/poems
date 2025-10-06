@@ -75,7 +75,6 @@ audio:
       active: true
   suno:
     - url: https://suno.com/s/NRL9PhaDfrKlkBJc
-      active: true
 
 analysis:
   type: single

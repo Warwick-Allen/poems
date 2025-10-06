@@ -39,6 +39,3 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/a-word-from-me
       active: false
-  suno:
-    - url: https://suno.com/song/#
-      active: false

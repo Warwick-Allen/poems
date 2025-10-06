@@ -61,7 +61,7 @@ div(id=`poem--${slug}`)
           title=title
         )
         br
-      if audio.suno && audio.suno[0] && audio.suno[0].active
+      if audio.suno && audio.suno[0] && audio.suno[0].url
         |  (
         a(href=audio.suno[0].url target="_blank") recording on Suno
         | )

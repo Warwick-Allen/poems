@@ -41,9 +41,17 @@ versions:
 ### Audio
 ```yaml
 audio:
-  audiomack: https://audiomack.com/embed/...
-  suno: https://suno.com/s/...
+  audiomack:
+    - url: https://audiomack.com/embed/...
+      active: true
+  suno:
+    - url: https://suno.com/s/...
 ```
+
+**Notes:**
+- Audio platforms are arrays of objects with `url` fields
+- For `audiomack`: use `active: true` to indicate the audio is active
+- For `suno`: presence of a `url` indicates the audio is active (no `active` field needed)
 
 ### Postscript Notes
 ```yaml

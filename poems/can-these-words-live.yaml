@@ -43,6 +43,3 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/can-these-words-live
       active: false
-  suno:
-    - url: https://suno.com/song/#
-      active: false

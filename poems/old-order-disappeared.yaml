@@ -65,7 +65,6 @@ audio:
       active: true
   suno:
     - url: https://suno.com/s/XDah0ukp7FePGBKZ
-      active: true
 
 analysis:
   type: single

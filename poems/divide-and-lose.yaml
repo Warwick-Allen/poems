@@ -44,7 +44,6 @@ audio:
       active: true
   suno:
     - url: https://suno.com/s/pbEL8k47lgTLgeXg
-      active: true
 
 analysis:
   type: dual

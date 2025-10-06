@@ -34,6 +34,3 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/to-be-me
       active: false
-  suno:
-    - url: https://suno.com/song/#
-      active: false

@@ -68,6 +68,3 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/awakening
       active: false
-  suno:
-    - url: https://suno.com/song/#
-      active: false

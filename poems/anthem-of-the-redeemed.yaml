@@ -106,7 +106,6 @@ audio:
       active: true
   suno:
     - url: https://suno.com/song/2aafcd12-2379-482b-9789-c872ba64d809
-      active: true
 
 postscript:
   - $ref: "shared.yaml#/disclaimer"

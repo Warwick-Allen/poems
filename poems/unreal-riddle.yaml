@@ -165,7 +165,6 @@ audio:
       active: true
   suno:
     - url: https://suno.com/s/MYqeWV1oeICs2ufk
-      active: true
 
 analysis:
   type: single

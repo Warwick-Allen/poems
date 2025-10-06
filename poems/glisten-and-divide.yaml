@@ -14,6 +14,3 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/saltysojourner/song/glisten-and-divide
       active: false
-  suno:
-    - url: https://suno.com/song/#
-      active: false

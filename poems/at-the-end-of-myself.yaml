@@ -75,7 +75,6 @@ audio:
       active: true
   suno:
     - url: https://suno.com/s/AtpUMNeWQURww1f2
-      active: true
 
 postscript:
   - $ref: "shared.yaml#/disclaimer"
