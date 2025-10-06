@@ -70,7 +70,7 @@ versions:
 
 audio:
   audiomack: true
-  suno: https://suno.com/s/AtpUMNeWQURww1f2
+  suno: s/AtpUMNeWQURww1f2
 
 postscript:
   - $ref: "_shared.yaml#/disclaimer"

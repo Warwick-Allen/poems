@@ -43,12 +43,12 @@ audio:
   audiomack:
     - url: https://audiomack.com/embed/...
       active: true
-  suno: https://suno.com/s/...
+  suno: s/...
 ```
 
 **Notes:**
 - For `audiomack`: use array format with `url` and `active` fields
-- For `suno`: use direct URL string format (presence indicates the audio is active)
+- For `suno`: use relative path format (e.g., `s/...` or `song/...`). The full URL will be automatically constructed by the template
 
 ### Postscript Notes
 ```yaml

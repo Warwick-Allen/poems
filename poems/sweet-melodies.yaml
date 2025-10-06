@@ -20,4 +20,4 @@ versions:
 
 audio:
   audiomack: true
-  suno: https://suno.com/song/c32f0adc-34a9-4856-a7c5-20e43354bc7e
+  suno: song/c32f0adc-34a9-4856-a7c5-20e43354bc7e

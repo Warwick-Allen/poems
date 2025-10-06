@@ -74,4 +74,4 @@ versions:
 
 audio:
   audiomack: true
-  suno: https://suno.com/song/c85fc871-3d23-4b26-b219-1605b6b802a6
+  suno: song/c85fc871-3d23-4b26-b219-1605b6b802a6

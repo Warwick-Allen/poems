@@ -70,7 +70,7 @@ versions:
 
 audio:
   audiomack: true
-  suno: https://suno.com/s/NRL9PhaDfrKlkBJc
+  suno: s/NRL9PhaDfrKlkBJc
 
 analysis:
   type: single

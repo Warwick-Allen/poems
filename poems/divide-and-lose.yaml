@@ -39,7 +39,7 @@ versions:
 
 audio:
   audiomack: true
-  suno: https://suno.com/s/pbEL8k47lgTLgeXg
+  suno: s/pbEL8k47lgTLgeXg
 
 analysis:
   type: dual

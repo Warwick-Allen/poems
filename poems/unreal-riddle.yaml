@@ -160,7 +160,7 @@ versions:
 
 audio:
   audiomack: true
-  suno: https://suno.com/s/MYqeWV1oeICs2ufk
+  suno: s/MYqeWV1oeICs2ufk
 
 analysis:
   type: single

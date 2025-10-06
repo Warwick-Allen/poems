@@ -24,4 +24,4 @@ versions:
 
 audio:
   audiomack: true
-  suno: https://suno.com/song/bcf3ae13-2a9d-423d-9120-a2d90dac0bb7
+  suno: song/bcf3ae13-2a9d-423d-9120-a2d90dac0bb7

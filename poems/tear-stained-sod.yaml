@@ -67,4 +67,4 @@ versions:
 
 audio:
   audiomack: true
-  suno: https://suno.com/song/b6b46088-510a-4ae5-9b20-68e5eedefa61
+  suno: song/b6b46088-510a-4ae5-9b20-68e5eedefa61

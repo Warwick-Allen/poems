@@ -101,7 +101,7 @@ versions:
 
 audio:
   audiomack: true
-  suno: https://suno.com/song/2aafcd12-2379-482b-9789-c872ba64d809
+  suno: song/2aafcd12-2379-482b-9789-c872ba64d809
 
 postscript:
   - $ref: "_shared.yaml#/disclaimer"

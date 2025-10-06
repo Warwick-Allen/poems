@@ -60,7 +60,7 @@ versions:
 
 audio:
   audiomack: true
-  suno: https://suno.com/s/XDah0ukp7FePGBKZ
+  suno: s/XDah0ukp7FePGBKZ
 
 analysis:
   type: single

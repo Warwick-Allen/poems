@@ -31,4 +31,4 @@ versions:
 
 audio:
   audiomack: true
-  suno: https://suno.com/song/22eda121-2264-48e4-a769-182cbacef2bb
+  suno: song/22eda121-2264-48e4-a769-182cbacef2bb

@@ -90,7 +90,7 @@ versions:
 
 audio:
   audiomack: true
-  suno: https://suno.com/s/vWx0ZKi8jW1VxnhQ
+  suno: s/vWx0ZKi8jW1VxnhQ
 
 analysis:
   type: single

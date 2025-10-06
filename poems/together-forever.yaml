@@ -48,7 +48,7 @@ versions:
 
 audio:
   audiomack: true
-  suno: https://suno.com/s/dK8n6Ma4boo94gvO
+  suno: s/dK8n6Ma4boo94gvO
 
 analysis:
   type: single
