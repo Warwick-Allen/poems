@@ -20,7 +20,5 @@ versions:
           space for my soul to play
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/sweet-melodies
-      active: true
+  audiomack: true
   suno: https://suno.com/song/c32f0adc-34a9-4856-a7c5-20e43354bc7e

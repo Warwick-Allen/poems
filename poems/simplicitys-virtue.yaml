@@ -56,7 +56,5 @@ versions:
           the trouble starts (tearing me in two)
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/simplicitys-virtue
-      active: true
+  audiomack: true
   suno: https://suno.com/song/28b5baf5-959e-4e6d-b12b-c8bcfd52d579

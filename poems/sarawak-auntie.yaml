@@ -25,6 +25,4 @@ versions:
           the One whom I adore
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/sarawak-auntie
-      active: false
+  audiomack: false

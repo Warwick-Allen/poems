@@ -90,9 +90,7 @@ versions:
           (&hellip;the endurance and faith of the saints.)
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/floral-apostle
-      active: true
+  audiomack: true
   suno: https://suno.com/s/vWx0ZKi8jW1VxnhQ
 
 analysis:

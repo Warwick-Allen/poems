@@ -40,6 +40,4 @@ versions:
           Prophesy, prophesy, prophesy!
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/can-these-words-live
-      active: false
+  audiomack: false

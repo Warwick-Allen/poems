@@ -65,6 +65,4 @@ versions:
           Crushed
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/awakening
-      active: false
+  audiomack: false

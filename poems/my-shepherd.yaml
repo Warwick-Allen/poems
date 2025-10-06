@@ -42,6 +42,4 @@ versions:
           &ldquo;Child, all the way&mdash;it's you and Me.&rdquo;
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/my-shepherd
-      active: false
+  audiomack: false

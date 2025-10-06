@@ -79,7 +79,5 @@ versions:
           We, in Him, can stand.
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/quiet-song
-      active: true
+  audiomack: true
   suno: https://suno.com/s/afEPyOhaKua9taD7

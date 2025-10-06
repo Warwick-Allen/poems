@@ -62,6 +62,4 @@ versions:
           &nbsp; completely
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/look-at-the-picture
-      active: false
+  audiomack: false

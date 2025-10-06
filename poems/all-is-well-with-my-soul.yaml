@@ -100,7 +100,5 @@ versions:
           All is well with my soul
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/all-is-well-with-my-soul
-      active: true
+  audiomack: true
   suno: https://suno.com/s/C2nexcHKQP8F9Lt8

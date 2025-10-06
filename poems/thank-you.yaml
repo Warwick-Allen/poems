@@ -36,6 +36,4 @@ versions:
           The darkness scares me so
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/thank-you
-      active: false
+  audiomack: false

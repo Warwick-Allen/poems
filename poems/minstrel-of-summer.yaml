@@ -24,7 +24,5 @@ versions:
           Don't let the summer end
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/minstrel-of-summer
-      active: true
+  audiomack: true
   suno: https://suno.com/song/a4135253-616e-42a4-aa51-d4330d9d9217

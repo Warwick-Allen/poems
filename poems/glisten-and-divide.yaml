@@ -11,6 +11,4 @@ versions:
           stands between
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/glisten-and-divide
-      active: false
+  audiomack: false

@@ -24,7 +24,5 @@ versions:
         Me be, so they fight
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/dissonance
-      active: true
+  audiomack: true
   suno: https://suno.com/song/bcf3ae13-2a9d-423d-9120-a2d90dac0bb7

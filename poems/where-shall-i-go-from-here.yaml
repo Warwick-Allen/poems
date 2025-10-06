@@ -34,6 +34,4 @@ versions:
           And you won't take from me any of that I hold so dear
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/where-shall-i-go-from-here
-      active: false
+  audiomack: false

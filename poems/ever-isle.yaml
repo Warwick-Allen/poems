@@ -24,7 +24,5 @@ versions:
           My life in Ever Isle
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/ever-isle
-      active: true
+  audiomack: true
   suno: https://suno.com/song/daaa6282-f20e-4a09-be16-e8e076d55644

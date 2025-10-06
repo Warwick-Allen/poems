@@ -31,6 +31,4 @@ versions:
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; to be me
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/to-be-me
-      active: false
+  audiomack: false

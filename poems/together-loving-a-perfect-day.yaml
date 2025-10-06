@@ -132,7 +132,5 @@ versions:
           Of the coming day
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/together-loving-a-perfect-day
-      active: true
+  audiomack: true
   suno: https://suno.com/s/WJOZ7iArInJfMPOe

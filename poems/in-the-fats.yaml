@@ -29,6 +29,4 @@ versions:
           Always
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/in-the-fats
-      active: false
+  audiomack: false

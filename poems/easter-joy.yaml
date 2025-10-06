@@ -77,7 +77,5 @@ versions:
           Jesus is His name.
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/easter-joy
-      active: true
+  audiomack: true
   suno: https://suno.com/song/849e5a96-74b0-479a-a815-8b2ce0810073

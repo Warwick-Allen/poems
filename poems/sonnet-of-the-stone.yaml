@@ -26,7 +26,5 @@ versions:
           And from my shoulders He will lift the weight.
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/sonnet-of-the-stone
-      active: true
+  audiomack: true
   suno: https://suno.com/s/hDQ4UTYEuitBaK5a

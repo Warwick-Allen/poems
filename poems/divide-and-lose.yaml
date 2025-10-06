@@ -39,9 +39,7 @@ versions:
           Do tell, will you heed the Prince who brings Peace?
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/divide-and-lose
-      active: true
+  audiomack: true
   suno: https://suno.com/s/pbEL8k47lgTLgeXg
 
 analysis:

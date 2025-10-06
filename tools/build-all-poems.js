@@ -55,8 +55,13 @@ function hasActiveAudio(audioData) {
       if (typeof entries === 'string' && entries.trim()) {
         return true;
       }
+    } else if (platform === 'audiomack') {
+      // For audiomack: boolean value indicates active
+      if (entries === true) {
+        return true;
+      }
     } else if (Array.isArray(entries)) {
-      // For audiomack: check active field
+      // For other platforms: check active field (legacy format)
       if (entries.some((entry) => entry.active === true)) {
         return true;
       }

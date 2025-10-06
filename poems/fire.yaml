@@ -76,6 +76,4 @@ versions:
           Its hold is too strong
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/fire
-      active: false
+  audiomack: false

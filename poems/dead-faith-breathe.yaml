@@ -41,7 +41,5 @@ versions:
         For you
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/dead-faith-breathe
-      active: true
+  audiomack: true
   suno: https://suno.com/song/d47aca78-b18a-4154-8799-c534b34401e9

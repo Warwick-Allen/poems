@@ -46,9 +46,7 @@ versions:
               Yes, I'm just a simple man
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/a-simple-man
-      active: true
+  audiomack: true
   suno: https://suno.com/s/NFu1HOzfTDYCs0Au
 
 analysis:

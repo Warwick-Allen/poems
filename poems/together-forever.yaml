@@ -48,9 +48,7 @@ versions:
           We will walk, together, forever
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/together-forever
-      active: true
+  audiomack: true
   suno: https://suno.com/s/dK8n6Ma4boo94gvO
 
 analysis:

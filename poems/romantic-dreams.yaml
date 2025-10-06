@@ -24,6 +24,4 @@ versions:
           On the ground.
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/romantic-dreams
-      active: false
+  audiomack: false

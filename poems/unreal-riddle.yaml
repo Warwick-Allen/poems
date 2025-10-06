@@ -160,9 +160,7 @@ versions:
           I think&hellip;
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/unreal-riddle
-      active: true
+  audiomack: true
   suno: https://suno.com/s/MYqeWV1oeICs2ufk
 
 analysis:

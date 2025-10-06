@@ -46,6 +46,4 @@ versions:
           Build on the Rock and reach heavenward
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/shadows-of-deceit
-      active: false
+  audiomack: false

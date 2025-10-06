@@ -74,7 +74,5 @@ versions:
           And You're always ready to forgive.
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/gratitude
-      active: true
+  audiomack: true
   suno: https://suno.com/s/BBn7DqV8Sh2XP55c

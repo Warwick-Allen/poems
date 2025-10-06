@@ -36,6 +36,4 @@ versions:
         Offered humbly
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/a-word-from-me
-      active: false
+  audiomack: false

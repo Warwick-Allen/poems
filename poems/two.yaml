@@ -24,7 +24,5 @@ versions:
           So let's go, let us dare, me with my lady fair.
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/two
-      active: true
+  audiomack: true
   suno: https://suno.com/s/AKCoMMaeQk571wXu

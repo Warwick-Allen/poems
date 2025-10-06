@@ -51,9 +51,9 @@ div(id=`poem--${slug}`)
   
   if audio
     div(id=`song--${slug}` class="song-link")
-      if audio.audiomack && audio.audiomack[0] && audio.audiomack[0].active
+      if audio.audiomack === true
         iframe(
-          src=audio.audiomack[0].url
+          src=`https://audiomack.com/embed/saltysojourner/song/${slug}`
           scrolling="no"
           width="100%"
           height="252"

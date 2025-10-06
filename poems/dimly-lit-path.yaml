@@ -30,7 +30,5 @@ versions:
         Is not shouldered alone
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/dimly-lit-path
-      active: true
+  audiomack: true
   suno: https://suno.com/song/0250f135-ca5a-488a-a69d-f3521e71ecbb

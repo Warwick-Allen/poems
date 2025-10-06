@@ -17,6 +17,4 @@ versions:
           Make me an &ldquo;amazing man of God&rdquo;.
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/amazing-man-of-god
-      active: false
+  audiomack: false

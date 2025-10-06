@@ -31,7 +31,5 @@ versions:
           &ldquo;Did I love?&rdquo;
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/rurus-first-call
-      active: true
+  audiomack: true
   suno: https://suno.com/song/22eda121-2264-48e4-a769-182cbacef2bb

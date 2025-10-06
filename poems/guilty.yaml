@@ -57,9 +57,7 @@ versions:
           Will judge.
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/guilty
-      active: true
+  audiomack: true
   suno: https://suno.com/s/UMfzfEHFJWEIvH2L
 
 analysis:

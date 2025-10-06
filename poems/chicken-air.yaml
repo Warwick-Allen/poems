@@ -11,6 +11,4 @@ versions:
           chicken salt
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/chicken-air
-      active: false
+  audiomack: false

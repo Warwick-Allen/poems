@@ -25,6 +25,4 @@ versions:
           Will be heard
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/a-sack-full-of-words
-      active: false
+  audiomack: false

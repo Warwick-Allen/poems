@@ -70,9 +70,7 @@ versions:
           for his name's sake.
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/at-the-end-of-myself
-      active: true
+  audiomack: true
   suno: https://suno.com/s/AtpUMNeWQURww1f2
 
 postscript:

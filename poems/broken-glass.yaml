@@ -22,6 +22,4 @@ versions:
           As I long for a piece of broken glass
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/broken-glass
-      active: false
+  audiomack: false

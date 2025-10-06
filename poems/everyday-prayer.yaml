@@ -72,6 +72,4 @@ versions:
           And know there's no end to everyday
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/everyday-prayer
-      active: false
+  audiomack: false

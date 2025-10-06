@@ -39,7 +39,5 @@ versions:
           Heaven in
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/seeds-of-joy
-      active: true
+  audiomack: true
   suno: https://suno.com/song/1d642543-e258-49c9-9435-5363d9781d95

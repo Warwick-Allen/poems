@@ -60,7 +60,5 @@ versions:
           But I feel my grip weakening.
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/the-valley
-      active: true
+  audiomack: true
   suno: https://suno.com/s/qxbZvEe6rqdynr6m

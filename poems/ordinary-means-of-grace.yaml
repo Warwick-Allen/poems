@@ -82,9 +82,7 @@ versions:
           there we see Your face.
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/ordinary-means-of-grace
-      active: true
+  audiomack: true
   suno: https://suno.com/s/kAzP6QwvasoFaYMi
 
 

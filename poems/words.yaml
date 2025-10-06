@@ -13,6 +13,4 @@ versions:
           And as little as words will betray of me
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/words
-      active: false
+  audiomack: false

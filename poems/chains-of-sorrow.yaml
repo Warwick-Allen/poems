@@ -70,9 +70,7 @@ versions:
           I need a new drug
 
 audio:
-  audiomack:
-    - url: https://audiomack.com/embed/saltysojourner/song/chains-of-sorrow
-      active: true
+  audiomack: true
   suno: https://suno.com/s/NRL9PhaDfrKlkBJc
 
 analysis:
