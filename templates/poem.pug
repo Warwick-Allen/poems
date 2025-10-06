@@ -2,10 +2,9 @@
 
 //- JavaScript function to slugify text
 - function slugify(text) {
--   text = text.toLowerCase()
--   text = text.replace(/[^a-z0-9]/g, '-')
--   text = text.replace(/-+/g, '-')
--   text = text.replace(/^-|-$/g, '');
+-   text = text.toLowerCase().trim()
+-   text = text.replace(/[^a-z0-9 -]/g, '')
+-   text = text.replace(/ +/g, '-')
 -   return text;
 - }
 
