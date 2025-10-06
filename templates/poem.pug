@@ -43,7 +43,7 @@ div(id=`poem--${slug}`)
   div.poem-info
     span(id=`title--${slug}` class="title")= title
     br
-    span(id=`author--${slug}` class="author")= author
+    span(id=`author--${slug}` class="author")= author || 'Warwick Allen'
     br
     span(id=`date--${slug}` class="date")= date
     br

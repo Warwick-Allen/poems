@@ -5,7 +5,6 @@ This document describes the YAML schema for poem files.
 ## Required Fields
 
 - `title`: String - The title of the poem
-- `author`: String - The author's name
 - `date`: String - The date in format "DayOfWeek, DD Month YYYY"
 - `versions`: Array - List of poem versions, each containing segments
 
@@ -36,6 +35,9 @@ versions:
 - Each version contains its own `segments` list.
 
 ## Optional Fields
+
+### Author
+- `author`: String - The author's name (defaults to "Warwick Allen" if omitted)
 
 ### Audio
 ```yaml
