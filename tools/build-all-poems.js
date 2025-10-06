@@ -7,6 +7,7 @@
 const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
+const { slugify } = require("./slugify");
 const beautify = require("js-beautify");
 // Individual poems are already built by the previous step in npm script chain
 
@@ -112,7 +113,14 @@ function concatenateAllHtmlFiles(dirPath) {
         const yamlContent = fs.readFileSync(yamlPath, "utf8");
         const data = yaml.load(yamlContent);
 
-        const fileName = data.slug;
+        const title = data.title;
+        if (!title) {
+          console.warn(`Warning: Missing title in ${file}, skipping`);
+          return;
+        }
+
+        const slug = slugify(title);
+        const fileName = slug;
 
         // Skip index.html and all-poems.html
         if (fileName === "index" || fileName === "all-poems") {
@@ -128,7 +136,6 @@ function concatenateAllHtmlFiles(dirPath) {
         }
 
         const anchor = `poem-${fileName}`;
-        const title = data.title || fileName;
         const date = data.date || "Unknown Date";
         const hasSongLink = hasActiveAudio(data.audio);
 
@@ -396,7 +403,13 @@ function generateIndexHtml(publicDir) {
         const yamlContent = fs.readFileSync(yamlPath, "utf8");
         const data = yaml.load(yamlContent);
 
-        const slug = data.slug;
+        const title = data.title;
+        if (!title) {
+          console.warn(`Warning: Missing title in ${yamlFile}, skipping`);
+          return;
+        }
+
+        const slug = slugify(title);
 
         // Skip index and all-poems
         if (slug === "index" || slug === "all-poems") {
@@ -404,7 +417,6 @@ function generateIndexHtml(publicDir) {
         }
 
         const fileName = `${slug}.html`;
-        const title = data.title || slug;
         const hasAudio = hasActiveAudio(data.audio);
 
         poemData.push({

@@ -7,7 +7,6 @@ This document describes the YAML schema for poem files.
 - `title`: String - The title of the poem
 - `author`: String - The author's name
 - `date`: String - The date in format "DayOfWeek, DD Month YYYY"
-- `slug`: String - URL-friendly identifier (used for HTML filename and IDs)
 - `versions`: Array - List of poem versions, each containing segments
 
 ## Content Fields
@@ -87,10 +86,15 @@ analysis:
 
 ## File Naming
 
-YAML files should be named using the slug with `.yaml` extension:
-- `slug: my-poem` → `my-poem.yaml`
+YAML files should be named using a URL-friendly version of the title with `.yaml` extension:
+- `title: "My Poem"` → `my-poem.yaml`
 
-The build script will generate:
+The build script will automatically generate a slug from the title and create:
 - `public/my-poem.html`
+
+**Note:** The slug is automatically calculated from the title using the same logic as the `slugify` function in the Pug template:
+1. Convert to lowercase and trim whitespace
+2. Remove all characters except letters, numbers, spaces, and hyphens
+3. Replace one or more consecutive spaces with a single hyphen
 
 

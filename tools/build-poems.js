@@ -7,6 +7,7 @@ const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
 const pug = require("pug");
+const { slugify } = require("./slugify");
 
 const POEMS_DIR = path.join(process.cwd(), "poems");
 const PUBLIC_DIR = path.join(process.cwd(), "public");
@@ -198,11 +199,14 @@ function buildAllPoems() {
     }
 
     // Validate required fields
-    if (!poemData.slug) {
-      console.error(`Error: Missing 'slug' field in ${yamlFile}`);
+    if (!poemData.title) {
+      console.error(`Error: Missing 'title' field in ${yamlFile}`);
       errorCount++;
       return;
     }
+
+    // Calculate slug from title
+    poemData.slug = slugify(poemData.title);
 
     // Check for empty versions and warn
     if (!poemData.versions || poemData.versions.length === 0) {
