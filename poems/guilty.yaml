@@ -60,8 +60,7 @@ audio:
   suno: s/UMfzfEHFJWEIvH2L
 
 analysis:
-  type: single
-  content: |
+  full: |
     <h2>Analysis of <em>Guilty</em></h2>
         <p>
           The contemporary poem &ldquo;Guilty&rdquo; is an exploration of

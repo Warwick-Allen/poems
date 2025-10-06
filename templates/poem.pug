@@ -95,7 +95,7 @@ div(id=`poem--${slug}`)
         onclick=`document.getElementById('analysis--${slug}').style.display = 'none'; document.getElementById('show-analysis--${slug}').style.display = 'block';`
       ) Hide analysis
       
-      if analysis.type === 'dual'
+      if analysis.synopsis && analysis.full
         .full-or-synopsis-selector
           button.analysis.selector.selected(
             id=`analysis-select-syno--${slug}`
@@ -117,7 +117,7 @@ div(id=`poem--${slug}`)
           != analysis.full
         //- end analysis-full
       else
-        != analysis.content
+        != analysis.full
     //- end analysis
     //- end analysis section
 //- end poem

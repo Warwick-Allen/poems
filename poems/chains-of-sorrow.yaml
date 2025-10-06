@@ -73,8 +73,7 @@ audio:
   suno: s/NRL9PhaDfrKlkBJc
 
 analysis:
-  type: single
-  content: |
+  full: |
     <h2>Analysis of <em>Chains of Sorrow</em> Lyrics</h2>
         <h3 id="thematic-architecture-and-spiritual-dialectic--chains-of-sorrow">
           Thematic Architecture and Spiritual Dialectic

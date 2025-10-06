@@ -163,8 +163,7 @@ audio:
   suno: s/MYqeWV1oeICs2ufk
 
 analysis:
-  type: single
-  content: |
+  full: |
     <h2>Analysis of <em>Unreal Riddle</em> (song arrangement)</h2>
         <h3 id="introduction--unreal-riddle">Introduction</h3>
         <p>

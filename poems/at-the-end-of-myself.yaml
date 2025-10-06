@@ -76,8 +76,7 @@ postscript:
   - $ref: "_shared.yaml#/disclaimer"
 
 analysis:
-  type: single
-  content: |
+  full: |
     <h2>Analysis of <em>At the End of Myself</em> Lyrics</h2>
 
     <p>

@@ -66,8 +66,7 @@ Omit the `analysis` field entirely.
 #### Single Analysis
 ```yaml
 analysis:
-  type: single
-  content: |
+  full: |
     <h2>Analysis Title</h2>
     <p>Analysis content with HTML markup...</p>
 ```
@@ -75,7 +74,6 @@ analysis:
 #### Dual Analysis (Synopsis and Full)
 ```yaml
 analysis:
-  type: dual
   synopsis: |
     <h2>Synopsis Title</h2>
     <p>Synopsis content...</p>
