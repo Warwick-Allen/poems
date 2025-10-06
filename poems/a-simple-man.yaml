@@ -4,7 +4,7 @@ date: Saturday, 3 August 2002
 
 versions:
   - segments:
-      - label: "[Verse 1]"
+      - label: Verse 1
         lines: |
           I'm just a simple man
           In the morning sun, I'll recline
@@ -12,7 +12,7 @@ versions:
           I think that's just fine
           Yes, I'm just a simple man
 
-      - label: "[Verse 2]"
+      - label: Verse 2
         lines: |
           I'm just a simple chap
           I like food and I like wine
@@ -20,7 +20,7 @@ versions:
           Together as we dine
           Yes, I'm just a simple chap
 
-      - label: "[Verse 3]"
+      - label: Verse 3
         lines: |
           I'm just a simple fellow
           I like to be at peace all the time
@@ -28,7 +28,7 @@ versions:
           To not have much trouble on my mind
           Yes, I'm just a simple fellow
 
-      - label: "[Verse 4]"
+      - label: Verse 4
         lines: |
           I'm just a simple guy
               And if I can love my neighbour down the line
@@ -36,7 +36,7 @@ versions:
               Praying only the simple truth will leave these lips of mine
               Yes, I'm just a simple guy
 
-      - label: "[Verse 5]"
+      - label: Verse 5
         lines: |
           I'm just a simple man
               In the quiet evening, you'll find

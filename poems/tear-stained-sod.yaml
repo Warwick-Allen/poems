@@ -4,7 +4,7 @@ date: Wednesday, 1 March 2025
 
 versions:
   - segments:
-      - label: "[Verse 1]"
+      - label: Verse 1
         lines: |
           Oh Lord, You laid the earth in motion,
           Spoke the stars to light the sky.
@@ -15,14 +15,14 @@ versions:
           Yet still Your voice, it softly spoken,
           Guided me through the shadowed days.
 
-      - label: "[Chorus]"
+      - label: Chorus
         lines: |
           Great are You, God, in the storm and the flame,
           Goodness flows from Your unequaled name.
           I lift my eyes from the tear-stained sod,
           And sing of the greatness of my God.
 
-      - label: "[Verse 2]"
+      - label: Verse 2
         lines: |
           You let the tempest tear my shelter,
           Stripped my hands of fleeting gold,
@@ -33,14 +33,14 @@ versions:
           In every trial, I stand and wonder,
           At the mercy You still show.
 
-      - label: "[Chorus]"
+      - label: Chorus
         lines: |
           Great are You, God, in the storm and the flame,
           Goodness flows from Your unequaled name.
           I lift my eyes from the tear-stained sod,
           And sing of the greatness of my God.
 
-      - label: "[Bridge]"
+      - label: Bridge
         lines: |
           Who am I to question Your purpose?
           I'm dust beneath Your boundless flame,
@@ -49,14 +49,14 @@ versions:
           From ashes, Lord, You lift my soul,
           Your love remains, it makes me whole.
 
-      - label: "[Chorus]"
+      - label: Chorus
         lines: |
           Great are You, God, in the storm and the flame,
           Goodness flows from Your unequaled name.
           I lift my eyes from the tear-stained sod,
           And sing of the greatness of my God.
 
-      - label: "[Outro]"
+      - label: Outro
         lines: |
           So here I stand, though scarred and humbled,
           Before Your throne, my spirit free,

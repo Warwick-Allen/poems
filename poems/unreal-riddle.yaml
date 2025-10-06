@@ -51,7 +51,7 @@ versions:
 
   - label: Song arrangement (2025)
     segments:
-      - label: "[Verse 1]"
+      - label: Verse 1
         lines: |
           I see writing on the wall;
           In blood, fateful words are spelled.
@@ -60,18 +60,18 @@ versions:
           But these games, the games themselves,
           Cause the blood to be real.
 
-      - label: "[Pre-chorus]"
+      - label: Pre-chorus
         lines: |
           I think, I don't know
 
-      - label: "[Chorus]"
+      - label: Chorus
         lines: |
           Inked with blood that's not real,
           I am the guilty artist.
           And still, blood is on the wall,
           A wall that does not exist.
 
-      - label: "[Verse 2]"
+      - label: Verse 2
         lines: |
           It's my mental graffiti;
           The words, surely, they are mine,
@@ -80,18 +80,18 @@ versions:
           This picture is my confine,
           Heavy words that hold me fast.
 
-      - label: "[Pre-chorus]"
+      - label: Pre-chorus
         lines: |
           I think, I don't know
 
-      - label: "[Chorus]"
+      - label: Chorus
         lines: |
           Inked with blood that's not real,
           I am the guilty artist.
           And still, blood is on the wall,
           A wall that does not exist.
 
-      - label: "[Verse 3]"
+      - label: Verse 3
         lines: |
           My thoughts give the wall substance,
           And make the blood rich, warm, red.
@@ -100,18 +100,18 @@ versions:
           Even if formed in my head.
           I can know it a little.
 
-      - label: "[Pre-chorus]"
+      - label: Pre-chorus
         lines: |
           I think, I don't know
 
-      - label: "[Chorus]"
+      - label: Chorus
         lines: |
           Inked with blood that's not real,
           I am the guilty artist.
           And still, blood is on the wall,
           A wall that does not exist.
 
-      - label: "[Verse 4]"
+      - label: Verse 4
         lines: |
           And the wall forms my safehold,
           But still the writing scares me.
@@ -120,18 +120,18 @@ versions:
           Harsh wind of reality.
           I built the wall, my cloister.
 
-      - label: "[Pre-chorus]"
+      - label: Pre-chorus
         lines: |
           I think, I don't know
 
-      - label: "[Chorus]"
+      - label: Chorus
         lines: |
           Inked with blood that's not real,
           I am the guilty artist.
           And still, blood is on the wall,
           A wall that does not exist.
 
-      - label: "[Verse 5]"
+      - label: Verse 5
         lines: |
           Could it really be me who's
           Written those dread words that haunt
@@ -140,18 +140,18 @@ versions:
           Only I'd capture and taunt.
           Everything is imagined.
 
-      - label: "[Pre-chorus]"
+      - label: Pre-chorus
         lines: |
           I think, I don't know
 
-      - label: "[Chorus]"
+      - label: Chorus
         lines: |
           Inked with blood that's not real,
           I am the guilty artist.
           And still, blood is on the wall,
           A wall that does not exist.
 
-      - label: "[Outro]"
+      - label: Outro
         lines: |
           I don't know, I don't know, oh
           I think, I think

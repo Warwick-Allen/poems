@@ -4,7 +4,7 @@ date: Saturday, 1 November 1997
 
 versions:
   - segments:
-      - label: "[Verse 1]"
+      - label: Verse 1
         lines: |
           As I wallow
           In my pit
@@ -15,13 +15,13 @@ versions:
           To lay the blame.
           But no matter where I look, or how hard,
 
-      - label: "[Refrain]"
+      - label: Refrain
         lines: |
           The only guilty party
           I find
           Is me.
 
-      - label: "[Verse 2]"
+      - label: Verse 2
         lines: |
           And no defence
           Do I have
@@ -32,13 +32,13 @@ versions:
           By the silent jeers
           From the gallery made up of those who care.
 
-      - label: "[Refrain]"
+      - label: Refrain
         lines: |
           The prosecutor,
           It seems,
           Is me.
 
-      - label: "[Verse 3]"
+      - label: Verse 3
         lines: |
           No jury
           Is required here;
@@ -49,7 +49,7 @@ versions:
           Will be, I fear,
           A life not fulfilled, a potential never reached.
 
-      - label: "[Coda]"
+      - label: Coda
         lines: |
           But I wait,
           For time

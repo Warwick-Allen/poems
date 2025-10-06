@@ -4,7 +4,7 @@ date: Wednesday, 12 March 2025
 
 versions:
   - segments:
-      - label: "[Verse 1]"
+      - label: Verse 1
         lines: |
           <span class="ai">From every nation, tribe, and tongue,
           A multitude in white has come,
@@ -15,7 +15,7 @@ versions:
           Through tribulation's darkened tide,
           They rise to glory at His side.</span>
 
-      - label: "[Chorus]"
+      - label: Chorus
         lines: |
           Glory <span class="ai">to our God on high,
           To Him who reigns</span> over earth and <span class="ai">sky</span>,
@@ -26,7 +26,7 @@ versions:
           Deepest praise, thanks and honour,
           Unto our God, Yeshua
 
-      - label: "[Verse 2]"
+      - label: Verse 2
         lines: |
           <span class="ai">The angels bow, the elders fall,
           A mighty chorus fills the hall,
@@ -37,7 +37,7 @@ versions:
           <span class="ai">By living springs of joy they stand,</span>
           In the majesty of the Lamb.
 
-      - label: "[Chorus]"
+      - label: Chorus
         lines: |
           Glory <span class="ai">to our God on high,
           To Him who reigns</span> over earth and <span class="ai">sky</span>,
@@ -48,7 +48,7 @@ versions:
           Deepest praise, thanks and honour,
           Unto our God, Yeshua
 
-      - label: "[Verse 3]"
+      - label: Verse 3
         lines: |
           <span class="ai">Twelve times twelve, the</span> thousands called,
           <span class="ai">A</span> righteous <span class="ai">host</span> with Him will rule,
@@ -59,7 +59,7 @@ versions:
           For He who</span> created <span class="ai">with His breath,
           Has conquered sin and vanquished death.</span>
 
-      - label: "[Chorus]"
+      - label: Chorus
         lines: |
           Glory <span class="ai">to our God on high,
           To Him who reigns over earth and sky,
@@ -70,7 +70,7 @@ versions:
           Deepest praise, thanks and honour,
           Unto our God, Yeshua
 
-      - label: "[Verse 4]"
+      - label: Verse 4
         lines: |
           The bright Morning Star is coming,
           His just reward, He is bringing.
@@ -81,7 +81,7 @@ versions:
           And the Spirit and bride invite
           To drink of the water of life.
 
-      - label: "[Chorus]"
+      - label: Chorus
         lines: |
           Glory <span class="ai">to our God on high,
           To Him who reigns over earth and sky,
@@ -92,7 +92,7 @@ versions:
           Deepest praise, thanks and honour,
           Unto our God, Yeshua
 
-      - label: "[Outro]"
+      - label: Outro
         lines: |
           <span class="ai">Forevermore, the throne we see,
           The Lamb, our Shepherd, sets us free,

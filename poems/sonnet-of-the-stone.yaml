@@ -4,7 +4,7 @@ date: Friday, 22 August 1997
 
 versions:
   - segments:
-      - label: "[Stanza 1]"
+      - label: Stanza 1
         lines: |
           The weight of the stone, around my heart bound
           Is not enough to pull me under, but
@@ -15,7 +15,7 @@ versions:
           I long for a haven, a lonely hut
           Where, onto a page, my fears and doubts mound.
 
-      - label: "[Stanza 2]"
+      - label: Stanza 2
         lines: |
           From this safe place, I cry my forlorn plea
           To my Lord, I ask Him to take the stone.

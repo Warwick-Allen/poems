@@ -4,7 +4,7 @@ date: Saturday, 20 September 2025
 
 versions:
   - segments:
-      - label: "[Verse 1]"
+      - label: Verse 1
         lines: |
           My love, o, see my love.
           It's feeble, not enough,
@@ -13,14 +13,14 @@ versions:
           It's all I have. It's true.
           My love, it's all for you.
 
-      - label: "[Chorus]"
+      - label: Chorus
         lines: |
           Through the grief and the pain,
           Through loss in place of gain,
           Through the valley, dark and long,
           My love is my quiet song.
 
-      - label: "[Verse 2]"
+      - label: Verse 2
         lines: |
           My love, my true desire,
           You, dear, raise me higher
@@ -29,14 +29,14 @@ versions:
           You're who I need, it's true,
           I'm better because of you.
 
-      - label: "[Chorus]"
+      - label: Chorus
         lines: |
           Through the grief and the pain,
           Through loss in place of gain,
           Through the valley, dark and long,
           My love is my quiet song.
 
-      - label: "[Verse 3]"
+      - label: Verse 3
         lines: |
           Sometimes hidden and silent,
           My love's never absent,
@@ -45,14 +45,14 @@ versions:
           In my weakness, it's true,
           I strive to serve you.
 
-      - label: "[Chorus]"
+      - label: Chorus
         lines: |
           Through the grief and the pain,
           Through loss in place of gain,
           Through the valley, dark and long,
           My love is my quiet song.
 
-      - label: "[Verse 4]"
+      - label: Verse 4
         lines: |
           One thing you know, my dear,
           I'm not going anywhere.
@@ -61,14 +61,14 @@ versions:
           My eyes, they're always true,
           My heart, it's just for you.
 
-      - label: "[Chorus]"
+      - label: Chorus
         lines: |
           Through the grief and the pain,
           Through loss in place of gain,
           Through the valley, dark and long,
           My love is my quiet song.
 
-      - label: "[Coda]"
+      - label: Coda
         lines: |
           We, together, two lie;
           We, together, have heat.

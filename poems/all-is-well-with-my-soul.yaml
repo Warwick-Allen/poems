@@ -46,7 +46,7 @@ versions:
 
   - label: Song arrangement (2025)
     segments:
-      - label: "[Verse 1]"
+      - label: Verse 1
         lines: |
           I feel my soul
           Is in need of nourishment
@@ -55,12 +55,12 @@ versions:
           The gentle whisper
           Of the Spirit of God
 
-      - label: "[Refrain]"
+      - label: Refrain
         lines: |
           And the whisper remains
           Continuing to encourage
 
-      - label: "[Verse 2]"
+      - label: Verse 2
         lines: |
           A thick cloud has enveloped me
           Cold mist has surrounded me
@@ -69,7 +69,7 @@ versions:
           Of their light
           Filters through
 
-      - label: "[Chorus 1]"
+      - label: Chorus 1
         lines: |
           Their joy is muffled
           Dampened by the darkness
@@ -77,12 +77,12 @@ versions:
           They only
           See part of me
 
-      - label: "[Refrain]"
+      - label: Refrain
         lines: |
           But the whisper remains
           Continuing to encourage
 
-      - label: "[Verse 3]"
+      - label: Verse 3
         lines: |
           My heart is heavy
           Anxiety, fear of failure
@@ -91,7 +91,7 @@ versions:
           And my body
           Is reluctant to move
 
-      - label: "[Coda]"
+      - label: Coda
         lines: |
           But still I hear the whisper
           That blessed whisper
