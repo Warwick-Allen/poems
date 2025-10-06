@@ -175,7 +175,7 @@ function buildAllPoems() {
     .readdirSync(POEMS_DIR)
     .filter((file) => file.endsWith(".yaml") || file.endsWith(".yml"))
     .filter((file) => !file.startsWith("YAML-SCHEMA"))
-    .filter((file) => file !== "shared.yaml"); // Skip shared.yaml as it's not a poem
+    .filter((file) => !file.startsWith("_")); // Skip files beginning with underscore
 
   if (yamlFiles.length === 0) {
     console.warn(`Warning: No YAML files found in ${POEMS_DIR}`);

@@ -4,7 +4,7 @@
 # Usage:
 #   To reference an element in a poem YAML file, use:
 #   postscript:
-#     - $ref: "shared.yaml#/disclaimer"
+#     - $ref: "_shared.yaml#/disclaimer"
 #
 #   The format is: $ref: "filename#/path/to/element"
 #   - filename: relative path from the poem file to this shared file

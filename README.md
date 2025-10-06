@@ -7,6 +7,7 @@ These are shared publicly at [Fragments & Unity](https://fragments-and-unity.blo
 This repository uses a YAML-based build system to generate HTML files:
 
 - **`poems/`** - Source YAML files for all poems (one file per poem)
+  - Files beginning with `_` (e.g., `_shared.yaml`) are ignored by the build process and used for shared content references
 - **`public/`** - Generated HTML files and assets
 - **`templates/`** - Pug template for rendering poems
 - **`tools/`** - Build scripts

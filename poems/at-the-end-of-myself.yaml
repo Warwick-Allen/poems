@@ -77,7 +77,7 @@ audio:
     - url: https://suno.com/s/AtpUMNeWQURww1f2
 
 postscript:
-  - $ref: "shared.yaml#/disclaimer"
+  - $ref: "_shared.yaml#/disclaimer"
 
 analysis:
   type: single
