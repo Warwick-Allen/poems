@@ -506,20 +506,22 @@ h3.post-title, .comments h4 {
 
 /* ~~ CUSTOM CSS START ~~ */
 
+/* Custom CSS for Fragments & Unity */
+
 .poem-info {
   color: gray;
   font-size: 90%;
   padding-bottom: 3ex;
+}
 
-  .author::before,
-  #author::before {
-    content: "by ";
-  }
+.poem-info .author::before,
+.poem-info #author::before {
+  content: "by ";
+}
 
-  .title,
-  #title {
-    display: none;
-  }
+.poem-info .title,
+.poem-info #title {
+  display: none;
 }
 
 .song-segment {
@@ -534,20 +536,20 @@ h3.post-title, .comments h4 {
   padding-top: 4ex;
 }
 
-.disclaimer {
+.postscript {
   color: gray;
   font-size: 80%;
   margin: 4ex 0;
   padding: 2ex 0;
   border-width: 1px;
-  border-color:purple;
+  border-color: purple;
   border-style: solid;
   border-right-style: none;
   border-left-style: none;
+}
 
-  :first-child {
-    font-weight: bold;
-  }
+.postscript :first-child {
+  font-weight: bold;
 }
 
 /* Analysis */
@@ -607,11 +609,17 @@ div.analysis {
   margin: 20px 0 10px;
 }
 
+.analysis h4 {
+  color: #34495e;
+  margin: 15px 0 8px;
+}
+
 .analysis p {
   margin-bottom: 15px;
 }
 
-.analysis ul, .analysis ol {
+.analysis ul,
+.analysis ol {
   margin: 10px 0 15px 20px;
 }
 
