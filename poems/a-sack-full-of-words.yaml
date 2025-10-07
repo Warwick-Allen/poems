@@ -1,6 +1,5 @@
 title: A Sack Full of Words
-date: 2015-05-04
-
+date: '2015-05-04'
 versions:
   - segments:
       - lines: |
@@ -21,6 +20,3 @@ versions:
           My words
           The Lion's roar
           Will be heard
-
-audio:
-  audiomack: false

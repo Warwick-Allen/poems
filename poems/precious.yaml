@@ -1,6 +1,5 @@
 title: Precious
-date: 2015-08-02
-
+date: '2015-08-02'
 versions:
   - segments:
       - lines: |
@@ -33,7 +32,6 @@ versions:
           Men made righteous
           All
           Souls are precious
-
 audio:
   audiomack: true
   suno: song/22b11aa8-707f-49c3-a389-198a6f775c6b

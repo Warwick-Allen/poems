@@ -1,6 +1,5 @@
 title: Mysterious Star
-date: 1998-12-12
-
+date: '1998-12-12'
 versions:
   - segments:
       - lines: |
@@ -8,42 +7,33 @@ versions:
           Into the heavens I stare
           I find some comfort there
           Though star seem so far away
-
       - lines: |
           I've been here for sometime
           Staring, watching, waiting
           Praying, always hoping
           A bright star might be mine
-
       - lines: |
           Past me, sometimes, a star will fly
           A beautiful, radiant shooting star
           Travelling by me not so far
           For my heart to singe as it passes by
-
       - lines: |
           I see a new star now coming towards me
           From the others, somehow different
           More intensely radiant
           With a light greater than its own, for all to see
-
       - lines: |
           With that light, I'm quite familiar
           That holy, pure light
           Potent enough to pierce the darkest night
           My heart this light does lure
-
       - lines: |
           Never before has a star of this nature
           Glowing with holy radiance
           Shinning with natural brilliance
           Never before has one come so near
-
       - lines: |
           Will this star come close enough for harm
           Burn my soul and then depart
           Fly harmlessly into the distance, or crash into my heart
           Or float like a butterfly into my arms
-
-audio:
-  audiomack: false

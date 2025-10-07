@@ -1,6 +1,5 @@
 title: Quiet Song
-date: 2025-09-20
-
+date: '2025-09-20'
 versions:
   - segments:
       - label: Verse 1
@@ -11,14 +10,12 @@ versions:
           It is not all you need.
           It's all I have. It's true.
           My love, it's all for you.
-
       - label: Chorus
         lines: |
           Through the grief and the pain,
           Through loss in place of gain,
           Through the valley, dark and long,
           My love is my quiet song.
-
       - label: Verse 2
         lines: |
           My love, my true desire,
@@ -27,14 +24,12 @@ versions:
           Doing life on my own.
           You're who I need, it's true,
           I'm better because of you.
-
       - label: Chorus
         lines: |
           Through the grief and the pain,
           Through loss in place of gain,
           Through the valley, dark and long,
           My love is my quiet song.
-
       - label: Verse 3
         lines: |
           Sometimes hidden and silent,
@@ -43,14 +38,12 @@ versions:
           Your needs not meeting.
           In my weakness, it's true,
           I strive to serve you.
-
       - label: Chorus
         lines: |
           Through the grief and the pain,
           Through loss in place of gain,
           Through the valley, dark and long,
           My love is my quiet song.
-
       - label: Verse 4
         lines: |
           One thing you know, my dear,
@@ -59,14 +52,12 @@ versions:
           By my beautiful wife.
           My eyes, they're always true,
           My heart, it's just for you.
-
       - label: Chorus
         lines: |
           Through the grief and the pain,
           Through loss in place of gain,
           Through the valley, dark and long,
           My love is my quiet song.
-
       - label: Coda
         lines: |
           We, together, two lie;
@@ -75,7 +66,6 @@ versions:
           Three, then, won't be beat.
           We, a cord of three strands;
           We, in Him, can stand.
-
 audio:
   audiomack: true
   suno: s/afEPyOhaKua9taD7

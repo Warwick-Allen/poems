@@ -1,6 +1,5 @@
 title: Blue Pen
-date: 2015-05-12
-
+date: '2015-05-12'
 versions:
   - label: Original poem (2015)
     segments:
@@ -14,7 +13,6 @@ versions:
           Jailor pen
           Can you
           Control them?
-
   - label: Song arrangement, "Jailor Pen", with added lines (2025)
     segments:
       - label: Verse 1
@@ -23,14 +21,12 @@ versions:
           Thoughts collide and pull me in,
           But there you wait, my stern blue guard,
           To lock them up, to stand unmarred.
-
       - label: Chorus
         lines: |
           Jailor pen, quell the riot,
           Pin that word (it'll be heard),
           Jailor pen, be my friend,
           Accentuate the quiet.
-
       - label: Verse 2
         lines: |
           Blue pen
@@ -42,35 +38,30 @@ versions:
           Jailor pen
           Can you
           Control them?
-
       - label: Bridge
         lines: |
           Each stroke a cell, each line a gate,
           You trap the clutter, shift the weight,
-          A paradox in ink I see&mdash;
+          A paradox in ink I see---
           You cage my mind to set me free.
-
       - label: Chorus
         lines: |
           Jailor pen, quell the riot,
           Pin that word (it'll be heard),
           Jailor pen, be my friend,
           Accentuate the quiet.
-
       - label: Verse 3
         lines: |
           The wild ones twist, they tug, they fray,
           A storm of threads that won't obey,
           But you, my ward, you bind them still,
           Expel the mess, my soul to fill.
-
       - label: Outro
         lines: |
           Blue pen, my shield, my strange release,
           You jail the storm, you grant me peace,
           Thoughts confined, yet I'm unbound,
           In your chains, my wings are found.
-
 audio:
   audiomack: true
   suno: song/c85fc871-3d23-4b26-b219-1605b6b802a6

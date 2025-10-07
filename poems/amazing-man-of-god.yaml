@@ -1,6 +1,5 @@
 title: Amazing Man of God
-date: 1997-08-01
-
+date: '1997-08-01'
 versions:
   - segments:
       - lines: |
@@ -13,6 +12,3 @@ versions:
           Has trouble comprehending that fact.
           Please, Lord,
           Make me an &ldquo;amazing man of God&rdquo;.
-
-audio:
-  audiomack: false

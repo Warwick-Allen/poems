@@ -1,6 +1,5 @@
 title: All is Well with My Soul
-date: 1998-02-25
-
+date: '1998-02-25'
 versions:
   - label: Original poem (1998)
     segments:
@@ -11,7 +10,6 @@ versions:
           I hear the whisper
           The gentle whisper
           Of the Spirit of God
-
       - lines: |
           A thick cloud has enveloped me
           Cold mist has surrounded me
@@ -24,11 +22,9 @@ versions:
           And through that darkness
           They only
           See part of me
-
       - lines: |
           But the whisper remains
           Continuing to encourage
-
       - lines: |
           My heart is heavy
           Anxiety, fear of failure
@@ -36,13 +32,11 @@ versions:
           Weigh on my mind
           And my body
           Is reluctant to move
-
       - lines: |
           But still I hear the whisper
           That blessed whisper
           And I know
           All is well with my soul
-
   - label: Song arrangement (2025)
     segments:
       - label: Verse 1
@@ -53,12 +47,10 @@ versions:
           I hear the whisper
           The gentle whisper
           Of the Spirit of God
-
       - label: Refrain
         lines: |
           And the whisper remains
           Continuing to encourage
-
       - label: Verse 2
         lines: |
           A thick cloud has enveloped me
@@ -67,7 +59,6 @@ versions:
           Of the joyful banter of friends
           Of their light
           Filters through
-
       - label: Chorus 1
         lines: |
           Their joy is muffled
@@ -75,12 +66,10 @@ versions:
           And through that darkness
           They only
           See part of me
-
       - label: Refrain
         lines: |
           But the whisper remains
           Continuing to encourage
-
       - label: Verse 3
         lines: |
           My heart is heavy
@@ -89,14 +78,12 @@ versions:
           Weigh on my mind
           And my body
           Is reluctant to move
-
       - label: Coda
         lines: |
           But still I hear the whisper
           That blessed whisper
           And I know
           All is well with my soul
-
 audio:
   audiomack: true
   suno: s/C2nexcHKQP8F9Lt8

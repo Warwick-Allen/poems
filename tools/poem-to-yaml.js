@@ -597,8 +597,8 @@ class PoemParser {
     text = text.replace(/\*([^*]+)\*/g, '<strong>$1</strong>'); // Strong
     text = text.replace(/_([^_]+)_/g, '<em>$1</em>'); // Emphasis
     
-    // Entities
-    text = text.replace(/&/g, '&#38;');
+    // Entities - convert & to &#38; but NOT if it's already part of an entity (&#...;)
+    text = text.replace(/&(?!#\d+;|[a-z]+;)/gi, '&#38;');
     text = text.replace(/'/g, '&#39;');
 
     // Restore escapes

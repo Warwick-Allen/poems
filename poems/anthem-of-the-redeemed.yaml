@@ -1,6 +1,5 @@
 title: Anthem of The Redeemed
-date: 2025-03-12
-
+date: '2025-03-12'
 versions:
   - segments:
       - label: Verse 1
@@ -13,7 +12,6 @@ versions:
           Marked by heaven's holy hand,
           Through tribulation's darkened tide,
           They rise to glory at His side.</span>
-
       - label: Chorus
         lines: |
           Glory <span class="ai">to our God on high,
@@ -24,7 +22,6 @@ versions:
           Blessing and power where glory dwells,</span>
           Deepest praise, thanks and honour,
           Unto our God, Yeshua
-
       - label: Verse 2
         lines: |
           <span class="ai">The angels bow, the elders fall,
@@ -35,7 +32,6 @@ versions:
           Their God <span class="ai">will</span> dry their every tear,
           <span class="ai">By living springs of joy they stand,</span>
           In the majesty of the Lamb.
-
       - label: Chorus
         lines: |
           Glory <span class="ai">to our God on high,
@@ -46,7 +42,6 @@ versions:
           Blessing and power where glory dwells,</span>
           Deepest praise, thanks and honour,
           Unto our God, Yeshua
-
       - label: Verse 3
         lines: |
           <span class="ai">Twelve times twelve, the</span> thousands called,
@@ -57,7 +52,6 @@ versions:
           A praise that never, never ends,
           For He who</span> created <span class="ai">with His breath,
           Has conquered sin and vanquished death.</span>
-
       - label: Chorus
         lines: |
           Glory <span class="ai">to our God on high,
@@ -68,7 +62,6 @@ versions:
           Blessing and power where glory dwells,</span>
           Deepest praise, thanks and honour,
           Unto our God, Yeshua
-
       - label: Verse 4
         lines: |
           The bright Morning Star is coming,
@@ -79,7 +72,6 @@ versions:
           To eat fruit of the tree of life.
           And the Spirit and bride invite
           To drink of the water of life.
-
       - label: Chorus
         lines: |
           Glory <span class="ai">to our God on high,
@@ -90,17 +82,14 @@ versions:
           Blessing and power where glory dwells,</span>
           Deepest praise, thanks and honour,
           Unto our God, Yeshua
-
       - label: Outro
         lines: |
           <span class="ai">Forevermore, the throne we see,
           The Lamb, our Shepherd, sets us free,
           With every voice, we join</span> in praise,
           Glory and honour to the Endless of Days!
-
 audio:
   audiomack: true
   suno: song/2aafcd12-2379-482b-9789-c872ba64d809
-
 postscript:
-  - $ref: "_shared.yaml#/disclaimer"
+  - $ref: _shared.yaml#/disclaimer

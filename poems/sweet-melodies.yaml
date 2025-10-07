@@ -1,6 +1,5 @@
 title: Sweet Melodies
-date: 2015-05-15
-
+date: '2015-05-15'
 versions:
   - segments:
       - lines: |
@@ -16,7 +15,6 @@ versions:
           exhaled and put away
           sweep the floor of today
           space for my soul to play
-
 audio:
   audiomack: true
   suno: song/c32f0adc-34a9-4856-a7c5-20e43354bc7e

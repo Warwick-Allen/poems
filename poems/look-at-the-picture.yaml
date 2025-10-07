@@ -1,6 +1,5 @@
 title: Look at The Picture
-date: 2015-03-26
-
+date: '2015-03-26'
 versions:
   - segments:
       - lines: |
@@ -10,7 +9,6 @@ versions:
           is it me
           a slice of
           &nbsp; humanity
-
       - lines: |
           look at the picture
           whom do you see
@@ -18,7 +16,6 @@ versions:
           is it He
           a slice of
           &nbsp; divinity
-
       - lines: |
           odd is the picture
           laid out here now
@@ -26,7 +23,6 @@ versions:
           far too mixed
           not as it
           &nbsp; it should be
-
       - lines: |
           that day of despair
           we wanted to see
@@ -34,7 +30,6 @@ versions:
           truth was won
           won back at
           &nbsp; Calvery
-
       - lines: |
           look at the picture
           sprinkled with Blood
@@ -42,7 +37,6 @@ versions:
           now it's He
           Dad sees His
           &nbsp; purity
-
       - lines: |
           beautiful's the picture
           our Dad does see
@@ -50,7 +44,6 @@ versions:
           taken away
           it is rid
           &nbsp; eternally
-
       - lines: |
           beautiful's the picture
           we strain to see
@@ -58,6 +51,3 @@ versions:
           could it be
           us restored
           &nbsp; completely
-
-audio:
-  audiomack: false

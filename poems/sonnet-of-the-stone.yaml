@@ -1,6 +1,5 @@
 title: Sonnet of the Stone
-date: 1997-08-22
-
+date: '1997-08-22'
 versions:
   - segments:
       - label: Stanza 1
@@ -13,7 +12,6 @@ versions:
           But often strength I've none, I'm in a rut,
           I long for a haven, a lonely hut
           Where, onto a page, my fears and doubts mound.
-
       - label: Stanza 2
         lines: |
           From this safe place, I cry my forlorn plea
@@ -22,7 +20,6 @@ versions:
           He wants to use me, now He's moulding me,
           Yet He still lets me know I'm not alone,
           And from my shoulders He will lift the weight.
-
 audio:
   audiomack: true
   suno: s/hDQ4UTYEuitBaK5a

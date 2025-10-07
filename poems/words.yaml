@@ -1,6 +1,5 @@
 title: Words
-date: 2000-12-10
-
+date: '2000-12-10'
 versions:
   - segments:
       - lines: |
@@ -9,6 +8,3 @@ versions:
           I draw about myself a cloak of obscurity
           Revealing as much as prudence will allow of me
           And as little as words will betray of me
-
-audio:
-  audiomack: false
