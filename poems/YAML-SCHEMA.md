@@ -5,7 +5,7 @@ This document describes the YAML schema for poem files.
 ## Required Fields
 
 - `title`: String - The title of the poem
-- `date`: String - The date in format "DayOfWeek, DD Month YYYY"
+- `date`: String - The date in format "yyyy-mm-dd" (e.g., "2015-05-04")
 - `versions`: Array - List of poem versions, each containing segments
 
 ## Content Fields

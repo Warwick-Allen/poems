@@ -32,12 +32,21 @@ The main build script:
 
 1. Scans the `public/` directory for all HTML files
 2. Extracts metadata (title, date, audio links) from each poem
-3. Sorts poems chronologically by date
+3. Sorts poems chronologically by date using the date utility functions
 4. Generates a comprehensive `all-poems.html` file with:
    - Table of contents with sorting functionality
    - All poems concatenated in chronological order
    - Custom CSS from the template
    - Interactive sorting by title, date, or audio availability
+
+#### Date Utility Functions (`tools/date-utils.js`)
+
+The build system includes utility functions for handling date formats:
+
+- **`formatDateForDisplay(dateStr)`** - Converts ISO date format (`yyyy-mm-dd`) to display format (`DayOfWeek, DD Month YYYY`)
+- **`parseDateForSorting(dateStr)`** - Parses date strings for chronological sorting, handling both ISO and display formats
+
+These utilities ensure consistent date handling across the build process and support migration from the old date format.
 
 #### Blogger Template Script (`tools/build-blogger.js`)
 
@@ -71,6 +80,16 @@ When you need to update the Blogger template with new CSS:
 
 The script will automatically handle the CSS injection and provide feedback on success or any errors encountered.
 
+### Date Format Migration
+
+The build system has been updated to use ISO date format (`yyyy-mm-dd`) in YAML files instead of the previous display format (`DayOfWeek, DD Month YYYY`). This change provides:
+
+- **Better sorting**: ISO format sorts correctly as strings
+- **Easier editing**: Standardised format is easier to work with
+- **Backward compatibility**: The date utility functions handle both formats during migration
+
+**Migration completed**: All poem YAML files have been updated to use the new ISO date format.
+
 ### File Structure
 
 ```
@@ -81,6 +100,13 @@ public/
 ├── fragments-and-unity.template.html    # Blogger template with injected CSS
 ├── poem1.html                           # Individual poems
 ├── poem2.html
+└── ...
+
+tools/
+├── build-all-poems.js                   # Main build script
+├── build-poems.js                       # Individual poem builder
+├── date-utils.js                        # Date format utilities
+├── serve-static.js                      # Development server
 └── ...
 ```
 

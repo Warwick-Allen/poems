@@ -89,6 +89,10 @@ This script:
 
 The updated template can then be uploaded to Blogger to apply the custom styling.
 
+## Date Format
+
+All poem YAML files use the ISO date format (`yyyy-mm-dd`, e.g., `2015-05-04`) for the `date` field. The build system automatically converts these dates to the display format (`DayOfWeek, DD Month YYYY`) in the generated HTML files.
+
 ## Documentation
 
 - **`poems/YAML-SCHEMA.md`** - Detailed schema for poem YAML files

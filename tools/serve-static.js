@@ -10,6 +10,7 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
+const { parseDateForSorting } = require("./date-utils");
 
 function parseArgs(argv) {
   const args = { port: undefined, dir: undefined };
@@ -286,42 +287,8 @@ function concatenateAllHtmlFiles(dirPath) {
 
     // Sort poems by date (oldest first) for display order
     poemData.sort((a, b) => {
-      const parseDate = (dateStr) => {
-        if (dateStr === "Unknown Date") return new Date(0);
-
-        // Handle format: "Monday, 4 May 2015" or "Friday, 1 August 1997"
-        const months = {
-          January: 0,
-          February: 1,
-          March: 2,
-          April: 3,
-          May: 4,
-          June: 5,
-          July: 6,
-          August: 7,
-          September: 8,
-          October: 9,
-          November: 10,
-          December: 11,
-        };
-
-        const parts = dateStr.split(", ");
-        if (parts.length >= 2) {
-          const datePart = parts[1].split(" ");
-          if (datePart.length >= 3) {
-            const day = parseInt(datePart[0]);
-            const month = months[datePart[1]];
-            const year = parseInt(datePart[2]);
-            if (!isNaN(day) && month !== undefined && !isNaN(year)) {
-              return new Date(year, month, day);
-            }
-          }
-        }
-        return new Date(0); // fallback for invalid dates
-      };
-
-      const aDate = parseDate(a.date);
-      const bDate = parseDate(b.date);
+      const aDate = parseDateForSorting(a.date);
+      const bDate = parseDateForSorting(b.date);
       return aDate - bDate; // oldest first
     });
 
@@ -434,8 +401,19 @@ function concatenateAllHtmlFiles(dirPath) {
 
         function parseDate(dateStr) {
             if (dateStr === "Unknown Date") return new Date(0);
+            
+            // Ensure dateStr is a string
+            if (typeof dateStr !== 'string') {
+                dateStr = String(dateStr);
+            }
 
-            // Handle format: "Monday, 4 May 2015" or "Friday, 1 August 1997"
+            // Handle both yyyy-mm-dd and "DayOfWeek, DD Month YYYY" formats
+            if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+                const date = new Date(dateStr + 'T00:00:00');
+                return isNaN(date.getTime()) ? new Date(0) : date;
+            }
+
+            // Handle display format: "Monday, 4 May 2015" or "Friday, 1 August 1997"
             const months = {
                 'January': 0, 'February': 1, 'March': 2, 'April': 3, 'May': 4, 'June': 5,
                 'July': 6, 'August': 7, 'September': 8, 'October': 9, 'November': 10, 'December': 11

@@ -8,6 +8,7 @@ const path = require("path");
 const yaml = require("js-yaml");
 const pug = require("pug");
 const { slugify } = require("./slugify");
+const { formatDateForDisplay } = require("./date-utils");
 
 const POEMS_DIR = path.join(process.cwd(), "poems");
 const PUBLIC_DIR = path.join(process.cwd(), "public");
@@ -106,7 +107,12 @@ function resolveRefs(data, basePath = POEMS_DIR) {
   // Recursively process all properties
   const result = {};
   for (const [key, value] of Object.entries(data)) {
-    result[key] = resolveRefs(value, basePath);
+    // Don't recursively process Date objects - keep them as-is
+    if (value instanceof Date) {
+      result[key] = value;
+    } else {
+      result[key] = resolveRefs(value, basePath);
+    }
   }
 
   return result;
@@ -207,6 +213,11 @@ function buildAllPoems() {
 
     // Calculate slug from title
     poemData.slug = slugify(poemData.title);
+
+    // Format date for display
+    if (poemData.date) {
+      poemData.date = formatDateForDisplay(poemData.date);
+    }
 
     // Check for empty versions and warn
     if (!poemData.versions || poemData.versions.length === 0) {
