@@ -50,7 +50,7 @@ but without a label.
 This note has two paragraphs.
 
 
----
+----
 <<<
   - $ref: "_shared.yaml#/disclaimer"
 >>>
@@ -147,7 +147,7 @@ but without a label.                   | notes.  Single newlines within
 This note has two paragraphs.          | Paragraph breaks are indicated by blank
                                        | lines.
                                        |
----                                    |
+----                                   |
 <<<                                    | A literal block.  Lines between <<< and
   - $ref: "_shared.yaml#/disclaimer"   | >>> are not converted.
 >>>                                    |
@@ -221,6 +221,8 @@ Poem files support this limited set of conversion instructions:
  ---         | &#8212;
  <<<         | The start of a literal block.
  >>>         | The end of a literal block.
+ <<#         | The start of a comment block.
+ #>>         | The end of a comment block.
 
 These instructions may be nested.  E.g.,
   `This [*is a _test_* link|example.com].`
@@ -246,3 +248,7 @@ However, be aware that
 will be converted to:
   -&ndash;
 
+Comment blocks start with `<<#` (anchored to the start of the line) and end with
+`#>>` (anchored to the start of the line).  Lines between these markers (and the
+marker lines themselves) will not be included in the output file. Text after a
+comment marker (on the same line as the marker) will also be ignored.
