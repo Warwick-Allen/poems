@@ -76,6 +76,14 @@ Escaped characters with `\` are preserved as literals.
 ### Comment Blocks
 Comment blocks delimited by `<<#` ... `#>>` are automatically removed during parsing.
 
+### Variables
+Variable syntax is documented in the specification but not yet implemented in this parser. The syntax includes:
+- Single-line variables: `={token}= value`
+- Multi-line variables: `={token}<<= ... =>>`
+- Variable substitution: `${token}`
+
+See `POEM-SYNTAX.md` and `poems/_example.poem` for complete variable documentation.
+
 ## Implementation Notes
 
 - The parser removes comment blocks before processing

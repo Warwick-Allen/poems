@@ -174,6 +174,55 @@ comment_line = { ? any character except newline ? }, newline ;
    ignored during parsing. They do not contribute to the output. *)
 
 (* ============================================================================
+   VARIABLES
+   ============================================================================ *)
+
+variable_definition = single_line_variable | multi_line_variable ;
+
+single_line_variable = single_line_var_start,
+                       variable_name,
+                       single_line_var_equals,
+                       variable_value ;
+
+single_line_var_start = "={" ;
+
+single_line_var_equals = "}=" ;
+
+multi_line_variable = multi_line_var_start,
+                      variable_name,
+                      multi_line_var_open,
+                      { ? any character except newline ? },
+                      newline,
+                      multi_line_var_content,
+                      multi_line_var_close,
+                      { ? any character except newline ? },
+                      newline ;
+
+multi_line_var_start = "={" ;
+
+multi_line_var_open = "}<<=" ;
+
+multi_line_var_close = "=>>" ;
+
+multi_line_var_content = { multi_line_var_line } ;
+
+multi_line_var_line = { ? any character except newline ? }, newline ;
+
+variable_name = ( letter | digit ), { variable_name_char } ;
+
+variable_name_char = ? any character except "{", "}", "$", "<", ">" and space at end ? ;
+
+variable_value = { ? any character except newline ? } ;
+
+variable_substitution = "${", variable_name, "}" ;
+
+(* Note: Variable definitions must be anchored to the start of a line.
+   Variables are file-scoped and processed before markup conversion.
+   Variable names must start with a letter or digit and cannot contain
+   {, }, $, <, > characters, and cannot end with a space.
+   See semantic constraints for complete variable behaviour rules. *)
+
+(* ============================================================================
    MARKUP SYSTEM
    ============================================================================ *)
 
@@ -190,9 +239,10 @@ markup_element = escaped_char
                | en_dash
                | ampersand
                | apostrophe
+               | variable_substitution
                | plain_char ;
 
-escaped_char = "\", ( "_" | "*" | "~" | "[" | "`" | '"' | "&" | "'" | "-" | "<" | ">" | "\" ) ;
+escaped_char = "\", ( "_" | "*" | "~" | "[" | "`" | '"' | "&" | "'" | "-" | "<" | ">" | "=" | "$" | "\" ) ;
 
 emphasis = "_", markup_content, "_" ;
 
@@ -339,6 +389,35 @@ leading_whitespace = ( " " | tab ), { " " | tab } ;
    
    16. Blank lines before and after dividers, markers, labels, and literal
        block delimiters have no effect on output (they are normalized)
+   
+   17. Variables can be defined anywhere in the file, except inside literal
+       blocks or multi-line variable blocks
+   
+   18. Variables are file-scoped
+   
+   19. If a variable is used before it is defined, no substitution occurs;
+       ${undefined} remains as literal text (parsers should emit a warning)
+   
+   20. Variables may be redefined; the old value is clobbered
+   
+   21. Variable definition lines do not appear in output and do not count
+       as content lines in their containing section
+   
+   22. Variables may be nested: A variable definition may include ${...}
+       references, which are substituted when the outer variable is defined.
+       Nesting may be of any depth. Self-referential definitions are allowed
+       (e.g., ={a}=foo then ={a}=${a}bar expands ${a} to foobar)
+   
+   23. Variables are processed for markup after substitution
+   
+   24. Variables cannot be used inside literal blocks
+   
+   25. Variable whitespace is retained: For single-line variables, everything
+       after the second "=" is included. For multi-line variables, everything
+       after the newline of the start tag up to before the final newline
+       before the close tag is included
+   
+   26. Variables may be used inside labels (both {{...}} and {...} labels)
 *)
 
 (* ============================================================================

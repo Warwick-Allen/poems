@@ -575,7 +575,7 @@ class PoemParser {
     // Process escapes first
     const escapes = new Map();
     let escapeIndex = 0;
-    text = text.replace(/\\([_*~\[`"&'\-<>\\])/g, (match, char) => {
+    text = text.replace(/\\([_*~\[`"&'\-<>=$\\])/g, (match, char) => {
       const placeholder = `__ESCAPE_${escapeIndex++}__`;
       escapes.set(placeholder, char);
       return placeholder;

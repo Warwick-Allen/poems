@@ -6,11 +6,13 @@ These are shared publicly at [Fragments & Unity](https://fragments-and-unity.blo
 
 This repository uses a YAML-based build system to generate HTML files:
 
-- **`poems/`** - Source YAML files for all poems (one file per poem)
-  - Files beginning with `_` (e.g., `_shared.yaml`) are ignored by the build process and used for shared content references
+- **`poems/`** - Source files for all poems (one file per poem)
+  - `.yaml` files - YAML format (see `poems/YAML-SCHEMA.md`)
+  - `.poem` files - Poem format (see `POEM-SYNTAX.md` and `poem-syntax.ebnf`)
+  - Files beginning with `_` (e.g., `_shared.yaml`, `_example.poem`) are ignored by the build process
 - **`public/`** - Generated HTML files and assets
 - **`templates/`** - Pug template for rendering poems
-- **`tools/`** - Build scripts
+- **`tools/`** - Build scripts (including `.poem` to YAML converter)
 - **`.github/workflows/`** - GitHub Actions for automated deployment
 
 ## Development
@@ -96,5 +98,7 @@ All poem YAML files use the ISO date format (`yyyy-mm-dd`, e.g., `2015-05-04`) f
 ## Documentation
 
 - **`poems/YAML-SCHEMA.md`** - Detailed schema for poem YAML files
+- **`POEM-SYNTAX.md`** - Complete specification for the `.poem` file format
+- **`poem-syntax.ebnf`** - Formal EBNF grammar for the Poem file format
 - **`REFACTORING-SUMMARY.md`** - Technical details about the build system
 - **`BUILD.md`** - GitHub Pages deployment information

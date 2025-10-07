@@ -294,7 +294,126 @@ Don't forget to revise this verse
 More poem lines
 ```
 
-## 7. Inline Markup
+## 7. Variables
+
+Variables allow you to define reusable text snippets that can be substituted throughout your poem file.
+
+### Variable Definition Syntax
+
+#### Single-Line Variables
+
+Single-line variable definitions follow this format:
+
+```
+={variable_name}= value text here
+```
+
+The variable name must:
+- Start with a letter or digit
+- Not contain `{`, `}`, `$`, `<`, `>` characters
+- Not end with a space
+
+Everything after the second `=` becomes the variable's value (whitespace is preserved).
+
+**Example:**
+
+```
+={My token!}= (some text)
+Here is${My token!}.
+```
+
+**Output:**
+
+```
+Here is (some text).
+```
+
+#### Multi-Line Variables
+
+Multi-line variable definitions follow this format:
+
+```
+={variable_name}<<= Anything after the second "=" is ignored
+variable content
+can span multiple lines
+=>> Anything after the second ">" is ignored
+```
+
+The content between the opening `}<<= ` and closing `=>>` markers becomes the variable's value. The final newline before the closing marker is not included.
+
+**Example:**
+
+```
+={My token!}<<= Comment here is ignored
+ (some text)
+ with multiple lines
+=>> Comment here is also ignored
+Here is${My token!}.
+```
+
+**Output:**
+
+```
+Here is (some text)
+ with multiple lines.
+```
+
+### Variable Substitution
+
+To use a variable's value, reference it with the substitution syntax:
+
+```
+${variable_name}
+```
+
+### Variable Rules
+
+1. **Definition Location**: Variables can be defined anywhere in the file, except inside literal blocks or multi-line variable blocks.
+
+2. **Scope**: Variables are file-scoped.
+
+3. **Forward References**: If a variable is used before it is defined, no substitution occurs. The text `${undefined}` will remain as literal text in the output. Parsers should emit a warning when this occurs, but should not raise an exception.
+
+4. **Redefinition**: Variables may be redefined. The old value will be clobbered.
+
+5. **Output**: Variable definition lines do not appear in the output. They do not count as content lines in their containing section.
+
+6. **Nesting**: Variables may be nested. A variable definition may include a `${...}` reference. The inner variable reference will be substituted when the outer variable is defined (not when the outer variable is used). Nesting may be of any depth.
+   - Example: If `={a}=foo`, and later `={b}=${a}bar`, and later `={c}=${b}baz`, then `${c}` expands to `foobarbaz`.
+   - Self-reference: If `={a}=foo`, and later `={a}=${a}bar`, then `${a}` expands to `foobar`.
+
+7. **Processing Order**: Variables are processed for markup after substitution.
+
+8. **Literal Blocks**: Variables cannot be used inside literal blocks.
+
+9. **Whitespace Retention**:
+   - For single-line variables, everything after the second `=` is included in the variable's value.
+   - For multi-line variables, everything after the newline character of the start tag line up to just before the final newline character before the close tag line is included.
+
+10. **Usage in Labels**: Variables may be used inside labels (both `{{...}}` and `{...}` labels).
+
+### Complete Example
+
+```
+={author}=Warwick Allen
+={verse1}<<= 
+These are lines
+Of the first verse
+=>>
+
+{{ Version by ${author} }}
+
+{Verse 1}
+${verse1}
+
+====
+====
+====
+```
+
+This demonstrates defining variables and using them in both labels and content.
+
+## 8. Inline Markup
 
 Text content supports inline markup for formatting:
 
@@ -340,6 +459,8 @@ Use backslash to prevent markup conversion:
 | `\-` | `-` |
 | `\<` | `<` |
 | `\>` | `>` |
+| `\=` | `=` |
+| `\$` | `$` |
 | `\\` | `\` |
 
 ### Markup Rules
@@ -353,7 +474,7 @@ Use backslash to prevent markup conversion:
    - Analysis section content
    - Labels (version and segment labels)
 
-## 8. Minimal File Structure
+## 9. Minimal File Structure
 
 The absolute minimal valid poem file looks like this:
 
@@ -398,7 +519,7 @@ This won't appear in the output
 #>>
 ```
 
-## 9. Structural Rules
+## 10. Structural Rules
 
 ### Line Anchoring
 
@@ -410,6 +531,7 @@ The following elements **must** appear at the start of a line (column 0):
 - Segment labels: `{ ... }`
 - Literal block markers: `<<<`, `>>>`
 - Comment block markers: `<<#`, `#>>`
+- Variable definitions: `={...}=`, `={...}<<=`, `=>>` 
 
 ### Whitespace Handling
 
@@ -439,11 +561,11 @@ Converts to:
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;More indented line three
 ```
 
-## 10. Complete Example
+## 11. Complete Example
 
 See `_example.poem` for a complete example file demonstrating all features.
 
-## 11. Formal Grammar
+## 12. Formal Grammar
 
 For the complete formal specification, see `poem-syntax.ebnf`, which defines the grammar in Extended Backus-Naur Form (EBNF).
 
