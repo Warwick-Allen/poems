@@ -109,8 +109,8 @@ These are the lines                    | Lines of the second segment.  There
 Of stanza 2                            | must be one or more segments per
                                        | version.
                                        |
-----                                   | Divider between song versions (omitted
-                                       | if there is only one version).
+----                                   | Divider between song versions (only
+                                       | required if there is another version).
                                        |
                                        | Extra blank lines are ignored.
                                        |
@@ -128,18 +128,23 @@ La-de-da                               |
 These are the lines                    |
 Of the second verse                    |
                                        |
-====                                   | End-of-poem marker (mandatory).
+====                                   | End-of-poem marker (only required if
+                                       | there are subsequent non-empty
+                                       | sections).
                                        |
 Audiomack                              | Audiomack link existence (optional).
 Suno: s/SongLink12345678               | Suno link URL part (optional).
                                        |
-====                                   | End-of-audio marker (mandatory).
+====                                   | End-of-audio marker (only required if
+                                       | there are subsequent non-empty
+                                       | sections).
                                        |
 {Postscript 1}                         | Postscript note label (optional).
 Something to note.                     | Postscript note content (mandatory for
                                        | each note).
                                        |
-----                                   | Divider between postscript notes.
+----                                   | Divider between postscript notes (only
+                                       | required if there is another note).
                                        |
 This is another postscript note,       | There may be any number of postscript
 but without a label.                   | notes.  Single newlines within
@@ -151,7 +156,9 @@ This note has two paragraphs.          | Paragraph breaks are indicated by blank
 <<<                                    | A literal block.  Lines between <<< and
   - $ref: "_shared.yaml#/disclaimer"   | >>> are not converted.
 >>>                                    |
-====                                   | End-of-postscript marker (mandatory).
+====                                   | End-of-postscript marker (only
+                                       | required if there are subsequent
+                                       | non-empty sections).
                                        |
 {Synopsis}                             | This marks the start of the analysis
                                        | synopsis.  The analysis synopsis is

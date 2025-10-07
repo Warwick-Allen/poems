@@ -28,11 +28,26 @@ class PoemParser {
 
     this.parseHeader();
     this.parseVersions();
+
+    // All subsequent sections and their markers are optional
+    // If we hit EOF, all remaining sections are empty
+
+    if (this.eof()) return this.result;
     this.expectMarker('====', 'end-of-poem');
+
+    if (this.eof()) return this.result;
     this.parseAudio();
+
+    if (this.eof()) return this.result;
     this.expectMarker('====', 'end-of-audio');
+
+    if (this.eof()) return this.result;
     this.parsePostscript();
+
+    if (this.eof()) return this.result;
     this.expectMarker('====', 'end-of-postscript');
+
+    if (this.eof()) return this.result;
     this.parseAnalysis();
 
     return this.result;
@@ -159,13 +174,21 @@ class PoemParser {
       this.skipBlankLines();
 
       // Check for version divider (not end marker)
+      // Divider is optional - only required if there's another version
       const line = this.peek();
       if (line && line.trim() === '----') {
         this.next();
         this.skipBlankLines();
+        // Continue to parse next version
       } else {
-        // No more versions
-        break;
+        // No divider found - check if there might be another version
+        // (i.e., a version label or segment label)
+        if (line && (line.trim().startsWith('{{') || line.trim().startsWith('{'))) {
+          // There's another version without a divider separator - continue parsing
+        } else {
+          // No more versions
+          break;
+        }
       }
     } while (true);
   }
@@ -325,7 +348,7 @@ class PoemParser {
     while (true) {
       this.skipBlankLines();
 
-      // Check if we've hit the end marker
+      // Check if we've hit the end marker or EOF
       const line = this.peek();
       if (!line || line.trim() === '====') {
         break;
@@ -339,12 +362,22 @@ class PoemParser {
 
       this.skipBlankLines();
 
-      // Check for divider
+      // Check for divider (optional - only required if there's another note)
       const divLine = this.peek();
       if (divLine && divLine.trim() === '----') {
         this.next();
+        // Continue to parse next postscript note
       } else if (!divLine || divLine.trim() === '====') {
         break;
+      } else {
+        // Check if there might be another postscript note
+        // (i.e., a label or content that's not a marker)
+        if (divLine.trim().startsWith('{') || divLine.trim().startsWith('<<<')) {
+          // There's another note without a divider - continue parsing
+        } else {
+          // Could be more content, let parsePostscriptNote decide
+          break;
+        }
       }
     }
 

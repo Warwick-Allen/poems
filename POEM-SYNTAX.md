@@ -12,9 +12,11 @@ A poem file consists of the following sections in strict order:
 
 1. **Header** (mandatory)
 2. **Versions** (mandatory, at least one)
-3. **Audio** (may be empty, but delimiter required)
-4. **Postscript** (may be empty, but delimiter required)
-5. **Analysis** (may be empty, end delimiter optional)
+3. **Audio** (optional)
+4. **Postscript** (optional)
+5. **Analysis** (optional)
+
+**Note:** Dividers (`----` and `====`) are only required if there is subsequent non-empty content. If the parser reaches the end of the file, all remaining sections are assumed to be empty.
 
 ## 1. Header Section
 
@@ -68,8 +70,8 @@ Contains one or more versions of the poem, separated by `----` dividers.
 - Segment labels are optional (wrapped in `{ }`)
 - Leading and trailing whitespace in labels is trimmed
 - Poem lines preserve all newlines and indentation (including leading spaces/tabs)
-- Versions are separated by `----` (exactly 4 hyphens)
-- The section ends with `====` (exactly 4 equals signs)
+- Versions are separated by `----` (exactly 4 hyphens) only if there is a subsequent version
+- The section ends with `====` (exactly 4 equals signs) only if there are subsequent non-empty sections
 
 ### Example
 
@@ -96,7 +98,7 @@ First verse lines
 
 ## 3. Audio Section
 
-Section for audio links. The section may be empty, but the end marker is always required.
+Section for audio links. The section and its markers are optional if empty.
 
 ### Structure
 
@@ -112,7 +114,7 @@ Section for audio links. The section may be empty, but the end marker is always 
 - **Audiomack**: The word "Audiomack" on its own line indicates presence of an Audiomack link
 - **Suno**: Format is `Suno: ` followed by a URL path (e.g., `s/SongLink12345678` or `song/uuid`)
 - Both lines are optional; if neither is present, the section will be empty
-- The `====` end marker is **always required**, even if the section is empty
+- The `====` end marker is only required if there are subsequent non-empty sections
 
 ### Example
 
@@ -125,7 +127,7 @@ Suno: s/SongLink12345678
 
 ## 4. Postscript Section
 
-Section for postscript notes. The section may be empty, but the end marker is always required.
+Section for postscript notes. The section and its markers are optional if empty.
 
 ### Structure
 
@@ -147,12 +149,12 @@ Section for postscript notes. The section may be empty, but the end marker is al
 
 ### Rules
 
-- Multiple postscript notes separated by `----` (exactly 4 hyphens)
+- Multiple postscript notes separated by `----` (exactly 4 hyphens) only if there is a subsequent note
 - Each note can have an optional label (wrapped in `{ }`)
 - Single newlines within postscript paragraphs are **not preserved** (collapsed into single line)
 - Blank lines indicate paragraph breaks
 - Literal blocks can appear between postscript notes
-- The `====` end marker is **always required**, even if the section is empty
+- The `====` end marker is only required if there are subsequent non-empty sections
 
 ### Literal Blocks
 
@@ -225,7 +227,7 @@ Section for poem analysis. The section may be empty. Can have two forms:
 - Single newlines within paragraphs are **not preserved** (collapsed)
 - Blank lines indicate paragraph breaks
 - Supports heading markup and inline markup
-- The `====` end marker is **optional** - only required if followed by ignored content (comments)
+- The `====` end marker is optional - only required if followed by ignored content (comments)
 
 ### Heading Markup
 
@@ -484,20 +486,11 @@ Title
 
 {Verse}
 Some lines
-
-====
-
-====
-
-====
 ```
 
-This demonstrates that:
-- The audio section delimiter `====` is always required (even when empty)
-- The postscript section delimiter `====` is always required (even when empty)
-- The analysis section may be empty, and its delimiter `====` is optional
+That's it! All dividers are optional if there's no subsequent content.
 
-If you want to add comments after the analysis section, you must include the final `====` delimiter:
+If you have audio but no postscript or analysis:
 
 ```
 Title
@@ -508,9 +501,18 @@ Some lines
 
 ====
 
-====
+Audiomack
+Suno: s/SongLink12345678
+```
 
-====
+If you want to add comments after all sections, you must include a final `====` delimiter before the comments:
+
+```
+Title
+1970-01-01
+
+{Verse}
+Some lines
 
 ====
 

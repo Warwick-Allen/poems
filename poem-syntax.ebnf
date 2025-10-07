@@ -21,22 +21,22 @@
 poem_file = header,
             blank_lines,
             versions_section,
-            blank_lines,
-            end_of_poem_marker,
-            blank_lines,
-            audio_section,
-            blank_lines,
-            end_of_audio_marker,
-            blank_lines,
-            postscript_section,
-            blank_lines,
-            end_of_postscript_marker,
-            blank_lines,
-            analysis_section,
-            blank_lines,
-            [ end_of_file_marker,
-              blank_lines,
-              [ ignored_content ] ] ;
+            [ blank_lines,
+              end_of_poem_marker,
+              [ blank_lines,
+                audio_section,
+                [ blank_lines,
+                  end_of_audio_marker,
+                  [ blank_lines,
+                    postscript_section,
+                    [ blank_lines,
+                      end_of_postscript_marker,
+                      [ blank_lines,
+                        analysis_section,
+                        [ blank_lines,
+                          end_of_file_marker,
+                          blank_lines,
+                          [ ignored_content ] ] ] ] ] ] ] ] ;
 
 (* ============================================================================
    HEADER SECTION
@@ -64,7 +64,7 @@ day = (("0" | "1" | "2"), digit) | ("3", ("0" | "1")) ;
    VERSIONS SECTION
    ============================================================================ *)
 
-versions_section = version, { blank_lines, version_divider, blank_lines, version } ;
+versions_section = version, { [ blank_lines, version_divider ], blank_lines, version } ;
 
 version = [ blank_lines, version_label, blank_lines ],
           segments ;
@@ -100,7 +100,7 @@ url_char = letter | digit | "/" | "-" | "_" | "." | "~" | ":" | "@" | "!" | "$" 
    POSTSCRIPT SECTION
    ============================================================================ *)
 
-postscript_section = { postscript_note, { blank_lines, postscript_divider, blank_lines, postscript_note } } ;
+postscript_section = [ postscript_note, { [ blank_lines, postscript_divider ], blank_lines, postscript_note } ] ;
 
 postscript_note = [ postscript_label, blank_lines ],
                   postscript_content,
@@ -377,47 +377,44 @@ leading_whitespace = ( " " | tab ), { " " | tab } ;
 
    12. The author line is optional; if omitted, defaults to "Warwick Allen"
 
-   13. The audio section may be empty (no Audiomack or Suno lines), but the
-       end_of_audio_marker (====) is always required
+   13. Dividers (both ---- and ====) are only required if there is subsequent
+       non-empty content. If the parser reaches end-of-file, all remaining
+       sections are assumed to be empty.
 
-   14. The postscript section may be empty (no postscript notes), but the
-       end_of_postscript_marker (====) is always required
+   14. The end_of_file_marker (====) before comments is optional - only
+       required if followed by ignored content (comments)
 
-   15. The analysis section may be empty (no synopsis or full analysis), and
-       the end_of_file_marker (====) is optional - only required if followed
-       by ignored content (comments)
-
-   16. Blank lines before and after dividers, markers, labels, and literal
+   15. Blank lines before and after dividers, markers, labels, and literal
        block delimiters have no effect on output (they are normalized)
 
-   17. Variables can be defined anywhere in the file, except inside literal
+   16. Variables can be defined anywhere in the file, except inside literal
        blocks or multi-line variable blocks
 
-   18. Variables are file-scoped
+   17. Variables are file-scoped
 
-   19. If a variable is used before it is defined, no substitution occurs;
+   18. If a variable is used before it is defined, no substitution occurs;
        ${undefined} remains as literal text (parsers should emit a warning)
 
-   20. Variables may be redefined; the old value is clobbered
+   19. Variables may be redefined; the old value is clobbered
 
-   21. Variable definition lines do not appear in output and do not count
+   20. Variable definition lines do not appear in output and do not count
        as content lines in their containing section
 
-   22. Variables may be nested: A variable definition may include ${...}
+   21. Variables may be nested: A variable definition may include ${...}
        references, which are substituted when the outer variable is defined.
        Nesting may be of any depth. Self-referential definitions are allowed
        (e.g., ={a}=foo then ={a}=${a}bar expands ${a} to foobar)
 
-   23. Variables are processed for markup after substitution
+   22. Variables are processed for markup after substitution
 
-   24. Variables cannot be used inside literal blocks
+   23. Variables cannot be used inside literal blocks
 
-   25. Variable whitespace is retained: For single-line variables, everything
+   24. Variable whitespace is retained: For single-line variables, everything
        after the second "=" is included. For multi-line variables, everything
        after the newline of the start tag up to before the final newline
        before the close tag is included
 
-   26. Variables may be used inside labels (both {{...}} and {...} labels)
+   25. Variables may be used inside labels (both {{...}} and {...} labels)
 *)
 
 (* ============================================================================
