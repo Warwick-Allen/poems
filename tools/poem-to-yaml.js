@@ -802,7 +802,17 @@ class PoemParser {
  * Convert a .poem file to YAML
  */
 function convertPoemToYaml(poemFilePath) {
-  const content = fs.readFileSync(poemFilePath, 'utf8');
+  let content = fs.readFileSync(poemFilePath, 'utf8');
+  
+  // Prepend .shared.poem if it exists in the same directory
+  const poemDir = path.dirname(poemFilePath);
+  const sharedPoemPath = path.join(poemDir, '.shared.poem');
+  
+  if (fs.existsSync(sharedPoemPath)) {
+    const sharedContent = fs.readFileSync(sharedPoemPath, 'utf8');
+    content = sharedContent + content;
+  }
+  
   const parser = new PoemParser(content);
   const data = parser.parse();
 
@@ -830,7 +840,8 @@ function main() {
     const files = fs.readdirSync(poemsDir);
 
     for (const file of files) {
-      if (file.endsWith('.poem')) {
+      // Skip .shared.poem (it's included by other files)
+      if (file.endsWith('.poem') && file !== '.shared.poem') {
         const poemPath = path.join(poemsDir, file);
         const yamlPath = path.join(poemsDir, file.replace('.poem', '.yaml'));
 

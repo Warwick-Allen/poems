@@ -31,6 +31,21 @@ The preamble is an optional section at the very beginning of the file that may c
 
 This allows you to define variables that can be used in the header (title/author) and throughout the rest of the poem.
 
+### Shared Variables (.shared.poem)
+
+The `poem-to-yaml.js` converter automatically prepends the contents of `.shared.poem` (if it exists in the same directory) to each `.poem` file before processing. This allows you to define common variables that are available to all poems without repeating them in each file.
+
+**Example `.shared.poem`:**
+```
+={disclaimer}<<=
+<<<
+  - $ref: "_shared.yaml#/disclaimer"
+>>>
+=>>
+```
+
+All `.poem` files in the same directory can then use `${disclaimer}` without defining it themselves.
+
 ### Example
 
 ```

@@ -90,14 +90,8 @@ Glory and honour to the Endless of Days!
 ====
 
 Audiomack
-={suno link}=song/2aafcd12-2379-482b-9789-c872ba64d809
-Suno: ${suno link}
+Suno: song/2aafcd12-2379-482b-9789-c872ba64d809
 
 ====
 
-={disclaimer}<<= A literal block that references shared YAML content.
-<<<
-  - $ref: "_shared.yaml#/disclaimer"
->>>
-=>>
 ${disclaimer}

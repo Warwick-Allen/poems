@@ -98,6 +98,8 @@ node tools/poem-to-yaml.js --all
 
 The converter fully supports all features including variable substitution, markup, literal blocks, and all structural elements defined in `POEM-SYNTAX.md`.
 
+**Shared Variables**: The converter automatically prepends `.shared.poem` (if it exists in the `poems/` directory) to each poem file before processing. This allows you to define common variables (like disclaimer text) once and use them across all poems.
+
 ## Local Viewing
 
 To view the poems locally without building:
