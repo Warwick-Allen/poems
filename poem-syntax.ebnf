@@ -415,6 +415,12 @@ leading_whitespace = ( " " | tab ), { " " | tab } ;
        before the close tag is included
 
    25. Variables may be used inside labels (both {{...}} and {...} labels)
+
+   26. Structural blocks in multi-line variables: Multi-line variables may
+       contain structural elements such as literal blocks (<<<...>>>),
+       comment blocks (<<#...#>>), and other markers. When a standalone
+       variable reference (e.g., ${variable} on its own line) is expanded,
+       these structural elements are properly recognised and parsed
 *)
 
 (* ============================================================================

@@ -59,15 +59,44 @@ The `setup-linux.sh` script ensures the correct Linux Node.js and npm versions a
 
 ### Adding a New Poem
 
+You can create poems in either YAML or Poem format:
+
+#### Using YAML Format
 1. Create a new YAML file in the `poems/` directory (see `poems/YAML-SCHEMA.md` for format)
 2. Run `npm run build` to generate the HTML
 3. Commit both the YAML source and generated HTML files
 
+#### Using Poem Format
+1. Create a new `.poem` file in the `poems/` directory (see `POEM-SYNTAX.md` for format)
+2. Convert to YAML: `node tools/poem-to-yaml.js poems/your-poem.poem`
+3. Run `npm run build` to generate the HTML
+4. Commit the `.poem` file, generated YAML, and HTML files
+
+**Note**: The Poem format supports variable substitution and other features detailed in `POEM-SYNTAX.md`.
+
 ### Editing an Existing Poem
 
-1. Edit the YAML file in the `poems/` directory
-2. Run `npm run build` to regenerate the HTML
-3. Commit the changes
+1. Edit the source file (`.yaml` or `.poem`) in the `poems/` directory
+2. If editing a `.poem` file, regenerate the YAML: `node tools/poem-to-yaml.js poems/your-poem.poem`
+3. Run `npm run build` to regenerate the HTML
+4. Commit the changes
+
+### Converting Poem Files to YAML
+
+The `poem-to-yaml.js` tool converts `.poem` files to YAML format:
+
+```bash
+# Convert a single file
+node tools/poem-to-yaml.js poems/your-poem.poem poems/your-poem.yaml
+
+# Convert a single file (output defaults to same name with .yaml extension)
+node tools/poem-to-yaml.js poems/your-poem.poem
+
+# Convert all .poem files in the poems/ directory
+node tools/poem-to-yaml.js --all
+```
+
+The converter fully supports all features including variable substitution, markup, literal blocks, and all structural elements defined in `POEM-SYNTAX.md`.
 
 ## Local Viewing
 

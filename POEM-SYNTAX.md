@@ -2,6 +2,8 @@
 
 This document provides a human-readable guide to the formal EBNF grammar defined in `poem-syntax.ebnf`.
 
+**Implementation Note**: Variable substitution and all other features defined in this specification have been implemented in `tools/poem-to-yaml.js`.
+
 ## File Extension
 
 `.poem`
@@ -388,11 +390,13 @@ ${variable_name}
 
 8. **Literal Blocks**: Variables cannot be used inside literal blocks.
 
-9. **Whitespace Retention**:
+9. **Structural Blocks in Multi-Line Variables**: Multi-line variables may contain structural elements such as literal blocks (`<<<...>>>`), comment blocks (`<<#...#>>`), and other markers. When a standalone variable reference (e.g., `${variable}` on its own line) is expanded, these structural elements are properly recognised and parsed.
+
+10. **Whitespace Retention**:
    - For single-line variables, everything after the second `=` is included in the variable's value.
    - For multi-line variables, everything after the newline character of the start tag line up to just before the final newline character before the close tag line is included.
 
-10. **Usage in Labels**: Variables may be used inside labels (both `{{...}}` and `{...}` labels).
+11. **Usage in Labels**: Variables may be used inside labels (both `{{...}}` and `{...}` labels).
 
 ### Complete Example
 
@@ -409,11 +413,20 @@ Of the first verse
 ${verse1}
 
 ====
+
+={disclaimer}<<=
+<<<
+  - $ref: "_shared.yaml#/disclaimer"
+>>>
+=>>
+${disclaimer}
+
+====
 ====
 ====
 ```
 
-This demonstrates defining variables and using them in both labels and content.
+This demonstrates defining variables and using them in both labels and content. The `${disclaimer}` variable contains a literal block, which is properly expanded and parsed when the variable is used.
 
 ## 8. Inline Markup
 

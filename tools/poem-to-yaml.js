@@ -17,6 +17,8 @@ class PoemParser {
     this.lines = content.split('\n');
     this.index = 0;
     this.result = {};
+    this.variables = new Map();
+    this.usedBeforeDefined = new Set();
   }
 
   /**
@@ -25,6 +27,9 @@ class PoemParser {
   parse() {
     // Remove comment blocks first
     this.removeCommentBlocks();
+
+    // Process variables (extract and remove definition lines)
+    this.processVariables();
 
     this.parseHeader();
     this.parseVersions();
@@ -49,6 +54,13 @@ class PoemParser {
 
     if (this.eof()) return this.result;
     this.parseAnalysis();
+
+    // Warn about variables used before definition
+    if (this.usedBeforeDefined.size > 0) {
+      for (const varName of this.usedBeforeDefined) {
+        console.warn(`Warning: Variable '\${${varName}}' used but not defined`);
+      }
+    }
 
     return this.result;
   }
@@ -75,6 +87,144 @@ class PoemParser {
     }
 
     this.lines = newLines;
+  }
+
+  /**
+   * Process variables: extract definitions and expand multi-line substitutions
+   */
+  processVariables() {
+    const newLines = [];
+    let i = 0;
+    let inLiteralBlock = false;
+
+    while (i < this.lines.length) {
+      const line = this.lines[i];
+
+      // Track literal blocks (variables not defined inside them)
+      if (line.trim() === '<<<') {
+        inLiteralBlock = true;
+        newLines.push(line);
+        i++;
+        continue;
+      }
+      if (line.trim() === '>>>') {
+        inLiteralBlock = false;
+        newLines.push(line);
+        i++;
+        continue;
+      }
+
+      // Skip variable definition inside literal blocks
+      if (inLiteralBlock) {
+        newLines.push(line);
+        i++;
+        continue;
+      }
+
+      // Check for single-line variable: ={name}= value
+      const singleLineMatch = line.match(/^=\{([^}]+)\}=(.*)$/);
+      if (singleLineMatch) {
+        const varName = singleLineMatch[1];
+        const varValue = singleLineMatch[2];
+        // Store value with nested variables unsubstituted for now
+        this.variables.set(varName, varValue);
+        i++;
+        continue; // Don't add to newLines (remove from content)
+      }
+
+      // Check for multi-line variable start: ={name}<<= ...
+      const multiLineMatch = line.match(/^=\{([^}]+)\}<<=.*$/);
+      if (multiLineMatch) {
+        const varName = multiLineMatch[1];
+        const contentLines = [];
+        i++; // Move past the start line
+
+        // Collect lines until we find =>>
+        while (i < this.lines.length) {
+          const contentLine = this.lines[i];
+          if (contentLine.match(/^=>>.*$/)) {
+            // Found the end marker
+            i++;
+            break;
+          }
+          contentLines.push(contentLine);
+          i++;
+        }
+
+        // Store content as array of lines for multi-line variables
+        this.variables.set(varName, contentLines);
+        continue; // Don't add to newLines (remove from content)
+      }
+
+      // Regular line - don't substitute yet, keep as-is
+      newLines.push(line);
+      i++;
+    }
+
+    this.lines = newLines;
+    
+    // Now substitute variables within variable definitions (for nesting)
+    // and convert multi-line variables to strings
+    for (const [varName, varValue] of this.variables.entries()) {
+      if (Array.isArray(varValue)) {
+        // Multi-line variable - substitute in each line then join
+        const substitutedLines = varValue.map(line => this.substituteVariables(line));
+        this.variables.set(varName, substitutedLines);
+      } else {
+        // Single-line variable - just substitute
+        this.variables.set(varName, this.substituteVariables(varValue));
+      }
+    }
+
+    // Now expand any standalone variable references into multiple lines
+    const expandedLines = [];
+    for (const line of this.lines) {
+      // Check if line is a standalone variable reference: ${varname}
+      const standaloneMatch = line.trim().match(/^\$\{([^}]+)\}$/);
+      if (standaloneMatch) {
+        const varName = standaloneMatch[1];
+        if (this.variables.has(varName)) {
+          const varValue = this.variables.get(varName);
+          if (Array.isArray(varValue)) {
+            // Multi-line variable - expand to multiple lines
+            expandedLines.push(...varValue);
+          } else {
+            // Single-line variable - substitute normally
+            expandedLines.push(this.substituteVariables(line));
+          }
+        } else {
+          // Variable not defined
+          this.usedBeforeDefined.add(varName);
+          expandedLines.push(line);
+        }
+      } else {
+        // Not a standalone variable reference - keep as-is (substitution happens during parsing)
+        expandedLines.push(line);
+      }
+    }
+
+    this.lines = expandedLines;
+  }
+
+  /**
+   * Substitute variables in text
+   */
+  substituteVariables(text) {
+    // Match ${variable_name} patterns
+    return text.replace(/\$\{([^}]+)\}/g, (match, varName) => {
+      if (this.variables.has(varName)) {
+        const varValue = this.variables.get(varName);
+        // If it's an array (multi-line variable), join with newlines
+        if (Array.isArray(varValue)) {
+          return varValue.join('\n');
+        }
+        return varValue;
+      } else {
+        // Variable not defined - track it and leave as literal
+        this.usedBeforeDefined.add(varName);
+        return match;
+      }
+    });
   }
 
   /**
@@ -132,7 +282,7 @@ class PoemParser {
     if (!title) {
       throw new Error('Missing title');
     }
-    this.result.title = title.trim();
+    this.result.title = this.substituteVariables(title.trim());
 
     // Author (optional) or Date
     let line = this.next();
@@ -147,7 +297,7 @@ class PoemParser {
       this.result.date = line.trim();
     } else {
       // This is the author
-      this.result.author = line.trim();
+      this.result.author = this.substituteVariables(line.trim());
       // Next line must be date
       line = this.next();
       if (!line || !datePattern.test(line.trim())) {
@@ -211,7 +361,7 @@ class PoemParser {
     if (firstLine.trim().startsWith('{{') && firstLine.trim().endsWith('}}')) {
       const label = firstLine.trim().slice(2, -2).trim();
       if (label) {
-        version.label = label;
+        version.label = this.substituteVariables(label);
       }
       this.next();
       this.skipBlankLines();
@@ -255,7 +405,7 @@ class PoemParser {
     if (line.trim().startsWith('{') && line.trim().endsWith('}') && !line.trim().startsWith('{{')) {
       const label = line.trim().slice(1, -1).trim();
       if (label && label !== 'Synopsis' && label !== 'Full') {
-        segment.label = label;
+        segment.label = this.substituteVariables(label);
         this.next();
         this.skipBlankLines();
       }
@@ -281,7 +431,7 @@ class PoemParser {
         }
       }
 
-      contentLines.push(this.next());
+      contentLines.push(this.substituteVariables(this.next()));
     }
 
     if (contentLines.length > 0) {
@@ -312,7 +462,7 @@ class PoemParser {
         break;
       }
 
-      const trimmed = line.trim();
+      const trimmed = this.substituteVariables(line.trim());
       if (trimmed === 'Audiomack') {
         audio.audiomack = true;
         hasAudio = true;
@@ -410,7 +560,7 @@ class PoemParser {
     if (line.trim().startsWith('{') && line.trim().endsWith('}')) {
       const label = line.trim().slice(1, -1).trim();
       if (label && label !== 'Synopsis' && label !== 'Full') {
-        postscript.label = label;
+        postscript.label = this.substituteVariables(label);
         this.next();
         this.skipBlankLines();
       }
@@ -441,8 +591,8 @@ class PoemParser {
         }
         this.next();
       } else {
-        // Add line to current paragraph
-        currentParagraph.push(contentLine.trim());
+        // Add line to current paragraph (with variable substitution)
+        currentParagraph.push(this.substituteVariables(contentLine.trim()));
         this.next();
       }
     }
@@ -559,7 +709,7 @@ class PoemParser {
           blocks.push(`<p>${this.convertMarkup(currentParagraph.join(' '))}</p>`);
           currentParagraph = [];
         }
-        const headingText = this.convertMarkup(trimmed.substring(4).trim());
+        const headingText = this.convertMarkup(this.substituteVariables(trimmed.substring(4).trim()));
         blocks.push(`<h5>${headingText}</h5>`);
         this.next();
       } else if (trimmed.startsWith('## ')) {
@@ -568,7 +718,7 @@ class PoemParser {
           blocks.push(`<p>${this.convertMarkup(currentParagraph.join(' '))}</p>`);
           currentParagraph = [];
         }
-        const headingText = this.convertMarkup(trimmed.substring(3).trim());
+        const headingText = this.convertMarkup(this.substituteVariables(trimmed.substring(3).trim()));
         blocks.push(`<h4>${headingText}</h4>`);
         this.next();
       } else if (trimmed.startsWith('# ')) {
@@ -577,7 +727,7 @@ class PoemParser {
           blocks.push(`<p>${this.convertMarkup(currentParagraph.join(' '))}</p>`);
           currentParagraph = [];
         }
-        const headingText = this.convertMarkup(trimmed.substring(2).trim());
+        const headingText = this.convertMarkup(this.substituteVariables(trimmed.substring(2).trim()));
         blocks.push(`<h3>${headingText}</h3>`);
         this.next();
       } else if (trimmed === '') {
@@ -588,7 +738,7 @@ class PoemParser {
         }
         this.next();
       } else {
-        currentParagraph.push(trimmed);
+        currentParagraph.push(this.substituteVariables(trimmed));
         this.next();
       }
     }
