@@ -18,7 +18,8 @@
    TOP-LEVEL STRUCTURE
    ============================================================================ *)
 
-poem_file = header,
+poem_file = [ preamble ],
+            header,
             blank_lines,
             versions_section,
             [ blank_lines,
@@ -37,6 +38,14 @@ poem_file = header,
                           end_of_file_marker,
                           blank_lines,
                           [ ignored_content ] ] ] ] ] ] ] ] ;
+
+(* ============================================================================
+   PREAMBLE SECTION
+   ============================================================================ *)
+
+preamble = preamble_item, { preamble_item } ;
+
+preamble_item = blank_line | variable_definition ;
 
 (* ============================================================================
    HEADER SECTION
@@ -421,6 +430,10 @@ leading_whitespace = ( " " | tab ), { " " | tab } ;
        comment blocks (<<#...#>>), and other markers. When a standalone
        variable reference (e.g., ${variable} on its own line) is expanded,
        these structural elements are properly recognised and parsed
+
+   27. Variable definitions and blank lines may appear before the header
+       (title/author/date). This allows for defining variables at the top
+       of the file that can be used in the header itself
 *)
 
 (* ============================================================================

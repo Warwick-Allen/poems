@@ -12,6 +12,7 @@ This document provides a human-readable guide to the formal EBNF grammar defined
 
 A poem file consists of the following sections in strict order:
 
+0. **Preamble** (optional) - Variable definitions and blank lines before the header
 1. **Header** (mandatory)
 2. **Versions** (mandatory, at least one)
 3. **Audio** (optional)
@@ -19,6 +20,30 @@ A poem file consists of the following sections in strict order:
 5. **Analysis** (optional)
 
 **Note:** Dividers (`----` and `====`) are only required if there is subsequent non-empty content. If the parser reaches the end of the file, all remaining sections are assumed to be empty.
+
+## 0. Preamble Section
+
+The preamble is an optional section at the very beginning of the file that may contain:
+
+- Variable definitions (both single-line and multi-line)
+- Blank lines
+- Comment blocks
+
+This allows you to define variables that can be used in the header (title/author) and throughout the rest of the poem.
+
+### Example
+
+```
+={poem_title}=The Journey Home
+={author_name}=Warwick Allen
+
+${poem_title}
+${author_name}
+2025-01-15
+
+{Verse 1}
+These are the poem lines...
+```
 
 ## 1. Header Section
 
@@ -32,9 +57,9 @@ The header appears at the beginning of the file and consists of:
 
 ### Fields
 
-- **Title** (mandatory): The title of the poem (any text)
-- **Author** (optional): The author's name. If omitted, defaults to "Warwick Allen"
-- **Date** (mandatory): Must be in format `YYYY-MM-DD` (e.g., `1970-01-01`)
+- **Title** (mandatory): The title of the poem (any text, may include variable references)
+- **Author** (optional): The author's name. If omitted, defaults to "Warwick Allen" (may include variable references)
+- **Date** (mandatory): Must be in format `YYYY-MM-DD` (e.g., `1970-01-01`) after variable substitution
 
 ### Example
 
@@ -42,6 +67,17 @@ The header appears at the beginning of the file and consists of:
 Example Poem
 A Poet
 1970-01-01
+```
+
+### Example with Variables
+
+```
+={poem_title}=My Journey
+={year}=2025
+
+${poem_title}
+Warwick Allen
+${year}-01-15
 ```
 
 ## 2. Versions Section
@@ -372,7 +408,7 @@ ${variable_name}
 
 ### Variable Rules
 
-1. **Definition Location**: Variables can be defined anywhere in the file, except inside literal blocks or multi-line variable blocks.
+1. **Definition Location**: Variables can be defined anywhere in the file, including in the preamble before the header, except inside literal blocks or multi-line variable blocks.
 
 2. **Scope**: Variables are file-scoped.
 
@@ -402,6 +438,12 @@ ${variable_name}
 
 ```
 ={author}=Warwick Allen
+={poem_title}=My Journey
+
+${poem_title}
+${author}
+2025-01-15
+
 ={verse1}<<=
 These are lines
 Of the first verse
@@ -426,7 +468,12 @@ ${disclaimer}
 ====
 ```
 
-This demonstrates defining variables and using them in both labels and content. The `${disclaimer}` variable contains a literal block, which is properly expanded and parsed when the variable is used.
+This demonstrates:
+- Defining variables in the preamble (before the header)
+- Using variables in the header (title and author)
+- Using variables in labels and content
+- Multi-line variables
+- The `${disclaimer}` variable contains a literal block, which is properly expanded and parsed when the variable is used
 
 ## 8. Inline Markup
 
@@ -502,6 +549,18 @@ Some lines
 ```
 
 That's it! All dividers are optional if there's no subsequent content.
+
+You can also include variables in a preamble before the header:
+
+```
+={title_var}=My Poem Title
+
+${title_var}
+1970-01-01
+
+{Verse}
+Some lines
+```
 
 If you have audio but no postscript or analysis:
 

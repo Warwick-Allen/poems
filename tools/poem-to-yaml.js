@@ -290,20 +290,25 @@ class PoemParser {
       throw new Error('Missing date');
     }
 
-    // Check if this is a date (YYYY-MM-DD format)
+    // Check if this is a date (YYYY-MM-DD format) after variable substitution
     const datePattern = /^\d{4}-\d{2}-\d{2}$/;
-    if (datePattern.test(line.trim())) {
+    const substitutedLine = this.substituteVariables(line.trim());
+    if (datePattern.test(substitutedLine)) {
       // No author, this is the date
-      this.result.date = line.trim();
+      this.result.date = substitutedLine;
     } else {
       // This is the author
-      this.result.author = this.substituteVariables(line.trim());
+      this.result.author = substitutedLine;
       // Next line must be date
       line = this.next();
-      if (!line || !datePattern.test(line.trim())) {
+      if (!line) {
+        throw new Error('Missing date');
+      }
+      const substitutedDateLine = this.substituteVariables(line.trim());
+      if (!datePattern.test(substitutedDateLine)) {
         throw new Error('Invalid or missing date');
       }
-      this.result.date = line.trim();
+      this.result.date = substitutedDateLine;
     }
 
     this.skipBlankLines();
