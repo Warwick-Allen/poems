@@ -1,0 +1,74 @@
+title: Example Poem
+author: A Poet
+date: 1970-01-01
+
+versions:
+  - label: Version 1
+    segments:
+      - label: Stanza 1
+        lines: |
+          These are the lines
+          Of stanza 1
+
+      - lines: |
+          These are the lines
+          Of stanza 2
+
+  - label: Version 2 (song arrangement)
+    segments:
+      - label: Verse 1
+        lines: |
+          These are the lines
+          Of the first verse
+
+      - label: Chorus
+        lines: |
+          La-de-da
+
+      - label: Verse 2
+        lines: |
+          These are the lines
+          Of the second verse
+
+audio:
+  audiomack: true
+  suno: s/SongLink12345678
+
+postscript:
+  - label: Postscript 1
+    content: |
+      <p>Something to note.</p>
+
+  - content: |
+      <p>This is another postscript note, but without a label.</p>
+
+      <p>This note has two paragraphs.</p>
+
+  - $ref: "_shared.yaml#/disclaimer"
+
+analysis:
+  synopsis: |
+    <h3>Synopsis</h3>
+
+    <p>This is where the synopsis of the analysis goes.</p>
+
+    <p>Another paragraph.</p>
+
+    <h3>Section Heading</h3>
+
+    <p>Some more text can go here.</p>
+
+    <p>Here is <em>another</em> paragraph.</p>
+
+  full: |
+    <h3>Full</h3>
+
+    <p>This is where the full analysis goes.</p>
+
+    <h3>Section Heading</h3>
+
+    <h4>Sub-Section Heading</h4>
+
+    <h5>Sub-Sub-Section Heading</h5>
+
+    <p>A paragraph in the sub-sub-section of the full analysis.</p>

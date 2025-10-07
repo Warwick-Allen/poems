@@ -1,0 +1,248 @@
+Example Poem
+A Poet
+1970-01-01
+
+{{ Version 1 }}
+
+{Stanza 1}
+These are the lines
+Of stanza 1
+
+These are the lines
+Of stanza 2
+
+
+----
+
+
+
+
+{{ Version 2 (song arrangement) }}
+
+
+{Verse 1}
+These are the lines
+Of the first verse
+
+{Chorus}
+La-de-da
+
+{Verse 2}
+These are the lines
+Of the second verse
+
+====
+
+Audiomack
+Suno: s/SongLink12345678
+
+====
+
+{Postscript 1}
+Something to note.
+
+
+----
+
+This is another postscript note,
+but without a label.
+
+This note has two paragraphs.
+
+
+---
+<<<
+  - $ref: "_shared.yaml#/disclaimer"
+>>>
+====
+
+{Synopsis}
+
+This is where the synopsis of the
+analysis goes.
+
+Another paragraph.
+
+# Section Heading
+
+Some more text can go here.
+
+Here is _another_ paragraph.
+
+
+{Full}
+
+This is where the full analysis goes.
+
+# Section Heading
+
+## Sub-Section Heading
+
+### Sub-Sub-Section Heading
+
+A paragraph in the sub-sub-section of
+the full analysis.
+
+====
+
+*This section will be ignored.*  It
+can be used for comments.
+
+# Notes about this example file.
+
+## Line-by-Line Notes
+
+Below is the example poem repeated, with explanatory notes in the right-hand
+column.
+
+Example Poem                           | The poem title (mandatory).
+A Poet                                 | The poem's author (optional).
+1970-01-01                             | The poem's creation date (mandatory).
+                                       |
+{{ Version 1 }}                        | The version label (optional).
+                                       |
+{Stanza 1}                             | Segment label (optional).
+These are the lines                    | The lines of the first segment of the
+Of stanza 1                            | first version.
+                                       |
+These are the lines                    | Lines of the second segment.  There
+Of stanza 2                            | must be one or more segments per
+                                       | version.
+                                       |
+----                                   | Divider between song versions (omitted
+                                       | if there is only one version).
+                                       |
+                                       | Extra blank lines are ignored.
+                                       |
+{{ Version 2 (song arrangement) }}     | The initial and final whitespace in
+                                       | labels will be trimmed.
+                                       |
+{Verse 1}                              |
+These are the lines                    | New lines within poem segments are
+Of the first verse                     | preserved.
+                                       |
+{Chorus}                               |
+La-de-da                               |
+                                       |
+{Verse 2}                              |
+These are the lines                    |
+Of the second verse                    |
+                                       |
+====                                   | End-of-poem marker (mandatory).
+                                       |
+Audiomack                              | Audiomack link existence (optional).
+Suno: s/SongLink12345678               | Suno link URL part (optional).
+                                       |
+====                                   | End-of-audio marker (mandatory).
+                                       |
+{Postscript 1}                         | Postscript note label (optional).
+Something to note.                     | Postscript note content (mandatory for
+                                       | each note).
+                                       |
+----                                   | Divider between postscript notes.
+                                       |
+This is another postscript note,       | There may be any number of postscript
+but without a label.                   | notes.  Single newlines within
+                                       | postscript notes are not preserved.
+This note has two paragraphs.          | Paragraph breaks are indicated by blank
+                                       | lines.
+                                       |
+---                                    |
+<<<                                    | A literal block.  Lines between <<< and
+  - $ref: "_shared.yaml#/disclaimer"   | >>> are not converted.
+>>>                                    |
+====                                   | End-of-postscript marker (mandatory).
+                                       |
+{Synopsis}                             | This marks the start of the analysis
+                                       | synopsis.  The analysis synopsis is
+This is where the synopsis of the      | optional.  Newlines are not preserved
+analysis goes.                         | within these paragraphs.  New
+                                       | paragraphs are indicated by blank
+Another paragraph.                     | lines.
+                                       |
+# Section Heading                      | This will be converted to:
+                                       | <h3>Section Heading</h3>
+Some more text can go here.            |
+                                       |
+Here is _another_ paragraph.           | The word "another" is emphasised (see
+                                       | notes below).
+                                       |
+{Full}                                 | This marks the start of the full
+                                       | analysis.  This is optional, unless a
+This is where the full analysis goes.  | synopsis section is present, in which
+                                       | case it is mandatory.
+# Section Heading                      |
+                                       |
+## Sub-Section Heading                 | This will be converted to an <h4> heading.
+                                       |
+### Sub-Sub-Section Heading            | This will be converted to an <h5> heading.
+                                       |
+A paragraph in the sub-sub-section of  |
+the full analysis.                     |
+                                       |
+====                                   | End-of-file marker.  This is optional,
+                                       | but if it is present, any subsequent
+*This section will be ignored.*  It    | content will be ignored.
+can be used for comments.              |
+
+## Other Notes
+
+There may be any number (including zero) of blank lines before and after
+dividers ("----" and "===="), labels ("{{...}}" and "{...}") and literal block
+delimiters ("<<<" and ">>>"), with no effect on the output.
+
+### Markup
+
+Poem files support this limited set of conversion instructions:
+
+ Raw         | Converted
+-------------|-------------------------------
+ \_          | _
+ \*          | *
+ \~          | ~
+ \[          | [
+ \`          | `
+ \"          | "
+ \&          | &
+ \'          | '
+ \-          | -
+ \<          | <
+ \>          | >
+ \\          | \
+ _text_      | <em>text</em>
+ *text*      | <strong>text</strong>
+ ~text~      | <s>text</s>
+ [text|url]  | <a href="https://url">text</a>
+ `text`      | &#8216;text&#8217;
+ "text"      | &#8220;text&#8221;
+ &           | &#38;
+ '           | &#39;
+ --          | &#8211;
+ ---         | &#8212;
+ <<<         | The start of a literal block.
+ >>>         | The end of a literal block.
+
+These instructions may be nested.  E.g.,
+  `This [*is a _test_* link|example.com].`
+will be converted to:
+  &#8216;This <a href="https://example.com"><strong>is a <em>test</em></strong>
+  link</a>.&#8217;
+
+The special quoting/bracketing character pairs (~~, [], ``, "") will match
+across lines within a paragraph, but not across paragraphs.  Unmatched pairs
+are not converted.
+
+A backslash before a special character (or character string) will prevent a
+conversion.  E.g.,
+  A demonstration---an example---of an em-dash.
+will be converted to:
+  A demonstration&#8212;an example&#8212;of an em-dash.
+But
+  A demonstration of preventing em-dash (\-\--) conversion.
+will be converted to:
+  A demonstration of preventing em-dash (---) conversion.
+However, be aware that
+  \---
+will be converted to:
+  -&ndash;
+
