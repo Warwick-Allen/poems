@@ -292,18 +292,37 @@ class YamlToPoemConverter {
    * Convert HTML entities back to markup
    */
   convertEntitiesToMarkup(text) {
-    // Convert entities back to markup or characters
-    text = text.replace(/&#8216;(.*?)&#8217;/g, '`$1`');
+    // First decode common named entities
+    text = text.replace(/&ldquo;/g, '&#8220;');
+    text = text.replace(/&rdquo;/g, '&#8221;');
+    text = text.replace(/&lsquo;/g, '&#8216;');
+    text = text.replace(/&rsquo;/g, '&#8217;');
+    text = text.replace(/&mdash;/g, '&#8212;');
+    text = text.replace(/&ndash;/g, '&#8211;');
+    text = text.replace(/&apos;/g, '&#39;');
+    text = text.replace(/&nbsp;/g, ' ');
+    
+    // Convert smart quotes to markup (paired quotes)
     text = text.replace(/&#8220;(.*?)&#8221;/g, '"$1"');
+    text = text.replace(/&#8216;(.*?)&#8217;/g, '`$1`');
+    
+    // Convert dashes to markup
     text = text.replace(/&#8212;/g, '---');
     text = text.replace(/&#8211;/g, '--');
+    
+    // Convert remaining entities to characters (not markup)
+    // These will just be plain characters in the .poem file
     text = text.replace(/&#38;/g, '&');
     text = text.replace(/&#39;/g, "'");
-    text = text.replace(/&nbsp;/g, ' ');
-    text = text.replace(/&ldquo;/g, '"');
-    text = text.replace(/&rdquo;/g, '"');
-    text = text.replace(/&lsquo;/g, '`');
-    text = text.replace(/&rsquo;/g, "`");
+    text = text.replace(/&#34;/g, '"');
+    text = text.replace(/&#60;/g, '<');
+    text = text.replace(/&#62;/g, '>');
+    
+    // Handle unpaired smart quotes (convert to regular quotes)
+    text = text.replace(/&#8220;/g, '"');
+    text = text.replace(/&#8221;/g, '"');
+    text = text.replace(/&#8216;/g, '`');
+    text = text.replace(/&#8217;/g, '`');
     
     return text;
   }
