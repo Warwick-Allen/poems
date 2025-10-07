@@ -196,7 +196,7 @@ delimiters ("<<<" and ">>>"), with no effect on the output.
 Poem files support this limited set of conversion instructions:
 
  Raw         | Converted
--------------|-------------------------------
+-------------|--------------------------------------------------------
  \_          | _
  \*          | *
  \~          | ~
@@ -208,6 +208,8 @@ Poem files support this limited set of conversion instructions:
  \-          | -
  \<          | <
  \>          | >
+ \=          | =
+ \$          | $
  \\          | \
  _text_      | <em>text</em>
  *text*      | <strong>text</strong>
@@ -223,6 +225,10 @@ Poem files support this limited set of conversion instructions:
  >>>         | The end of a literal block.
  <<#         | The start of a comment block.
  #>>         | The end of a comment block.
+ ={token}=   | The definition of a single-line variable named "token".
+ ={token}<<= | The start of a multi-line variable definition.
+ =>>         | The end of a multi-line variable definition.
+ ${token}    | Insert the value of the "token" variable.
 
 These instructions may be nested.  E.g.,
   `This [*is a _test_* link|example.com].`
@@ -252,3 +258,96 @@ Comment blocks start with `<<#` (anchored to the start of the line) and end with
 `#>>` (anchored to the start of the line).  Lines between these markers (and the
 marker lines themselves) will not be included in the output file. Text after a
 comment marker (on the same line as the marker) will also be ignored.
+
+## Variables
+
+Variable definitions must be anchored to the start of a line.
+
+### Single-Line Variables
+
+Single-line variable definitions must match this (Perl-flavoured) regular
+expression:
+  /^=\{ ( [A-Za-z0-9] (?: [^{}$<>]* [^{}$<> ] )? ) \}= ( .* )/xs
+where the first capture group is the variable name and the second capture group
+is its value.
+
+#### Example
+
+Raw (input):
+```
+={My token!}= (some text)
+Here is${My token!}.
+```
+
+Converted (output):
+```
+Here is (some text).
+```
+
+### Multi-Line Variables
+
+Multi-line variable definitions must match this (Perl-flavoured) regular
+expression:
+  /^=\{ ( [A-Za-z0-9] (?: [^{}$<>]* [^{}$<> ] )? ) \}<<= .*? ^( .* ) \n=>> .*/xsm
+where the first capture group is the variable name and the second capture group
+is its value.  The final newline is not included in the variable's value.
+
+#### Example
+
+Raw (input):
+```
+={My token!}<<= Anything after the second "=" on this line is ignored.
+ (some text)
+=>> Anything after the second ">" on this line is ignored.
+Here is${My token!}.
+```
+
+Converted (output):
+```
+Here is (some text).
+```
+
+### Rules for Variables
+
+1.  Variables can be defined anywhere in the file, except inside literal blocks
+    or multi-line variable blocks.
+
+2.  Variables are file-scoped.
+
+3.  If a variable is used before it is defined, no substitution occurs.  I.e.,
+    `${undefined}` will remain as literal text in the output.  When this occurs,
+    parsers should emit a warning, but they should not raise an exception.
+
+4.  Variables may be redefined.  The old value will be clobbered.
+
+5.  Variable definition lines do not appear in the output.  They do not count as
+    content lines in their containing section.
+
+6.  Variables may be nested: A variable definition may include a `${...}`
+    reference.  The inner variable reference will be substituted when the outer
+    variable is defined (not when the outer variable is used).  Nesting may be
+    of any depth, so, e.g., if `={a}=foo`, and later `={b}=${a}bar`, and later
+    `={c}=${b}baz`, then `${c}` will be expanded to `foobarbaz`.  Also, if
+    `={a}=foo`, and later `={a}=${a}bar`, then `${a}` will be expanded to
+    `foobar`.
+
+7.  Variables are processed for markup after substitution.
+
+8.  Variables cannot be used inside literal blocks.
+
+9.  Whitespace is retained:
+    - For single-line variables, everything after the second "=" is included in
+      the variable's value.
+    - For multi-line variables, everything after the newline character of the
+      start tag line up to just before the final newline character before the
+      close tag line is included.
+
+10. Variables may be used inside labels (both `{{...}}` and `{...}` labels).
+
+## Comments
+
+1.  Comment tags within literal blocks do not start a comment.  These will be
+    retained unchanged.
+
+2.  Comments are removed before any other processing occurs.
+
