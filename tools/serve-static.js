@@ -401,7 +401,7 @@ function concatenateAllHtmlFiles(dirPath) {
 
         function parseDate(dateStr) {
             if (dateStr === "Unknown Date") return new Date(0);
-            
+
             // Ensure dateStr is a string
             if (typeof dateStr !== 'string') {
                 dateStr = String(dateStr);

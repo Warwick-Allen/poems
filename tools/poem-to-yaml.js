@@ -25,7 +25,7 @@ class PoemParser {
   parse() {
     // Remove comment blocks first
     this.removeCommentBlocks();
-    
+
     this.parseHeader();
     this.parseVersions();
     this.expectMarker('====', 'end-of-poem');
@@ -34,7 +34,7 @@ class PoemParser {
     this.parsePostscript();
     this.expectMarker('====', 'end-of-postscript');
     this.parseAnalysis();
-    
+
     return this.result;
   }
 
@@ -44,7 +44,7 @@ class PoemParser {
   removeCommentBlocks() {
     const newLines = [];
     let inComment = false;
-    
+
     for (const line of this.lines) {
       if (line.trimStart().startsWith('<<#')) {
         inComment = true;
@@ -58,7 +58,7 @@ class PoemParser {
         newLines.push(line);
       }
     }
-    
+
     this.lines = newLines;
   }
 
@@ -111,7 +111,7 @@ class PoemParser {
    */
   parseHeader() {
     this.skipBlankLines();
-    
+
     // Title (mandatory)
     const title = this.next();
     if (!title) {
@@ -149,15 +149,15 @@ class PoemParser {
    */
   parseVersions() {
     this.result.versions = [];
-    
+
     do {
       const version = this.parseVersion();
       if (version) {
         this.result.versions.push(version);
       }
-      
+
       this.skipBlankLines();
-      
+
       // Check for version divider (not end marker)
       const line = this.peek();
       if (line && line.trim() === '----') {
@@ -175,15 +175,15 @@ class PoemParser {
    */
   parseVersion() {
     this.skipBlankLines();
-    
+
     // Check if we've hit the end-of-poem marker
     const firstLine = this.peek();
     if (!firstLine || firstLine.trim() === '====') {
       return null;
     }
-    
+
     const version = {};
-    
+
     // Check for version label
     if (firstLine.trim().startsWith('{{') && firstLine.trim().endsWith('}}')) {
       const label = firstLine.trim().slice(2, -2).trim();
@@ -198,13 +198,13 @@ class PoemParser {
     version.segments = [];
     while (true) {
       this.skipBlankLines();
-      
+
       // Check if we've hit a divider or end marker
       const line = this.peek();
       if (!line || line.trim() === '----' || line.trim() === '====') {
         break;
       }
-      
+
       const segment = this.parseSegment();
       if (!segment) {
         break;
@@ -220,7 +220,7 @@ class PoemParser {
    */
   parseSegment() {
     this.skipBlankLines();
-    
+
     const line = this.peek();
     if (!line || line.trim() === '----' || line.trim() === '====') {
       return null;
@@ -242,14 +242,14 @@ class PoemParser {
     const contentLines = [];
     while (true) {
       const contentLine = this.peek();
-      if (!contentLine || 
-          contentLine.trim() === '----' || 
+      if (!contentLine ||
+          contentLine.trim() === '----' ||
           contentLine.trim() === '====') {
         break;
       }
-      
+
       // Check if this is the start of a new segment (has a label)
-      if (contentLine.trim().startsWith('{') && contentLine.trim().endsWith('}') && 
+      if (contentLine.trim().startsWith('{') && contentLine.trim().endsWith('}') &&
           !contentLine.trim().startsWith('{{')) {
         const possibleLabel = contentLine.trim().slice(1, -1).trim();
         if (possibleLabel && possibleLabel !== 'Synopsis' && possibleLabel !== 'Full') {
@@ -257,7 +257,7 @@ class PoemParser {
           break;
         }
       }
-      
+
       contentLines.push(this.next());
     }
 
@@ -266,7 +266,7 @@ class PoemParser {
       while (contentLines.length > 0 && contentLines[contentLines.length - 1].trim() === '') {
         contentLines.pop();
       }
-      
+
       if (contentLines.length > 0) {
         segment.lines = contentLines.join('\n') + '\n';
       }
@@ -324,13 +324,13 @@ class PoemParser {
 
     while (true) {
       this.skipBlankLines();
-      
+
       // Check if we've hit the end marker
       const line = this.peek();
       if (!line || line.trim() === '====') {
         break;
       }
-      
+
       const postscript = this.parsePostscriptNote();
       if (!postscript) {
         break;
@@ -338,7 +338,7 @@ class PoemParser {
       postscripts.push(postscript);
 
       this.skipBlankLines();
-      
+
       // Check for divider
       const divLine = this.peek();
       if (divLine && divLine.trim() === '----') {
@@ -360,7 +360,7 @@ class PoemParser {
    */
   parsePostscriptNote() {
     this.skipBlankLines();
-    
+
     const line = this.peek();
     if (!line || line.trim() === '====') {
       return null;
@@ -391,10 +391,10 @@ class PoemParser {
 
     while (true) {
       const contentLine = this.peek();
-      
+
       // Stop at end of file or structural markers
       if (contentLine === null ||
-          contentLine.trim() === '----' || 
+          contentLine.trim() === '----' ||
           contentLine.trim() === '====' ||
           contentLine.trim() === '<<<') {
         break;
@@ -468,7 +468,7 @@ class PoemParser {
    */
   parseAnalysis() {
     this.skipBlankLines();
-    
+
     const line = this.peek();
     if (!line || line.trim() === '====') {
       return;
@@ -506,7 +506,7 @@ class PoemParser {
 
     while (true) {
       const line = this.peek();
-      
+
       // Stop at end of file or end marker or if we hit the next section label
       if (line === null || line.trim() === '====') {
         break;
@@ -584,19 +584,19 @@ class PoemParser {
     // Convert markup (process longer patterns first)
     text = text.replace(/---/g, '&#8212;'); // Em dash
     text = text.replace(/--/g, '&#8211;'); // En dash
-    
+
     // Links: [text|url]
     text = text.replace(/\[([^\]|]+)\|([^\]]+)\]/g, '<a href="https://$2">$1</a>');
-    
+
     // Smart quotes
     text = text.replace(/`([^`]+)`/g, '&#8216;$1&#8217;'); // Single quotes
     text = text.replace(/"([^"]+)"/g, '&#8220;$1&#8221;'); // Double quotes
-    
+
     // Basic formatting
     text = text.replace(/\~([^~]+)\~/g, '<s>$1</s>'); // Strikethrough
     text = text.replace(/\*([^*]+)\*/g, '<strong>$1</strong>'); // Strong
     text = text.replace(/_([^_]+)_/g, '<em>$1</em>'); // Emphasis
-    
+
     // Entities - convert & to &#38; but NOT if it's already part of an entity (&#...;)
     text = text.replace(/&(?!#\d+;|[a-z]+;)/gi, '&#38;');
     text = text.replace(/'/g, '&#39;');
@@ -617,7 +617,7 @@ function convertPoemToYaml(poemFilePath) {
   const content = fs.readFileSync(poemFilePath, 'utf8');
   const parser = new PoemParser(content);
   const data = parser.parse();
-  
+
   return yaml.dump(data, {
     lineWidth: -1, // Don't wrap lines
     noRefs: true,  // Don't use YAML references
@@ -629,7 +629,7 @@ function convertPoemToYaml(poemFilePath) {
  */
 function main() {
   const args = process.argv.slice(2);
-  
+
   if (args.length === 0) {
     console.error('Usage: poem-to-yaml.js <file.poem> [output.yaml]');
     console.error('   or: poem-to-yaml.js --all');
@@ -640,12 +640,12 @@ function main() {
     // Convert all .poem files in poems/ directory
     const poemsDir = path.join(process.cwd(), 'poems');
     const files = fs.readdirSync(poemsDir);
-    
+
     for (const file of files) {
       if (file.endsWith('.poem')) {
         const poemPath = path.join(poemsDir, file);
         const yamlPath = path.join(poemsDir, file.replace('.poem', '.yaml'));
-        
+
         try {
           console.log(`Converting ${file}...`);
           const yamlContent = convertPoemToYaml(poemPath);
@@ -660,7 +660,7 @@ function main() {
     // Convert single file
     const inputFile = args[0];
     const outputFile = args[1] || inputFile.replace('.poem', '.yaml');
-    
+
     try {
       const yamlContent = convertPoemToYaml(inputFile);
       fs.writeFileSync(outputFile, yamlContent, 'utf8');

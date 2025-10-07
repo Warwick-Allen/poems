@@ -396,7 +396,7 @@ ${variable_name}
 
 ```
 ={author}=Warwick Allen
-={verse1}<<= 
+={verse1}<<=
 These are lines
 Of the first verse
 =>>
@@ -531,7 +531,7 @@ The following elements **must** appear at the start of a line (column 0):
 - Segment labels: `{ ... }`
 - Literal block markers: `<<<`, `>>>`
 - Comment block markers: `<<#`, `#>>`
-- Variable definitions: `={...}=`, `={...}<<=`, `=>>` 
+- Variable definitions: `={...}=`, `={...}<<=`, `=>>`
 
 ### Whitespace Handling
 

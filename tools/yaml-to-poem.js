@@ -26,7 +26,7 @@ class YamlToPoemConverter {
     this.writeAudio();
     this.writePostscript();
     this.writeAnalysis();
-    
+
     return this.lines.join('\n');
   }
 
@@ -51,12 +51,12 @@ class YamlToPoemConverter {
    */
   writeHeader() {
     this.addLine(this.data.title);
-    
+
     // Only add author line if it's not the default
     if (this.data.author && this.data.author !== 'Warwick Allen') {
       this.addLine(this.data.author);
     }
-    
+
     // Format date as YYYY-MM-DD
     const date = this.formatDate(this.data.date);
     this.addLine(date);
@@ -71,7 +71,7 @@ class YamlToPoemConverter {
     if (typeof dateInput === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(dateInput)) {
       return dateInput;
     }
-    
+
     // Parse date and format as YYYY-MM-DD
     const date = new Date(dateInput);
     const year = date.getFullYear();
@@ -90,7 +90,7 @@ class YamlToPoemConverter {
 
     for (let i = 0; i < this.data.versions.length; i++) {
       const version = this.data.versions[i];
-      
+
       // Add version label if present
       if (version.label) {
         this.addLine(`{{ ${version.label} }}`);
@@ -104,7 +104,7 @@ class YamlToPoemConverter {
 
       for (let j = 0; j < version.segments.length; j++) {
         const segment = version.segments[j];
-        
+
         // Add segment label if present
         if (segment.label) {
           this.addLine(`{${segment.label}}`);
@@ -113,8 +113,8 @@ class YamlToPoemConverter {
         // Write segment lines
         if (segment.lines) {
           // Remove trailing newline from lines if present
-          const lines = segment.lines.endsWith('\n') 
-            ? segment.lines.slice(0, -1) 
+          const lines = segment.lines.endsWith('\n')
+            ? segment.lines.slice(0, -1)
             : segment.lines;
           this.addLine(lines);
         }
@@ -238,14 +238,14 @@ class YamlToPoemConverter {
       const cleanContent = content.replace(/\s+/g, ' ').trim();
       return `<${tag}>${cleanContent}</${tag}>`;
     });
-    
+
     // Split by double newlines to get blocks
     const blocks = html.trim().split(/\n\n+/);
     const result = [];
 
     for (const block of blocks) {
       const trimmed = block.trim();
-      
+
       // Handle headings (now they're single-line after normalization)
       if (trimmed.match(/^<h5[^>]*>/) && trimmed.endsWith('</h5>')) {
         const text = this.stripHtmlTags(trimmed.replace(/^<h5[^>]*>/, '').replace(/<\/h5>$/, ''));
@@ -284,7 +284,7 @@ class YamlToPoemConverter {
     text = text.replace(/<strong>(.*?)<\/strong>/g, '*$1*');
     text = text.replace(/<s>(.*?)<\/s>/g, '~$1~');
     text = text.replace(/<a href="https?:\/\/(.*?)">(.*?)<\/a>/g, '[$2|$1]');
-    
+
     return this.convertEntitiesToMarkup(text);
   }
 
@@ -301,15 +301,15 @@ class YamlToPoemConverter {
     text = text.replace(/&ndash;/g, '&#8211;');
     text = text.replace(/&apos;/g, '&#39;');
     text = text.replace(/&nbsp;/g, ' ');
-    
+
     // Convert smart quotes to markup (paired quotes)
     text = text.replace(/&#8220;(.*?)&#8221;/g, '"$1"');
     text = text.replace(/&#8216;(.*?)&#8217;/g, '`$1`');
-    
+
     // Convert dashes to markup
     text = text.replace(/&#8212;/g, '---');
     text = text.replace(/&#8211;/g, '--');
-    
+
     // Convert remaining entities to characters (not markup)
     // These will just be plain characters in the .poem file
     text = text.replace(/&#38;/g, '&');
@@ -317,13 +317,13 @@ class YamlToPoemConverter {
     text = text.replace(/&#34;/g, '"');
     text = text.replace(/&#60;/g, '<');
     text = text.replace(/&#62;/g, '>');
-    
+
     // Handle unpaired smart quotes (convert to regular quotes)
     text = text.replace(/&#8220;/g, '"');
     text = text.replace(/&#8221;/g, '"');
     text = text.replace(/&#8216;/g, '`');
     text = text.replace(/&#8217;/g, '`');
-    
+
     return text;
   }
 }
@@ -334,7 +334,7 @@ class YamlToPoemConverter {
 function convertYamlToPoem(yamlFilePath) {
   const content = fs.readFileSync(yamlFilePath, 'utf8');
   const data = yaml.load(content);
-  
+
   const converter = new YamlToPoemConverter(data);
   return converter.convert();
 }
@@ -344,7 +344,7 @@ function convertYamlToPoem(yamlFilePath) {
  */
 function main() {
   const args = process.argv.slice(2);
-  
+
   if (args.length === 0) {
     console.error('Usage: yaml-to-poem.js <file.yaml> [output.poem]');
     console.error('   or: yaml-to-poem.js --all');
@@ -355,15 +355,15 @@ function main() {
     // Convert all .yaml files in poems/ directory (except special files)
     const poemsDir = path.join(process.cwd(), 'poems');
     const files = fs.readdirSync(poemsDir);
-    
+
     const skipFiles = ['_shared.yaml', '_example.yaml'];
     let converted = 0;
-    
+
     for (const file of files) {
       if (file.endsWith('.yaml') && !skipFiles.includes(file)) {
         const yamlPath = path.join(poemsDir, file);
         const poemPath = path.join(poemsDir, file.replace('.yaml', '.poem'));
-        
+
         try {
           console.log(`Converting ${file}...`);
           const poemContent = convertYamlToPoem(yamlPath);
@@ -375,13 +375,13 @@ function main() {
         }
       }
     }
-    
+
     console.log(`\nConverted ${converted} YAML files to .poem format`);
   } else {
     // Convert single file
     const inputFile = args[0];
     const outputFile = args[1] || inputFile.replace('.yaml', '.poem');
-    
+
     try {
       const poemContent = convertYamlToPoem(inputFile);
       fs.writeFileSync(outputFile, poemContent, 'utf8');

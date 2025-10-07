@@ -1,8 +1,8 @@
 (* ============================================================================
    EBNF Grammar for Poem File Format (.poem)
-   
+
    This grammar defines the structure of poem files used in the poems system.
-   
+
    Notation:
    - Non-terminals are written in lowercase with underscores
    - Terminals are written in double quotes or defined as character patterns
@@ -346,77 +346,77 @@ leading_whitespace = ( " " | tab ), { " " | tab } ;
    SEMANTIC CONSTRAINTS (not expressible in pure EBNF)
    ============================================================================ *)
 
-(* 
+(*
    1. Each version must contain at least one segment
-   
+
    2. If a synopsis section is present, a full section must also be present
-   
+
    3. Dividers, markers, labels, and literal block delimiters must appear
       at the start of a line (column 0)
-   
+
    4. Version labels and segment labels have leading and trailing whitespace
       trimmed
-   
+
    5. Within postscript notes, single newlines are collapsed (not preserved);
       only paragraph breaks (blank lines) are preserved
-   
+
    6. Within poem segments, all newlines and indentation are preserved
-   
+
    7. Within analysis sections, single newlines within paragraphs are
       collapsed; only paragraph breaks (blank lines) are preserved
-   
+
    8. Markup special character pairs (_, *, ~, `, ") match across lines
       within a paragraph but not across paragraph boundaries
-   
+
    9. Unmatched markup pairs are not converted and remain as literal text
-   
+
    10. Markup can be nested (e.g., `[*_text_*|url]`)
-   
+
    11. Comment blocks (<<# ... #>>) can appear anywhere and are completely
        removed during parsing
-   
+
    12. The author line is optional; if omitted, defaults to "Warwick Allen"
-   
+
    13. The audio section may be empty (no Audiomack or Suno lines), but the
        end_of_audio_marker (====) is always required
-   
+
    14. The postscript section may be empty (no postscript notes), but the
        end_of_postscript_marker (====) is always required
-   
+
    15. The analysis section may be empty (no synopsis or full analysis), and
        the end_of_file_marker (====) is optional - only required if followed
        by ignored content (comments)
-   
+
    16. Blank lines before and after dividers, markers, labels, and literal
        block delimiters have no effect on output (they are normalized)
-   
+
    17. Variables can be defined anywhere in the file, except inside literal
        blocks or multi-line variable blocks
-   
+
    18. Variables are file-scoped
-   
+
    19. If a variable is used before it is defined, no substitution occurs;
        ${undefined} remains as literal text (parsers should emit a warning)
-   
+
    20. Variables may be redefined; the old value is clobbered
-   
+
    21. Variable definition lines do not appear in output and do not count
        as content lines in their containing section
-   
+
    22. Variables may be nested: A variable definition may include ${...}
        references, which are substituted when the outer variable is defined.
        Nesting may be of any depth. Self-referential definitions are allowed
        (e.g., ={a}=foo then ={a}=${a}bar expands ${a} to foobar)
-   
+
    23. Variables are processed for markup after substitution
-   
+
    24. Variables cannot be used inside literal blocks
-   
+
    25. Variable whitespace is retained: For single-line variables, everything
        after the second "=" is included. For multi-line variables, everything
        after the newline of the start tag up to before the final newline
        before the close tag is included
-   
+
    26. Variables may be used inside labels (both {{...}} and {...} labels)
 *)
 

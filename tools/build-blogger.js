@@ -29,7 +29,7 @@ function injectCSSIntoTemplate() {
 
     // Create the regex pattern to match the CSS section
     const cssPattern = /(\/\* ~~ CUSTOM CSS START ~~ \*\/)([\s\S]*?)(\/\* ~~ CUSTOM CSS END ~~ \*\/)/;
-    
+
     // Check if the delimiters exist
     if (!cssPattern.test(templateContent)) {
       console.error("Error: CSS delimiters not found in template file");
@@ -44,11 +44,11 @@ function injectCSSIntoTemplate() {
 
     // Write the updated template back to file
     fs.writeFileSync(templatePath, updatedContent, "utf8");
-    
+
     console.log("✅ Successfully injected CSS into template");
     console.log(`📁 Template: ${templatePath}`);
     console.log(`🎨 Styles: ${stylesPath}`);
-    
+
   } catch (err) {
     console.error("Error injecting CSS:", err.message);
     process.exit(1);
