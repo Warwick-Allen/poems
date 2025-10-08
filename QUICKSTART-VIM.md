@@ -28,7 +28,7 @@ The syntax highlighting provides colour-coding for all major Poem file elements:
 |---------|---------|-----------|
 | **Title** | First line of file | Special formatting |
 | **Date** | `2025-01-15` | Date format |
-| **Version labels** | `{{ Version 1 }}` | Identifier |
+| **Version labels** | {% raw %}`{{ Version 1 }}`{% endraw %} | Identifier |
 | **Segment labels** | `{Verse 1}` | Type |
 | **Variables** | `={var}=value`, `${var}` | Macro/Identifier |
 | **Comments** | `<<# comment #>>` | Comment style |

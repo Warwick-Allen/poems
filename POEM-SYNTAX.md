@@ -101,6 +101,7 @@ Contains one or more versions of the poem, separated by `----` dividers.
 
 ### Structure
 
+{% raw %}
 ```
 [{{ <Version Label> }}]
 
@@ -115,11 +116,12 @@ Contains one or more versions of the poem, separated by `----` dividers.
 [{{ <Version Label> }}]
 ...
 ```
+{% endraw %}
 
 ### Rules
 
 - Each version must contain at least one segment
-- Version labels are optional (wrapped in `{{ }}`)
+- Version labels are optional (wrapped in {% raw %}`{{ }}`{% endraw %})
 - Segment labels are optional (wrapped in `{ }`)
 - Leading and trailing whitespace in labels is trimmed
 - Poem lines preserve all newlines and indentation (including leading spaces/tabs)
@@ -129,6 +131,7 @@ Contains one or more versions of the poem, separated by `----` dividers.
 
 ### Example
 
+{% raw %}
 ```
 {{ Version 1 }}  # Original version
 
@@ -149,6 +152,7 @@ First verse lines
 
 ====  # End of versions section
 ```
+{% endraw %}
 
 Note: The text after `#` in the example above is ignored by the parser, allowing for inline comments.
 
@@ -454,10 +458,11 @@ ${variable_name}
    - For single-line variables, everything after the second `=` is included in the variable's value.
    - For multi-line variables, everything after the newline character of the start tag line up to just before the final newline character before the close tag line is included.
 
-11. **Usage in Labels**: Variables may be used inside labels (both `{{...}}` and `{...}` labels).
+11. **Usage in Labels**: Variables may be used inside labels (both {% raw %}`{{...}}`{% endraw %} and `{...}` labels).
 
 ### Complete Example
 
+{% raw %}
 ```
 ={author}=Warwick Allen
 ={poem_title}=My Journey
@@ -489,6 +494,7 @@ ${disclaimer}
 ====
 ====
 ```
+{% endraw %}
 
 This demonstrates:
 - Defining variables in the preamble (before the header)
@@ -649,7 +655,7 @@ The following elements **must** appear at the start of a line (column 0):
 
 - Dividers: `----`
 - End markers: `====`
-- Version labels: `{{ ... }}`
+- Version labels: {% raw %}`{{ ... }}`{% endraw %}
 - Segment labels: `{ ... }`
 - Literal block markers: `<<<`, `>>>`
 - Comment block markers: `<<#`, `#>>`
@@ -658,7 +664,7 @@ The following elements **must** appear at the start of a line (column 0):
 **Trailing Text Rule**: Any text after a line-anchored token on the same line is ignored. This allows for inline comments and notes. This applies to:
 - Dividers (`----`)
 - End markers (`====`)
-- Version labels (`{{ ... }}`)
+- Version labels ({% raw %}`{{ ... }}`{% endraw %})
 - Segment labels (`{ ... }`)
 - Postscript labels
 - Analysis labels (`{Synopsis}`, `{Full}`)

@@ -21,7 +21,7 @@ This change:
 Updated the grammar to consume trailing text for:
 - Dividers (`----`)
 - End markers (`====`)
-- Version labels (`{{ ... }}`)
+- Version labels ({% raw %}`{{ ... }}`{% endraw %})
 - Segment labels (`{ ... }`)
 - Postscript labels
 - Analysis labels (`{Synopsis}`, `{Full}`)
@@ -44,6 +44,7 @@ Added comprehensive documentation:
 ### 3. Example File (`poems/_example.poem`)
 
 Enhanced with inline comments demonstrating the feature:
+{% raw %}
 ```
 {{ Version 1 }}  # Original poem structure
 {Stanza 1}  # Opening stanza
@@ -52,6 +53,7 @@ Enhanced with inline comments demonstrating the feature:
 <<<  # Start of literal block
 >>>  # End of literal block
 ```
+{% endraw %}
 
 Added new "Dividers and Inline Comments" section explaining the feature.
 
@@ -71,20 +73,24 @@ Updated:
 ## Examples
 
 ### Before (implicit behaviour):
+{% raw %}
 ```
 ----
 ====
 {{ Version 1 }}
 {Stanza 1}
 ```
+{% endraw %}
 
 ### After (explicit specification with inline comments):
+{% raw %}
 ```
 ----  # End of first version
 ====  # End of poem section
 {{ Version 1 }}  # Original version
 {Stanza 1}  # Opening stanza
 ```
+{% endraw %}
 
 Both forms are valid, but the specification now explicitly states that trailing text is ignored.
 

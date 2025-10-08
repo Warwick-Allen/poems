@@ -8,7 +8,7 @@ The syntax highlighting provides colour-coding for:
 
 - **Header elements**: Title, author, and date
 - **Dividers and markers**: `----` and `====` separators
-- **Labels**: Version labels `{{ ... }}`, segment labels `{ ... }`, postscript labels, and analysis labels
+- **Labels**: Version labels {% raw %}`{{ ... }}`{% endraw %}, segment labels `{ ... }`, postscript labels, and analysis labels
 - **Variables**: Single-line and multi-line variable definitions (`={var}=`), and variable references (`${var}`)
 - **Comment blocks**: `<<# ... #>>`
 - **Literal blocks**: `<<< ... >>>` with optional language-specific syntax highlighting

@@ -35,7 +35,7 @@ The converter handles all features defined in the `.poem` syntax specification:
 
 ### Versions
 - Multiple versions separated by `----` dividers
-- Optional version labels with `{{ ... }}`
+- Optional version labels with {% raw %}`{{ ... }}`{% endraw %}
 - Segments with optional labels `{ ... }`
 - Preserves all indentation and newlines in poem content
 
