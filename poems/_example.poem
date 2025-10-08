@@ -11,14 +11,9 @@ Of stanza 1
 These are the lines
 Of stanza 2
 
-
 ----
 
-
-
-
 {{ Version 2 (song arrangement) }}
-
 
 {Verse 1}
 These are the lines
@@ -41,14 +36,12 @@ Suno: s/SongLink12345678
 {Postscript 1}
 Something to note.
 
-
 ----
 
 This is another postscript note,
 but without a label.
 
 This note has two paragraphs.
-
 
 ----
 
@@ -68,7 +61,6 @@ Another paragraph.
 Some more text can go here.
 
 Here is _another_ paragraph.
-
 
 {Full}
 
@@ -192,13 +184,13 @@ the full analysis.                     |
 *This section will be ignored.*  It    | content will be ignored.
 can be used for comments.              |
 
-## Other Notes
+## Dividers
 
 There may be any number (including zero) of blank lines before and after
 dividers ("----" and "===="), labels ("{{...}}" and "{...}") and literal block
 delimiters ("<<<" and ">>>"), with no effect on the output.
 
-### Markup
+## Markup
 
 Poem files support this limited set of conversion instructions:
 
@@ -224,6 +216,7 @@ Poem files support this limited set of conversion instructions:
  [text|url]  | <a href="https://url">text</a>
  `text`      | &#8216;text&#8217;
  "text"      | &#8220;text&#8221;
+ <<.c:text>> | <span class="c">text</span>
  &           | &#38;
  '           | &#39;
  --          | &#8211;
@@ -243,9 +236,25 @@ will be converted to:
   &#8216;This <a href="https://example.com"><strong>is a <em>test</em></strong>
   link</a>.&#8217;
 
-The special quoting/bracketing character pairs (~~, [], ``, "") will match
-across lines within a paragraph, but not across paragraphs.  Unmatched pairs
-are not converted.
+### Quoting and Bracketing Pairs
+
+The special quoting/bracketing character pairs are:
+
+ Left   | Right | Note
+--------|-------|-----------------------------------------------------
+  _     |  _    | Italic
+  *     |  *    | Bold
+  ~     |  ~    | Strikethrough
+  [     |  ]    | Link
+  `     |  `    | Single quotes
+  "     |  "    | Double quotes
+  <<.c: |  >>   | "c" is a placeholder matching /^\w(?:[\w\.-]*|\w)?$/
+
+
+These pairs will match across lines within a paragraph, but not across
+paragraphs.  Unmatched pairs are not converted.
+
+## Escaping
 
 A backslash before a special character (or character string) will prevent a
 conversion.  E.g.,
@@ -260,6 +269,8 @@ However, be aware that
   \---
 will be converted to:
   -&ndash;
+
+## Comment Blocks
 
 Comment blocks start with `<<#` (anchored to the start of the line) and end with
 `#>>` (anchored to the start of the line).  Lines between these markers (and the

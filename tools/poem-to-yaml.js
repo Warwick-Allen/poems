@@ -831,7 +831,7 @@ class PoemParser {
     const escapes = new Map();
     let escapeIndex = 0;
     text = text.replace(/\\([_*~\[`"&'\-<>=$\\])/g, (match, char) => {
-      const placeholder = `__ESCAPE_${escapeIndex++}__`;
+      const placeholder = `\x00ESCAPE${escapeIndex++}\x00`;
       escapes.set(placeholder, char);
       return placeholder;
     });
@@ -840,8 +840,25 @@ class PoemParser {
     text = text.replace(/---/g, '&#8212;'); // Em dash
     text = text.replace(/--/g, '&#8211;'); // En dash
 
-    // Links: [text|url]
-    text = text.replace(/\[([^\]|]+)\|([^\]]+)\]/g, '<a href="https://$2">$1</a>');
+    // Links: [text|url] - use &quot; to avoid smart quote conversion
+    text = text.replace(/\[([^\]|]+)\|([^\]]+)\]/g, '<a href=&quot;https://$2&quot;>$1</a>');
+
+    // Span elements: <<.classname:content>> - use &quot; to avoid smart quote conversion
+    text = text.replace(/<<\.([^:>]*):(.*?)>>/g, (match, className, content) => {
+      if (className === '') {
+        console.warn('Warning: Span element with empty class name');
+        return `<span>${content}</span>`;
+      }
+      
+      // Validate class name with regex: /^\w(?:[\w\.-]*\w)?$/
+      const classNameRegex = /^\w(?:[\w\.-]*\w)?$/;
+      if (!classNameRegex.test(className)) {
+        console.warn(`Warning: Invalid span class name: "${className}"`);
+        return match; // Leave unchanged
+      }
+      
+      return `<span class=&quot;${className}&quot;>${content}</span>`;
+    });
 
     // Smart quotes
     text = text.replace(/`([^`]+)`/g, '&#8216;$1&#8217;'); // Single quotes
