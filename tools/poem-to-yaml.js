@@ -167,8 +167,24 @@ class PoemParser {
     // and convert multi-line variables to strings
     for (const [varName, varValue] of this.variables.entries()) {
       if (Array.isArray(varValue)) {
-        // Multi-line variable - substitute in each line then join
-        const substitutedLines = varValue.map(line => this.substituteVariables(line));
+        // Multi-line variable - substitute in each line, but NOT inside literal blocks
+        const substitutedLines = [];
+        let inLiteralBlock = false;
+        for (const line of varValue) {
+          if (line.trim() === '<<<') {
+            inLiteralBlock = true;
+            substitutedLines.push(line);
+          } else if (line.trim() === '>>>') {
+            inLiteralBlock = false;
+            substitutedLines.push(line);
+          } else if (inLiteralBlock) {
+            // Don't substitute variables inside literal blocks
+            substitutedLines.push(line);
+          } else {
+            // Substitute variables outside literal blocks
+            substitutedLines.push(this.substituteVariables(line));
+          }
+        }
         this.variables.set(varName, substitutedLines);
       } else {
         // Single-line variable - just substitute
