@@ -629,15 +629,25 @@ The following elements **must** appear at the start of a line (column 0):
 - **Analysis sections**: Single newlines are collapsed; only blank lines (paragraph breaks) are preserved
 - **Blank lines**: Any number of blank lines before/after dividers, markers, and labels are normalized (have no effect on output)
 
-### Indentation in Poem Segments
+### Indentation and Space Preservation in Poem Segments
 
-Indentation is preserved in poem segments:
+Indentation and multiple spaces are preserved in poem segments by automatically converting them to non-breaking space entities (`&nbsp;`):
+
+- **Leading spaces** (indentation) are converted entirely to `&nbsp;` to maintain consistent indentation
+- **Multiple consecutive spaces** (2 or more) within lines are converted using a pattern that allows text wrapping on small displays:
+  - The first space remains a normal space (allows line wrapping)
+  - Subsequent spaces are converted to `&nbsp;`
+  - Example: `  ` (2 spaces) becomes ` &nbsp;` (space + nbsp)
+- Single spaces between words are left as regular spaces
+
+**Example:**
 
 ```
 {Verse}
 Line one
    Indented line two
       More indented line three
+Line with  multiple  spaces
 ```
 
 Converts to:
@@ -648,7 +658,10 @@ Converts to:
     Line one
     &nbsp;&nbsp;&nbsp;Indented line two
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;More indented line three
+    Line with &nbsp;multiple &nbsp;spaces
 ```
+
+**Note:** You can also manually use `&nbsp;` in your `.poem` files if needed, and they will be preserved as-is. The alternating pattern (normal space + `&nbsp;`) ensures that text can wrap at appropriate points on small displays while still preserving the visual spacing.
 
 ## 11. Complete Example
 

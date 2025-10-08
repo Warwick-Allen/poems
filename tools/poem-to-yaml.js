@@ -395,6 +395,28 @@ class PoemParser {
   }
 
   /**
+   * Convert spaces to non-breaking spaces in poem lines
+   * - Leading spaces (indentation) are converted to &nbsp;
+   * - Multiple consecutive spaces within lines are converted to alternating
+   *   space + &nbsp; pattern (e.g., "  " becomes " &nbsp;") to allow wrapping
+   *   on small displays while preserving visual spacing
+   */
+  convertSpacesToNbsp(line) {
+    // Convert leading spaces to &nbsp;
+    const leadingSpaces = line.match(/^( +)/);
+    if (leadingSpaces) {
+      const nbspLeading = '&nbsp;'.repeat(leadingSpaces[1].length);
+      line = nbspLeading + line.substring(leadingSpaces[1].length);
+    }
+
+    // Convert multiple consecutive spaces (2 or more) within the line
+    // Pattern: first space is normal (allows wrapping), rest are &nbsp;
+    line = line.replace(/( {2,})/g, (match) => ' ' + '&nbsp;'.repeat(match.length - 1));
+
+    return line;
+  }
+
+  /**
    * Parse a segment within a version
    */
   parseSegment() {
@@ -437,7 +459,9 @@ class PoemParser {
         }
       }
 
-      contentLines.push(this.substituteVariables(this.next()));
+      // Substitute variables first, then convert spaces to nbsp
+      const processedLine = this.convertSpacesToNbsp(this.substituteVariables(this.next()));
+      contentLines.push(processedLine);
     }
 
     if (contentLines.length > 0) {
