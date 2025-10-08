@@ -1,6 +1,6 @@
 *.code-workspace
-../*.s[wp]
+*.sw[op]
 node_modules
 
-poems/*.yaml
+src/poems/*.yaml
 public/*.html

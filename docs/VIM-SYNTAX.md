@@ -168,10 +168,10 @@ If you prefer a simpler approach, you can manually enable syntax highlighting fo
 au BufRead,BufNewFile *.poem set filetype=poem
 
 " Add the syntax directory to Vim's runtime path
-set runtimepath+=~/poems/vim
+set runtimepath+=~/poems/editors/vim
 ```
 
-Replace `~/poems/vim` with the full path to the `vim/` directory in this repository.
+Replace `~/poems/editors/vim` with the full path to the `editors/vim/` directory in this repository.
 
 ## Verification
 
@@ -180,7 +180,7 @@ To verify the syntax highlighting is working:
 1. Open a `.poem` file in Vim:
 
    ```bash
-   vim poems/_example.poem
+   vim src/poems/_example.poem
    ```
 
 2. Check the filetype:

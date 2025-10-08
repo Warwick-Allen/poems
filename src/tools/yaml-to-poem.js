@@ -353,7 +353,7 @@ function main() {
 
   if (args[0] === '--all') {
     // Convert all .yaml files in poems/ directory (except special files)
-    const poemsDir = path.join(process.cwd(), 'poems');
+    const poemsDir = path.join(process.cwd(), 'src', 'poems');
     const files = fs.readdirSync(poemsDir);
 
     const skipFiles = ['_shared.yaml', '_example.yaml'];

@@ -2,7 +2,7 @@
 
 This document provides a human-readable guide to the formal EBNF grammar defined in `poem-syntax.ebnf`.
 
-**Implementation Note**: Variable substitution and all other features defined in this specification have been implemented in `tools/poem-to-yaml.js`.
+**Implementation Note**: Variable substitution and all other features defined in this specification have been implemented in `src/tools/poem-to-yaml.js`.
 
 ## File Extension
 

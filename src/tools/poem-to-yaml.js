@@ -941,7 +941,7 @@ function main() {
 
   if (args[0] === '--all') {
     // Convert all .poem files in poems/ directory
-    const poemsDir = path.join(process.cwd(), 'poems');
+    const poemsDir = path.join(process.cwd(), 'src', 'poems');
     const files = fs.readdirSync(poemsDir);
 
     for (const file of files) {

@@ -17,7 +17,7 @@ Run the installation script from the project root:
 Open a poem file to see syntax highlighting in action:
 
 ```bash
-vim poems/_example.poem
+vim src/poems/_example.poem
 ```
 
 ## What Gets Highlighted?

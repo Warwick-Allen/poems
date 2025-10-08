@@ -41,7 +41,7 @@ Added comprehensive documentation:
 - Updated examples showing inline comments (e.g., `----  # comment`)
 - Clarified behaviour for comment blocks, literal blocks, and multi-line variables
 
-### 3. Example File (`poems/_example.poem`)
+### 3. Example File (`src/poems/_example.poem`)
 
 Enhanced with inline comments demonstrating the feature:
 {% raw %}
@@ -103,10 +103,10 @@ Existing poem files without trailing text continue to work exactly as before. Th
 ## Files Modified
 
 1. `poem-syntax.ebnf` - Grammar rules and semantic constraints
-2. `POEM-SYNTAX.md` - Human-readable documentation
-3. `poems/_example.poem` - Example file with demonstrations
-4. `vim/syntax/poem.vim` - Vim syntax highlighting
-5. `VIM-SYNTAX.md` - Vim syntax documentation
+2. `docs/POEM-SYNTAX.md` - Human-readable documentation
+3. `src/poems/_example.poem` - Example file with demonstrations
+4. `editors/vim/syntax/poem.vim` - Vim syntax highlighting
+5. `docs/VIM-SYNTAX.md` - Vim syntax documentation
 6. `QUICKSTART-VIM.md` - Quick start guide
 7. `CHANGELOG-TRAILING-TEXT.md` - This changelog (new)
 

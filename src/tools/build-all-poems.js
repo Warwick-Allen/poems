@@ -69,7 +69,7 @@ function hasActiveAudio(audioData) {
 function concatenateAllHtmlFiles(dirPath) {
   try {
     // Read YAML files from the poems directory for metadata
-    const poemsDir = path.join(process.cwd(), "poems");
+    const poemsDir = path.join(process.cwd(), "src", "poems");
     const yamlFiles = fs
       .readdirSync(poemsDir)
       .filter((file) => file.endsWith(".yaml") || file.endsWith(".yml"))
@@ -357,7 +357,7 @@ function concatenateAllHtmlFiles(dirPath) {
 function generateIndexHtml(publicDir) {
   try {
     // Read YAML files from the poems directory for metadata
-    const poemsDir = path.join(process.cwd(), "poems");
+    const poemsDir = path.join(process.cwd(), "src", "poems");
     const yamlFiles = fs
       .readdirSync(poemsDir)
       .filter((file) => file.endsWith(".yaml") || file.endsWith(".yml"))
