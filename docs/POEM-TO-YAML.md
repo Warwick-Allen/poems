@@ -4,24 +4,24 @@ This script converts `.poem` files to YAML format based on the formal syntax spe
 
 ## Usage
 
-### Convert all .poem files in poems/ directory
+### Convert all .poem files in src/poems/ directory
 
 ```bash
 npm run build:yaml
 ```
 
-This will convert all `.poem` files in the `poems/` directory to corresponding `.yaml` files.
+This will convert all `.poem` files in the `src/poems/` directory to corresponding `.yaml` files.
 
 ### Convert a single file
 
 ```bash
-node tools/poem-to-yaml.js input.poem output.yaml
+node src/tools/poem-to-yaml.js input.poem output.yaml
 ```
 
 Or let it auto-generate the output filename:
 
 ```bash
-node tools/poem-to-yaml.js input.poem
+node src/tools/poem-to-yaml.js input.poem
 ```
 
 ## Features
@@ -82,7 +82,7 @@ Variable syntax is documented in the specification but not yet implemented in th
 - Multi-line variables: `={token}<<= ... =>>`
 - Variable substitution: `${token}`
 
-See `POEM-SYNTAX.md` and `poems/_example.poem` for complete variable documentation.
+See `docs/POEM-SYNTAX.md` and `src/poems/_example.poem` for complete variable documentation.
 
 ## Implementation Notes
 
@@ -95,7 +95,7 @@ See `POEM-SYNTAX.md` and `poems/_example.poem` for complete variable documentati
 ## Related Files
 
 - `poem-syntax.ebnf` - Formal EBNF grammar specification
-- `POEM-SYNTAX.md` - Human-readable syntax documentation
-- `poems/_example.poem` - Complete example demonstrating all features
-- `poems/_example.yaml` - Expected YAML output for the example
+- `docs/POEM-SYNTAX.md` - Human-readable syntax documentation
+- `src/poems/_example.poem` - Complete example demonstrating all features
+- `src/poems/_example.yaml` - Expected YAML output for the example
 

@@ -26,7 +26,7 @@ Since GitHub Pages serves static files only, we use a build script to generate t
 
 ### What the Build Scripts Do
 
-#### Main Build Script (`tools/build-all-poems.js`)
+#### Main Build Script (`src/tools/build-all-poems.js`)
 
 The main build script:
 
@@ -39,7 +39,7 @@ The main build script:
    - Custom CSS from the template
    - Interactive sorting by title, date, or audio availability
 
-#### Date Utility Functions (`tools/date-utils.js`)
+#### Date Utility Functions (`src/tools/date-utils.js`)
 
 The build system includes utility functions for handling date formats:
 
@@ -48,7 +48,7 @@ The build system includes utility functions for handling date formats:
 
 These utilities ensure consistent date handling across the build process and support migration from the old date format.
 
-#### Blogger Template Script (`tools/build-blogger.js`)
+#### Blogger Template Script (`src/tools/build-blogger.js`)
 
 The Blogger template script:
 
@@ -102,7 +102,7 @@ public/
 ├── poem2.html
 └── ...
 
-tools/
+src/tools/
 ├── build-all-poems.js                   # Main build script
 ├── build-poems.js                       # Individual poem builder
 ├── date-utils.js                        # Date format utilities
@@ -112,4 +112,4 @@ tools/
 
 ### Customisation
 
-The build script uses the same logic as the development server (`tools/serve-static.js`) but generates a static file instead of serving dynamically. You can modify the styling or functionality by editing the build script.
+The build script uses the same logic as the development server (`src/tools/serve-static.js`) but generates a static file instead of serving dynamically. You can modify the styling or functionality by editing the build script.

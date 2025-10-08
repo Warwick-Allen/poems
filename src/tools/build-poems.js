@@ -10,9 +10,9 @@ const pug = require("pug");
 const { slugify } = require("./slugify");
 const { formatDateForDisplay } = require("./date-utils");
 
-const POEMS_DIR = path.join(process.cwd(), "poems");
+const POEMS_DIR = path.join(process.cwd(), "src", "poems");
 const PUBLIC_DIR = path.join(process.cwd(), "public");
-const TEMPLATE_FILE = path.join(process.cwd(), "templates", "poem.pug");
+const TEMPLATE_FILE = path.join(process.cwd(), "src", "templates", "poem.pug");
 
 /**
  * Cache for resolved references to improve build performance

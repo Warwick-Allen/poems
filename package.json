@@ -5,13 +5,13 @@
     "pug": "^3.0.2"
   },
   "scripts": {
-    "start": "node tools/serve-static.js",
-    "stop": "pkill -f 'node tools/serve-static.js' || true",
+    "start": "node src/tools/serve-static.js",
+    "stop": "pkill -f 'node src/tools/serve-static.js' || true",
     "stop:win": "for /f \"tokens=5\" %a in ('netstat -ano ^| findstr :8080') do taskkill /PID %a /F",
-    "build:poems": "node tools/build-poems.js",
-    "build:yaml": "node tools/poem-to-yaml.js --all",
-    "build": "npm run build:yaml && npm run build:poems && node tools/build-all-poems.js",
+    "build:poems": "node src/tools/build-poems.js",
+    "build:yaml": "node src/tools/poem-to-yaml.js --all",
+    "build": "npm run build:yaml && npm run build:poems && node src/tools/build-all-poems.js",
     "build:all": "npm run build && npm run start",
-    "build:blogger": "node tools/build-blogger.js"
+    "build:blogger": "node src/tools/build-blogger.js"
   }
 }
