@@ -78,14 +78,14 @@ versions_section = version, { [ blank_lines, version_divider ], blank_lines, ver
 version = [ blank_lines, version_label, blank_lines ],
           segments ;
 
-version_label = "{{", whitespace, label_text, whitespace, "}}" ;
+version_label = "{{", whitespace, label_text, whitespace, "}}", { ? any character except newline ? } ;
 
 segments = segment, { blank_lines, segment } ;
 
 segment = [ segment_label, blank_lines ],
           segment_content ;
 
-segment_label = "{", label_text, "}" ;
+segment_label = "{", label_text, "}", { ? any character except newline ? } ;
 
 segment_content = content_line, { newline, content_line } ;
 
@@ -115,7 +115,7 @@ postscript_note = [ postscript_label, blank_lines ],
                   postscript_content,
                   { blank_lines, literal_block, blank_lines } ;
 
-postscript_label = "{", label_text, "}" ;
+postscript_label = "{", label_text, "}", { ? any character except newline ? } ;
 
 postscript_content = paragraph, { blank_lines, paragraph } ;
 
@@ -126,9 +126,9 @@ literal_block = literal_block_start,
                 { literal_block_line },
                 literal_block_end ;
 
-literal_block_start = "<<<" ;
+literal_block_start = "<<<", { ? any character except newline ? } ;
 
-literal_block_end = ">>>" ;
+literal_block_end = ">>>", { ? any character except newline ? } ;
 
 literal_block_line = literal_content, newline ;
 
@@ -145,13 +145,13 @@ synopsis_section = synopsis_label,
                    blank_lines,
                    analysis_content ;
 
-synopsis_label = "{Synopsis}" ;
+synopsis_label = "{Synopsis}", { ? any character except newline ? } ;
 
 full_section = full_label,
                blank_lines,
                analysis_content ;
 
-full_label = "{Full}" ;
+full_label = "{Full}", { ? any character except newline ? } ;
 
 analysis_content = analysis_block, { blank_lines, analysis_block } ;
 
@@ -300,19 +300,20 @@ plain_char = ? any character except markup special characters ? ;
    DIVIDERS AND MARKERS
    ============================================================================ *)
 
-version_divider = "----" ;
+version_divider = "----", { ? any character except newline ? } ;
 
-postscript_divider = "----" ;
+postscript_divider = "----", { ? any character except newline ? } ;
 
-end_of_poem_marker = "====" ;
+end_of_poem_marker = "====", { ? any character except newline ? } ;
 
-end_of_audio_marker = "====" ;
+end_of_audio_marker = "====", { ? any character except newline ? } ;
 
-end_of_postscript_marker = "====" ;
+end_of_postscript_marker = "====", { ? any character except newline ? } ;
 
-end_of_file_marker = "====" ;
+end_of_file_marker = "====", { ? any character except newline ? } ;
 
-(* Note: All dividers and markers must be anchored to the start of a line *)
+(* Note: All dividers and markers must be anchored to the start of a line.
+   Any text after the marker on the same line is ignored. *)
 
 (* ============================================================================
    IGNORED CONTENT
@@ -374,25 +375,33 @@ leading_whitespace = ( " " | tab ), { " " | tab } ;
    3. Dividers, markers, labels, and literal block delimiters must appear
       at the start of a line (column 0)
 
-   4. Version labels and segment labels have leading and trailing whitespace
+   4. Any text after a line-anchored token on the same line is ignored.
+      This applies to: dividers (----), end markers (====), version labels
+      ({{ ... }}), segment labels ({ ... }), postscript labels, analysis
+      labels ({Synopsis}, {Full}), literal block markers (<<<, >>>),
+      comment block markers (<<#, #>>), and multi-line variable markers
+      (={...}<<=, =>>). Single-line variable definitions (={...}=) are
+      excluded as everything after }= is the variable value (not ignored)
+
+   5. Version labels and segment labels have leading and trailing whitespace
       trimmed
 
-   5. Within postscript notes, single newlines are collapsed (not preserved);
+   6. Within postscript notes, single newlines are collapsed (not preserved);
       only paragraph breaks (blank lines) are preserved
 
-   6. Within poem segments, all newlines and indentation are preserved
+   7. Within poem segments, all newlines and indentation are preserved
 
-   7. Within analysis sections, single newlines within paragraphs are
+   8. Within analysis sections, single newlines within paragraphs are
       collapsed; only paragraph breaks (blank lines) are preserved
 
-   8. Markup special character pairs (_, *, ~, `, ", and span elements)
+   9. Markup special character pairs (_, *, ~, `, ", and span elements)
       match across lines within a paragraph but not across paragraph boundaries
 
-   9. Unmatched markup pairs are not converted and remain as literal text
+   10. Unmatched markup pairs are not converted and remain as literal text
 
-   10. Markup can be nested (e.g., `[*_text_*|url]`, `/.c{*text*}`)
+   11. Markup can be nested (e.g., `[*_text_*|url]`, `/.c{*text*}`)
 
-   11. Span elements use the syntax `/.classname{content}` where classname
+   12. Span elements use the syntax `/.classname{content}` where classname
        must match the pattern /^\w(?:[\w\.-]*\w)?$/ (word char, optional
        middle section of word chars/dots/hyphens, word char). Multiple classes
        can be specified (e.g., `class1.class2`). If the class name is empty
@@ -401,57 +410,57 @@ leading_whitespace = ( " " | tab ), { " " | tab } ;
        warning is emitted and the markup is left unchanged. Empty content
        (`/.class{}`) is valid and produces `<span class="class"></span>`
 
-   12. Comment blocks (<<# ... #>>) can appear anywhere and are completely
+   13. Comment blocks (<<# ... #>>) can appear anywhere and are completely
        removed during parsing
 
-   13. The author line is optional; if omitted, defaults to "Warwick Allen"
+   14. The author line is optional; if omitted, defaults to "Warwick Allen"
 
-   14. Dividers (both ---- and ====) are only required if there is subsequent
+   15. Dividers (both ---- and ====) are only required if there is subsequent
        non-empty content. If the parser reaches end-of-file, all remaining
        sections are assumed to be empty.
 
-   15. The end_of_file_marker (====) before comments is optional - only
+   16. The end_of_file_marker (====) before comments is optional - only
        required if followed by ignored content (comments)
 
-   16. Blank lines before and after dividers, markers, labels, and literal
+   17. Blank lines before and after dividers, markers, labels, and literal
        block delimiters have no effect on output (they are normalized)
 
-   17. Variables can be defined anywhere in the file, except inside literal
+   18. Variables can be defined anywhere in the file, except inside literal
        blocks or multi-line variable blocks
 
-   18. Variables are file-scoped
+   19. Variables are file-scoped
 
-   19. If a variable is used before it is defined, no substitution occurs;
+   20. If a variable is used before it is defined, no substitution occurs;
        ${undefined} remains as literal text (parsers should emit a warning)
 
-   20. Variables may be redefined; the old value is clobbered
+   21. Variables may be redefined; the old value is clobbered
 
-   21. Variable definition lines do not appear in output and do not count
+   22. Variable definition lines do not appear in output and do not count
        as content lines in their containing section
 
-   22. Variables may be nested: A variable definition may include ${...}
+   23. Variables may be nested: A variable definition may include ${...}
        references, which are substituted when the outer variable is defined.
        Nesting may be of any depth. Self-referential definitions are allowed
        (e.g., ={a}=foo then ={a}=${a}bar expands ${a} to foobar)
 
-   23. Variables are processed for markup after substitution
+   24. Variables are processed for markup after substitution
 
-   24. Variables cannot be used inside literal blocks
+   25. Variables cannot be used inside literal blocks
 
-   25. Variable whitespace is retained: For single-line variables, everything
+   26. Variable whitespace is retained: For single-line variables, everything
        after the second "=" is included. For multi-line variables, everything
        after the newline of the start tag up to before the final newline
        before the close tag is included
 
-   26. Variables may be used inside labels (both {{...}} and {...} labels)
+   27. Variables may be used inside labels (both {{...}} and {...} labels)
 
-   27. Structural blocks in multi-line variables: Multi-line variables may
+   28. Structural blocks in multi-line variables: Multi-line variables may
        contain structural elements such as literal blocks (<<<...>>>),
        comment blocks (<<#...#>>), and other markers. When a standalone
        variable reference (e.g., ${variable} on its own line) is expanded,
        these structural elements are properly recognised and parsed
 
-   28. Variable definitions and blank lines may appear before the header
+   29. Variable definitions and blank lines may appear before the header
        (title/author/date). This allows for defining variables at the top
        of the file that can be used in the header itself
 *)

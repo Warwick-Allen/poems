@@ -2,54 +2,56 @@ Example Poem
 A Poet
 1970-01-31
 
-{{ Version 1 }}
+{{ Version 1 }}  # Original poem structure
 
-{Stanza 1}
+{Stanza 1}  # Opening stanza
 These are the lines
 Of stanza 1
 
 These are the lines
 Of stanza 2
 
-----
+----  # Divider between versions
 
-{{ Version 2 (song arrangement) }}
+{{ Version 2 (song arrangement) }}  # Adapted for musical performance
 
-{Verse 1}
+{Verse 1}  # First verse
 These are the lines
 Of the first verse
 
-{Chorus}
+{Chorus}  # Main chorus
 La-de-da
 
-{Verse 2}
+{Verse 2}  # Second verse
 These are the lines
 Of the second verse
 
-====
+====  # End of versions
 
 Audiomack
 Suno: s/SongLink12345678
 
-====
+====  # End of audio section
 
-{Postscript 1}
+{Postscript 1}  # First note
 Something to note.
 
-----
+----  # Divider between postscript notes
 
 This is another postscript note,
 but without a label.
 
 This note has two paragraphs.
 
-----
+----  # Another divider
 
-${disclaimer}
+<<<  # Start of literal block
+  - $ref: "_shared.yaml#/disclaimer"
+>>>  # End of literal block
 
-====
+====  # End of postscript section
 
-{Synopsis}
+{Synopsis}  # Brief analysis overview
 
 This is where the synopsis of the
 analysis goes.
@@ -62,7 +64,7 @@ Some more text can go here.
 
 Here is _another_ paragraph.
 
-{Full}
+{Full}  # Detailed analysis
 
 This is where the full analysis goes.
 
@@ -75,7 +77,7 @@ This is where the full analysis goes.
 A paragraph in the sub-sub-section of
 the full analysis.
 
-====
+====  # End of analysis section
 
 *This section will be ignored.*  It
 can be used for comments.
@@ -184,11 +186,24 @@ the full analysis.                     |
 *This section will be ignored.*  It    | content will be ignored.
 can be used for comments.              |
 
-## Dividers
+## Dividers and Inline Comments
 
 There may be any number (including zero) of blank lines before and after
 dividers ("----" and "===="), labels ("{{...}}" and "{...}") and literal block
 delimiters ("<<<" and ">>>"), with no effect on the output.
+
+Any text after a line-anchored token on the same line is ignored. This allows
+for inline comments. For example:
+
+  {{ Version 1 }}  # This is a comment
+  {Stanza 1}  # Another comment
+  ----  # Divider comment
+  ====  # End marker comment
+  <<<  # Literal block start comment
+  >>>  # Literal block end comment
+
+This applies to all line-anchored tokens except single-line variable
+definitions (={var}=value), where everything after }= is the variable value.
 
 ## Markup
 

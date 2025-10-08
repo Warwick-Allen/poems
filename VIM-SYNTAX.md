@@ -16,6 +16,7 @@ The syntax highlighting provides colour-coding for:
 - **Analysis headings**: `#`, `##`, and `###` headings
 - **Inline markup**: Emphasis (`_text_`), strong (`*text*`), strikethrough (`~text~`), links (`[text|url]`), smart quotes (`` `text` `` and `"text"`), and span elements (`/.class{text}`)
 - **Special characters**: Escaped characters (`\*`), em dashes (`---`), and en dashes (`--`)
+- **Trailing text**: Inline comments after line-anchored tokens (e.g., `----  # comment`)
 
 ## Installation
 

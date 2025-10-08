@@ -125,13 +125,14 @@ Contains one or more versions of the poem, separated by `----` dividers.
 - Poem lines preserve all newlines and indentation (including leading spaces/tabs)
 - Versions are separated by `----` (exactly 4 hyphens) only if there is a subsequent version
 - The section ends with `====` (exactly 4 equals signs) only if there are subsequent non-empty sections
+- Any text after labels, dividers, or markers on the same line is ignored (allows inline comments)
 
 ### Example
 
 ```
-{{ Version 1 }}
+{{ Version 1 }}  # Original version
 
-{Stanza 1}
+{Stanza 1}  # Opening stanza
 These are the lines
    With some indentation
 Of stanza 1
@@ -139,15 +140,17 @@ Of stanza 1
 These are the lines
 Of stanza 2
 
-----
+----  # Version separator
 
-{{ Version 2 (song arrangement) }}
+{{ Version 2 (song arrangement) }}  # Modified for performance
 
-{Verse 1}
+{Verse 1}  # First verse
 First verse lines
 
-====
+====  # End of versions section
 ```
+
+Note: The text after `#` in the example above is ignored by the parser, allowing for inline comments.
 
 ## 3. Audio Section
 
@@ -168,6 +171,7 @@ Section for audio links. The section and its markers are optional if empty.
 - **Suno**: Format is `Suno: ` followed by a URL path (e.g., `s/SongLink12345678` or `song/uuid`)
 - Both lines are optional; if neither is present, the section will be empty
 - The `====` end marker is only required if there are subsequent non-empty sections
+- Any text after the end marker on the same line is ignored
 
 ### Example
 
@@ -208,6 +212,7 @@ Section for postscript notes. The section and its markers are optional if empty.
 - Blank lines indicate paragraph breaks
 - Literal blocks can appear between postscript notes
 - The `====` end marker is only required if there are subsequent non-empty sections
+- Any text after labels, dividers, markers, or literal block delimiters on the same line is ignored
 
 ### Literal Blocks
 
@@ -221,6 +226,7 @@ Literal blocks preserve content exactly as written without any markup conversion
 
 - Start marker: `<<<` (must be at start of line)
 - End marker: `>>>` (must be at start of line)
+- Any text after the markers on the same line is ignored
 - Content between markers is not processed or converted
 
 ### Example
@@ -281,6 +287,7 @@ Section for poem analysis. The section may be empty. Can have two forms:
 - Blank lines indicate paragraph breaks
 - Supports heading markup and inline markup
 - The `====` end marker is optional - only required if followed by ignored content (comments)
+- Any text after analysis labels or the end marker on the same line is ignored
 
 ### Heading Markup
 
@@ -331,7 +338,7 @@ It can span multiple lines
 
 - Start marker: `<<#` (must be at start of line)
 - End marker: `#>>` (must be at start of line)
-- Text after markers on the same line is also ignored
+- Any text after the markers on the same line is ignored
 - Comment blocks can appear anywhere in the file
 - Content is completely removed during parsing
 
@@ -391,10 +398,10 @@ Multi-line variable definitions follow this format:
 ={variable_name}<<= Anything after the second "=" is ignored
 variable content
 can span multiple lines
-=>> Anything after the second ">" is ignored
+=>> Anything after the second ">" is also ignored
 ```
 
-The content between the opening `}<<= ` and closing `=>>` markers becomes the variable's value. The final newline before the closing marker is not included.
+The content between the opening `}<<=` and closing `=>>` markers becomes the variable's value. The final newline before the closing marker is not included. Any text after the `=` on the opening line or after the second `>` on the closing line is ignored, allowing for inline comments.
 
 **Example:**
 
@@ -647,6 +654,19 @@ The following elements **must** appear at the start of a line (column 0):
 - Literal block markers: `<<<`, `>>>`
 - Comment block markers: `<<#`, `#>>`
 - Variable definitions: `={...}=`, `={...}<<=`, `=>>`
+
+**Trailing Text Rule**: Any text after a line-anchored token on the same line is ignored. This allows for inline comments and notes. This applies to:
+- Dividers (`----`)
+- End markers (`====`)
+- Version labels (`{{ ... }}`)
+- Segment labels (`{ ... }`)
+- Postscript labels
+- Analysis labels (`{Synopsis}`, `{Full}`)
+- Literal block markers (`<<<`, `>>>`)
+- Comment block markers (`<<#`, `#>>`)
+- Multi-line variable markers (`={...}<<=`, `=>>`)
+
+**Exception**: Single-line variable definitions (`={...}=value`) are excluded from this rule, as everything after `}=` is the variable value (intentional content, not ignored text).
 
 ### Whitespace Handling
 

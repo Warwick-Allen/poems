@@ -40,6 +40,7 @@ The syntax highlighting provides colour-coding for all major Poem file elements:
 | **Strong** | `*text*` | Bold/Statement |
 | **Links** | `[text\|url]` | Underlined |
 | **Smart quotes** | `` `text` ``, `"text"` | String |
+| **Trailing text** | `----  # comment` | Comment style |
 
 ## Requirements
 

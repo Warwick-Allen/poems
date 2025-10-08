@@ -9,47 +9,58 @@ if exists("b:current_syntax")
   finish
 endif
 
+" Comment blocks
+syn region poemComment start="^<<#" end="^#>>" keepend
+
+" Literal blocks
+syn region poemLiteralBlock start="^<<<$" end="^>>>$" keepend
+
+" Literal block markers with trailing text
+syn match poemLiteralStartLine "^<<<\s\+.*$" contains=poemLiteralStartMark
+syn match poemLiteralStartMark "^<<<" contained
+syn match poemLiteralEndLine "^>>>\s\+.*$" contains=poemLiteralEndMark
+syn match poemLiteralEndMark "^>>>" contained
+
 " Variables
 syn match poemVariableDef "^={\w\+}=" nextgroup=poemVariableValue
-syn region poemMultiLineVariableDef start="^={\w\+}<<=" end="^=>>" contains=poemMultiLineVarStart,poemMultiLineVarEnd
 syn match poemVariableValue ".*$" contained
 syn match poemVariableRef "\${[^}]\+}"
 
-" Comment blocks
-syn region poemComment start="^<<#" end="^#>>" contains=poemCommentStart,poemCommentEnd
-syn match poemCommentStart "^<<#" contained
-syn match poemCommentEnd "^#>>" contained
+" Multi-line variables
+syn region poemMultiLineVarDef start="^={\w\+}<<=" end="^=>>" keepend
 
-" Literal blocks
-syn region poemLiteralBlock start="^<<<" end="^>>>" contains=poemLiteralStart,poemLiteralEnd
-syn match poemLiteralStart "^<<<" contained
-syn match poemLiteralEnd "^>>>" contained
+" Version labels MUST come before segment labels to have priority
+" Version labels with trailing text - entire line is Comment, but label part is Identifier
+syn match poemVersionLabelLineTrailing "^{{.\{-}}}\s\+.*$" contains=poemVersionLabelPart
+syn match poemVersionLabelPart "^{{.\{-}}}" contained contains=poemVersionLabelDelim,poemVariableRef
+syn match poemVersionLabelDelim "{{" contained
+syn match poemVersionLabelDelim "}}" contained
+" Version labels without trailing text
+syn match poemVersionLabelLineOnly "^{{.\{-}}}$" contains=poemVersionLabelDelim,poemVariableRef
 
-" Dividers and markers
-syn match poemDivider "^----$"
-syn match poemEndMarker "^====$"
+" Segment labels with trailing text - must NOT start with {{
+syn match poemSegmentLabelLineTrailing "^{[^{}]\+}\s\+.*$" contains=poemSegmentLabelPart
+syn match poemSegmentLabelPart "^{[^{}]\+}" contained contains=poemSegmentLabelDelim,poemVariableRef
+syn match poemSegmentLabelDelim "{" contained
+syn match poemSegmentLabelDelim "}" contained
+" Segment labels without trailing text
+syn match poemSegmentLabelLineOnly "^{[^{}]\+}$" contains=poemSegmentLabelDelim,poemVariableRef
+
+" Dividers without trailing text (must come before trailing version for priority)
+syn match poemDividerLineOnly "^----$"
+" Dividers with trailing text - entire line is Comment, but ---- is Delimiter
+syn match poemDividerLineTrailing "^----\s\+.*$" contains=poemDividerMark
+syn match poemDividerMark "^----" contained
+
+" End markers without trailing text (must come before trailing version for priority)
+syn match poemEndMarkerLineOnly "^====$"
+" End markers with trailing text
+syn match poemEndMarkerLineTrailing "^====\s\+.*$" contains=poemEndMarkerMark
+syn match poemEndMarkerMark "^====" contained
 
 " Header section (first 3 lines)
 syn match poemTitle "\%1l.*$"
 syn match poemDate "^\d\{4\}-\d\{2\}-\d\{2\}$"
-
-" Labels
-syn region poemVersionLabel start="^{{\s*" end="\s*}}" contains=poemVersionLabelDelim,poemVariableRef
-syn match poemVersionLabelDelim "{{" contained
-syn match poemVersionLabelDelim "}}" contained
-
-syn region poemSegmentLabel start="^{\S" end="}" contains=poemSegmentLabelDelim,poemVariableRef oneline
-syn match poemSegmentLabelDelim "{" contained
-syn match poemSegmentLabelDelim "}" contained
-
-" Analysis labels
-syn match poemAnalysisLabel "^{Synopsis}$"
-syn match poemAnalysisLabel "^{Full}$"
-
-" Postscript labels
-syn region poemPostscriptLabel start="^{[A-Z]" end="}" contains=poemPostscriptLabelDelim,poemVariableRef oneline
-syn match poemPostscriptLabelDelim "{" contained
-syn match poemPostscriptLabelDelim "}" contained
 
 " Audio section
 syn match poemAudioKeyword "^Audiomack$"
@@ -75,35 +86,43 @@ syn region poemSpan start="/\.\w\+{" end="}" oneline
 
 " Special characters
 syn match poemEscaped "\\[_*~\[`\"&'\-<>=$/{}\\]"
-syn match poemEmDash "---"
-syn match poemEnDash "--"
+" Em-dash: three hyphens not followed by another hyphen
+syn match poemEmDash "---\%(-\)\@!"
+" En-dash: two hyphens not followed by another hyphen  
+syn match poemEnDash "--\%(-\)\@!"
 
-" Define highlighting
+" Define highlighting - lines with trailing text are Comment
 hi def link poemTitle Title
 hi def link poemDate Special
-hi def link poemDivider Delimiter
-hi def link poemEndMarker Delimiter
 
-hi def link poemVersionLabel Identifier
+hi def link poemDividerLineTrailing Comment
+hi def link poemDividerMark Delimiter
+hi def link poemDividerLineOnly Delimiter
+hi def link poemEndMarkerLineTrailing Comment
+hi def link poemEndMarkerMark Delimiter
+hi def link poemEndMarkerLineOnly Delimiter
+
+hi def link poemVersionLabelLineTrailing Comment
+hi def link poemVersionLabelPart Identifier
+hi def link poemVersionLabelLineOnly Identifier
 hi def link poemVersionLabelDelim Delimiter
-hi def link poemSegmentLabel Type
+
+hi def link poemSegmentLabelLineTrailing Comment
+hi def link poemSegmentLabelPart Type
+hi def link poemSegmentLabelLineOnly Type
 hi def link poemSegmentLabelDelim Delimiter
-hi def link poemPostscriptLabel Type
-hi def link poemPostscriptLabelDelim Delimiter
-hi def link poemAnalysisLabel Type
 
 hi def link poemVariableDef Macro
 hi def link poemVariableValue String
-hi def link poemMultiLineVariableDef Macro
+hi def link poemMultiLineVarDef Macro
 hi def link poemVariableRef Identifier
 
 hi def link poemComment Comment
-hi def link poemCommentStart Comment
-hi def link poemCommentEnd Comment
-
 hi def link poemLiteralBlock PreProc
-hi def link poemLiteralStart Delimiter
-hi def link poemLiteralEnd Delimiter
+hi def link poemLiteralStartLine Comment
+hi def link poemLiteralStartMark Delimiter
+hi def link poemLiteralEndLine Comment
+hi def link poemLiteralEndMark Delimiter
 
 hi def link poemAudioKeyword Keyword
 hi def link poemSunoKeyword Keyword
@@ -127,4 +146,3 @@ hi def link poemEmDash Special
 hi def link poemEnDash Special
 
 let b:current_syntax = "poem"
-
