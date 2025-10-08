@@ -19,7 +19,7 @@ syn region myHtml start="..." end="..." contains=@html
 
 " CORRECT - works:
 unlet! b:current_syntax
-syn include @myCustomHtml syntax/html.vim  
+syn include @myCustomHtml syntax/html.vim
 unlet! b:current_syntax
 syn region myHtml start="..." end="..." contains=@myCustomHtml
 ```
@@ -38,8 +38,8 @@ syn region myHtml start="..." end="..." contains=@myCustomHtml
 
 3. **Region definitions** using `matchgroup` for delimiters:
    ```vim
-   syn region poemLiteralHtml matchgroup=Delimiter 
-     \ start="^<<<html\>.*$" matchgroup=Delimiter end="^>>>$" 
+   syn region poemLiteralHtml matchgroup=Delimiter
+     \ start="^<<<html\>.*$" matchgroup=Delimiter end="^>>>$"
      \ keepend contains=@poemHtml
    ```
 

@@ -162,7 +162,7 @@ class PoemParser {
     }
 
     this.lines = newLines;
-    
+
     // Now substitute variables within variable definitions (for nesting)
     // and convert multi-line variables to strings
     for (const [varName, varValue] of this.variables.entries()) {
@@ -662,12 +662,12 @@ class PoemParser {
     while (true) {
       this.skipBlankLines();
       const nextLine = this.peek();
-      
+
       // Stop at end of file or structural markers
       if (!nextLine || nextLine.trim() === '----' || nextLine.trim() === '====') {
         break;
       }
-      
+
       // Check for literal block
       if (nextLine.trim() === '<<<') {
         const literalBlock = this.parseLiteralBlock();
@@ -874,14 +874,14 @@ class PoemParser {
         console.warn('Warning: Span element with empty class name');
         return `<span>${content}</span>`;
       }
-      
+
       // Validate class name with regex: /^\w(?:[\w\.-]*\w)?$/
       const classNameRegex = /^\w(?:[\w\.-]*\w)?$/;
       if (!classNameRegex.test(className)) {
         console.warn(`Warning: Invalid span class name: "${className}"`);
         return match; // Leave unchanged
       }
-      
+
       return `<span class="${className}">${content}</span>`;
     });
 
@@ -908,16 +908,16 @@ class PoemParser {
  */
 function convertPoemToYaml(poemFilePath) {
   let content = fs.readFileSync(poemFilePath, 'utf8');
-  
+
   // Prepend .shared.poem if it exists in the same directory
   const poemDir = path.dirname(poemFilePath);
   const sharedPoemPath = path.join(poemDir, '.shared.poem');
-  
+
   if (fs.existsSync(sharedPoemPath)) {
     const sharedContent = fs.readFileSync(sharedPoemPath, 'utf8');
     content = sharedContent + content;
   }
-  
+
   const parser = new PoemParser(content);
   const data = parser.parse();
 

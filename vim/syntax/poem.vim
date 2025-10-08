@@ -22,45 +22,45 @@ if !exists('g:poem_no_embedded_languages')
   unlet! b:current_syntax
   syn include @poemHtml syntax/html.vim
   unlet! b:current_syntax
-  
+
   " CSS
   syn include @poemCss syntax/css.vim
   unlet! b:current_syntax
-  
+
   " JavaScript
   syn include @poemJavascript syntax/javascript.vim
   unlet! b:current_syntax
-  
+
   " Python
   syn include @poemPython syntax/python.vim
   unlet! b:current_syntax
-  
+
   " YAML
   syn include @poemYaml syntax/yaml.vim
   unlet! b:current_syntax
-  
+
   " JSON
   syn include @poemJson syntax/json.vim
   unlet! b:current_syntax
-  
+
   " XML
   syn include @poemXml syntax/xml.vim
   unlet! b:current_syntax
-  
+
   " SQL
   syn include @poemSql syntax/sql.vim
   unlet! b:current_syntax
-  
+
   " Shell
   syn include @poemSh syntax/sh.vim
   unlet! b:current_syntax
-  
+
   " Markdown
   syn include @poemMarkdown syntax/markdown.vim
   unlet! b:current_syntax
 endif
 
-" Literal blocks with language-specific syntax highlighting  
+" Literal blocks with language-specific syntax highlighting
 " Strategy: Match the <<<lang line, but start highlighting content on the next line using ms
 " matchgroup highlights just the delimiters, region contains the embedded language
 syn region poemLiteralHtml matchgroup=Delimiter start="^<<<html\>.*$" matchgroup=Delimiter end="^>>>$" keepend contains=@poemHtml
@@ -154,7 +154,7 @@ syn region poemSpan start="/\.\w\+{" end="}" oneline
 syn match poemEscaped "\\[_*~\[`\"&'\-<>=$/{}\\]"
 " Em-dash: three hyphens not followed by another hyphen
 syn match poemEmDash "---\%(-\)\@!"
-" En-dash: two hyphens not followed by another hyphen  
+" En-dash: two hyphens not followed by another hyphen
 syn match poemEnDash "--\%(-\)\@!"
 
 " Define highlighting - lines with trailing text are Comment
