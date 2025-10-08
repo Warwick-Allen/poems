@@ -73,7 +73,7 @@ The header appears at the beginning of the file and consists of:
 ### Fields
 
 - **Title** (mandatory): The title of the poem (any text, may include variable references)
-- **Author** (optional): The author's name. If omitted, defaults to "Warwick Allen" (may include variable references)
+- **Author** (optional): The author's name. If omitted, defaults to `${author}` which will be expanded if the variable is defined, or left as the literal text `${author}` if not (may include variable references)
 - **Date** (mandatory): Must be in format `YYYY-MM-DD` (e.g., `1970-01-01`) after variable substitution
 
 ### Example

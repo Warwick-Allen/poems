@@ -294,7 +294,8 @@ class PoemParser {
     const datePattern = /^\d{4}-\d{2}-\d{2}$/;
     const substitutedLine = this.substituteVariables(line.trim());
     if (datePattern.test(substitutedLine)) {
-      // No author, this is the date
+      // No author, this is the date - default to ${author}
+      this.result.author = this.substituteVariables('${author}');
       this.result.date = substitutedLine;
     } else {
       // This is the author
