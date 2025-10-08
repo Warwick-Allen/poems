@@ -367,7 +367,7 @@ class PoemParser {
     if (firstLine.trim().startsWith('{{') && firstLine.trim().endsWith('}}')) {
       const label = firstLine.trim().slice(2, -2).trim();
       if (label) {
-        version.label = this.substituteVariables(label);
+        version.label = this.convertMarkup(this.substituteVariables(label));
       }
       this.next();
       this.skipBlankLines();
@@ -433,7 +433,7 @@ class PoemParser {
     if (line.trim().startsWith('{') && line.trim().endsWith('}') && !line.trim().startsWith('{{')) {
       const label = line.trim().slice(1, -1).trim();
       if (label && label !== 'Synopsis' && label !== 'Full') {
-        segment.label = this.substituteVariables(label);
+        segment.label = this.convertMarkup(this.substituteVariables(label));
         this.next();
         this.skipBlankLines();
       }
@@ -459,9 +459,9 @@ class PoemParser {
         }
       }
 
-      // Substitute variables first, then convert spaces to nbsp
-      const processedLine = this.convertSpacesToNbsp(this.substituteVariables(this.next()));
-      contentLines.push(processedLine);
+      // Substitute variables only (markup processing happens after joining lines)
+      const substituted = this.substituteVariables(this.next());
+      contentLines.push(substituted);
     }
 
     if (contentLines.length > 0) {
@@ -471,7 +471,12 @@ class PoemParser {
       }
 
       if (contentLines.length > 0) {
-        segment.lines = contentLines.join('\n') + '\n';
+        // Join lines, convert markup (which can span across lines), then split and convert spaces
+        const joinedContent = contentLines.join('\n');
+        const withMarkup = this.convertMarkup(joinedContent);
+        const linesWithMarkup = withMarkup.split('\n');
+        const processedLines = linesWithMarkup.map(line => this.convertSpacesToNbsp(line));
+        segment.lines = processedLines.join('\n') + '\n';
       }
     }
 
@@ -590,7 +595,7 @@ class PoemParser {
     if (line.trim().startsWith('{') && line.trim().endsWith('}')) {
       const label = line.trim().slice(1, -1).trim();
       if (label && label !== 'Synopsis' && label !== 'Full') {
-        postscript.label = this.substituteVariables(label);
+        postscript.label = this.convertMarkup(this.substituteVariables(label));
         this.next();
         this.skipBlankLines();
       }
@@ -830,7 +835,7 @@ class PoemParser {
     // Process escapes first
     const escapes = new Map();
     let escapeIndex = 0;
-    text = text.replace(/\\([_*~\[`"&'\-<>=$\\])/g, (match, char) => {
+    text = text.replace(/\\([_*~\[`"&'\-<>=$\\/{}])/g, (match, char) => {
       const placeholder = `\x00ESCAPE${escapeIndex++}\x00`;
       escapes.set(placeholder, char);
       return placeholder;
@@ -840,11 +845,15 @@ class PoemParser {
     text = text.replace(/---/g, '&#8212;'); // Em dash
     text = text.replace(/--/g, '&#8211;'); // En dash
 
-    // Links: [text|url] - use &quot; to avoid smart quote conversion
-    text = text.replace(/\[([^\]|]+)\|([^\]]+)\]/g, '<a href=&quot;https://$2&quot;>$1</a>');
+    // Smart quotes (process BEFORE links and spans to avoid converting HTML attribute quotes)
+    text = text.replace(/`([^`]+)`/g, '&#8216;$1&#8217;'); // Single quotes
+    text = text.replace(/"([^"]+)"/g, '&#8220;$1&#8221;'); // Double quotes
 
-    // Span elements: <<.classname:content>> - use &quot; to avoid smart quote conversion
-    text = text.replace(/<<\.([^:>]*):(.*?)>>/g, (match, className, content) => {
+    // Links: [text|url]
+    text = text.replace(/\[([^\]|]+)\|([^\]]+)\]/g, '<a href="https://$2">$1</a>');
+
+    // Span elements: /.classname{content}
+    text = text.replace(/\/\.([^{]*)\{([^}]*)\}/g, (match, className, content) => {
       if (className === '') {
         console.warn('Warning: Span element with empty class name');
         return `<span>${content}</span>`;
@@ -857,12 +866,8 @@ class PoemParser {
         return match; // Leave unchanged
       }
       
-      return `<span class=&quot;${className}&quot;>${content}</span>`;
+      return `<span class="${className}">${content}</span>`;
     });
-
-    // Smart quotes
-    text = text.replace(/`([^`]+)`/g, '&#8216;$1&#8217;'); // Single quotes
-    text = text.replace(/"([^"]+)"/g, '&#8220;$1&#8221;'); // Double quotes
 
     // Basic formatting
     text = text.replace(/\~([^~]+)\~/g, '<s>$1</s>'); // Strikethrough

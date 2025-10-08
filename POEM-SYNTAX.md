@@ -512,7 +512,7 @@ Text content supports inline markup for formatting:
 
 | Syntax | Output |
 |--------|--------|
-| `<<.classname:text>>` | `<span class="classname">text</span>` |
+| `/.classname{text}` | `<span class="classname">text</span>` |
 
 Span elements allow you to apply custom CSS classes to inline text. The class name must match the pattern `/^\w(?:[\w\.-]*\w)?$/`, which allows:
 - Single word characters: `c`, `x`, `1`
@@ -520,15 +520,15 @@ Span elements allow you to apply custom CSS classes to inline text. The class na
 - Hyphenated names: `text-highlight`, `my-class`
 
 **Special cases:**
-- Empty class name `<<.:text>>` produces `<span>text</span>` (with a warning)
+- Empty class name `/.{text}` produces `<span>text</span>` (with a warning)
 - Invalid class names are left unchanged (with a warning)
-- Empty content `<<.class:>>` produces `<span class="class"></span>`
+- Empty content `/.class{}` produces `<span class="class"></span>`
 
 **Examples:**
 ```
-<<.highlight:important text>>
-<<.red.bold:multi-class styling>>
-<<.note:This can contain *bold* and _italic_ markup>>
+/.highlight{important text}
+/.red.bold{multi-class styling}
+/.note{This can contain *bold* and _italic_ markup}
 ```
 
 ### Smart Quotes and Punctuation
@@ -561,11 +561,14 @@ Use backslash to prevent markup conversion:
 | `\>` | `>` |
 | `\=` | `=` |
 | `\$` | `$` |
+| `\/` | `/` |
+| `\{` | `{` |
+| `\}` | `}` |
 | `\\` | `\` |
 
 ### Markup Rules
 
-1. **Nesting**: Markup can be nested (e.g., `` `[*_text_*\|url]` ``, `<<.c:*text*>>`)
+1. **Nesting**: Markup can be nested (e.g., `` `[*_text_*\|url]` ``, `/.c{*text*}`)
 2. **Paragraph Boundaries**: Markup pairs (`_`, `*`, `~`, `` ` ``, `"`, and span elements) match across lines within a paragraph but **not** across paragraph boundaries
 3. **Unmatched Pairs**: If a pair is not matched, it remains as literal text
 4. **Context**: Inline markup applies in:

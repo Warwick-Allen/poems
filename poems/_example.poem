@@ -209,6 +209,9 @@ Poem files support this limited set of conversion instructions:
  \>          | >
  \=          | =
  \$          | $
+ \/          | /
+ \{          | {
+ \}          | }
  \\          | \
  _text_      | <em>text</em>
  *text*      | <strong>text</strong>
@@ -216,7 +219,7 @@ Poem files support this limited set of conversion instructions:
  [text|url]  | <a href="https://url">text</a>
  `text`      | &#8216;text&#8217;
  "text"      | &#8220;text&#8221;
- <<.c:text>> | <span class="c">text</span>
+ /.c{text}   | <span class="c">text</span>
  &           | &#38;
  '           | &#39;
  --          | &#8211;
@@ -248,7 +251,7 @@ The special quoting/bracketing character pairs are:
   [     |  ]    | Link
   `     |  `    | Single quotes
   "     |  "    | Double quotes
-  <<.c: |  >>   | "c" is a placeholder matching /^\w(?:[\w\.-]*|\w)?$/
+  /.c{  |  }    | "c" is a placeholder matching /^\w(?:[\w\.-]*|\w)?$/
 
 
 These pairs will match across lines within a paragraph, but not across

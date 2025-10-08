@@ -252,7 +252,7 @@ markup_element = escaped_char
                | variable_substitution
                | plain_char ;
 
-escaped_char = "\", ( "_" | "*" | "~" | "[" | "`" | '"' | "&" | "'" | "-" | "<" | ">" | "=" | "$" | "\" ) ;
+escaped_char = "\", ( "_" | "*" | "~" | "[" | "`" | '"' | "&" | "'" | "-" | "<" | ">" | "=" | "$" | "/" | "{" | "}" | "\" ) ;
 
 emphasis = "_", markup_content, "_" ;
 
@@ -266,7 +266,7 @@ link_text = markup_content ;
 
 link_url = { url_char } ;
 
-span_element = "<<.", span_class_name, ":", span_content, ">>" ;
+span_element = "/.", span_class_name, "{", span_content, "}" ;
 
 span_class_name = { span_class_char } ;
 
@@ -274,7 +274,7 @@ span_class_char = letter | digit | "." | "-" ;
 
 span_content = { span_content_char } ;
 
-span_content_char = ? any character except ">" followed by ">" ? ;
+span_content_char = ? any character except "}" ? ;
 
 markup_content = { markup_element } ;
 
@@ -390,16 +390,16 @@ leading_whitespace = ( " " | tab ), { " " | tab } ;
 
    9. Unmatched markup pairs are not converted and remain as literal text
 
-   10. Markup can be nested (e.g., `[*_text_*|url]`, `<<.c:*text*>>`)
+   10. Markup can be nested (e.g., `[*_text_*|url]`, `/.c{*text*}`)
 
-   11. Span elements use the syntax `<<.classname:content>>` where classname
+   11. Span elements use the syntax `/.classname{content}` where classname
        must match the pattern /^\w(?:[\w\.-]*\w)?$/ (word char, optional
        middle section of word chars/dots/hyphens, word char). Multiple classes
        can be specified (e.g., `class1.class2`). If the class name is empty
-       (`<<.:content>>`), a warning is emitted and `<span>content</span>` is
+       (`/.{content}`), a warning is emitted and `<span>content</span>` is
        produced without a class attribute. If the class name is invalid, a
        warning is emitted and the markup is left unchanged. Empty content
-       (`<<.class:>>`) is valid and produces `<span class="class"></span>`
+       (`/.class{}`) is valid and produces `<span class="class"></span>`
 
    12. Comment blocks (<<# ... #>>) can appear anywhere and are completely
        removed during parsing
