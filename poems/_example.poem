@@ -45,7 +45,7 @@ This note has two paragraphs.
 
 ----  # Another divider
 
-<<<  # Start of literal block
+<<<yaml  # Start of literal block
   - $ref: "_shared.yaml#/disclaimer"
 >>>  # End of literal block
 

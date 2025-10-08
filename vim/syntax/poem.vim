@@ -12,12 +12,78 @@ endif
 " Comment blocks
 syn region poemComment start="^<<#" end="^#>>" keepend
 
-" Literal blocks
+" Embedded language support for literal blocks
+" Key insight: We need to create custom cluster names (like @poemHtml)
+" and include syntax files into those clusters, similar to how html.vim works
+
+" Include common embedded languages into custom clusters
+if !exists('g:poem_no_embedded_languages')
+  " HTML
+  unlet! b:current_syntax
+  syn include @poemHtml syntax/html.vim
+  unlet! b:current_syntax
+  
+  " CSS
+  syn include @poemCss syntax/css.vim
+  unlet! b:current_syntax
+  
+  " JavaScript
+  syn include @poemJavascript syntax/javascript.vim
+  unlet! b:current_syntax
+  
+  " Python
+  syn include @poemPython syntax/python.vim
+  unlet! b:current_syntax
+  
+  " YAML
+  syn include @poemYaml syntax/yaml.vim
+  unlet! b:current_syntax
+  
+  " JSON
+  syn include @poemJson syntax/json.vim
+  unlet! b:current_syntax
+  
+  " XML
+  syn include @poemXml syntax/xml.vim
+  unlet! b:current_syntax
+  
+  " SQL
+  syn include @poemSql syntax/sql.vim
+  unlet! b:current_syntax
+  
+  " Shell
+  syn include @poemSh syntax/sh.vim
+  unlet! b:current_syntax
+  
+  " Markdown
+  syn include @poemMarkdown syntax/markdown.vim
+  unlet! b:current_syntax
+endif
+
+" Literal blocks with language-specific syntax highlighting  
+" Strategy: Match the <<<lang line, but start highlighting content on the next line using ms
+" matchgroup highlights just the delimiters, region contains the embedded language
+syn region poemLiteralHtml matchgroup=Delimiter start="^<<<html\>.*$" matchgroup=Delimiter end="^>>>$" keepend contains=@poemHtml
+syn region poemLiteralCss matchgroup=Delimiter start="^<<<css\>.*$" matchgroup=Delimiter end="^>>>$" keepend contains=@poemCss
+syn region poemLiteralJavascript matchgroup=Delimiter start="^<<<javascript\>.*$" matchgroup=Delimiter end="^>>>$" keepend contains=@poemJavascript
+syn region poemLiteralJavascriptAlt matchgroup=Delimiter start="^<<<js\>.*$" matchgroup=Delimiter end="^>>>$" keepend contains=@poemJavascript
+syn region poemLiteralPython matchgroup=Delimiter start="^<<<python\>.*$" matchgroup=Delimiter end="^>>>$" keepend contains=@poemPython
+syn region poemLiteralPythonAlt matchgroup=Delimiter start="^<<<py\>.*$" matchgroup=Delimiter end="^>>>$" keepend contains=@poemPython
+syn region poemLiteralYaml matchgroup=Delimiter start="^<<<yaml\>.*$" matchgroup=Delimiter end="^>>>$" keepend contains=@poemYaml
+syn region poemLiteralYamlAlt matchgroup=Delimiter start="^<<<yml\>.*$" matchgroup=Delimiter end="^>>>$" keepend contains=@poemYaml
+syn region poemLiteralJson matchgroup=Delimiter start="^<<<json\>.*$" matchgroup=Delimiter end="^>>>$" keepend contains=@poemJson
+syn region poemLiteralXml matchgroup=Delimiter start="^<<<xml\>.*$" matchgroup=Delimiter end="^>>>$" keepend contains=@poemXml
+syn region poemLiteralSql matchgroup=Delimiter start="^<<<sql\>.*$" matchgroup=Delimiter end="^>>>$" keepend contains=@poemSql
+syn region poemLiteralShell matchgroup=Delimiter start="^<<<shell\>.*$" matchgroup=Delimiter end="^>>>$" keepend contains=@poemSh
+syn region poemLiteralBash matchgroup=Delimiter start="^<<<bash\>.*$" matchgroup=Delimiter end="^>>>$" keepend contains=@poemSh
+syn region poemLiteralSh matchgroup=Delimiter start="^<<<sh\>.*$" matchgroup=Delimiter end="^>>>$" keepend contains=@poemSh
+syn region poemLiteralMarkdown matchgroup=Delimiter start="^<<<markdown\>.*$" matchgroup=Delimiter end="^>>>$" keepend contains=@poemMarkdown
+syn region poemLiteralMarkdownAlt matchgroup=Delimiter start="^<<<md\>.*$" matchgroup=Delimiter end="^>>>$" keepend contains=@poemMarkdown
+
+" Plain literal blocks (no language tag or unrecognized tag)
 syn region poemLiteralBlock start="^<<<$" end="^>>>$" keepend
 
-" Literal block markers with trailing text
-syn match poemLiteralStartLine "^<<<\s\+.*$" contains=poemLiteralStartMark
-syn match poemLiteralStartMark "^<<<" contained
+" Literal block end markers with trailing text
 syn match poemLiteralEndLine "^>>>\s\+.*$" contains=poemLiteralEndMark
 syn match poemLiteralEndMark "^>>>" contained
 

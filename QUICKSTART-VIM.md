@@ -33,6 +33,7 @@ The syntax highlighting provides colour-coding for all major Poem file elements:
 | **Variables** | `={var}=value`, `${var}` | Macro/Identifier |
 | **Comments** | `<<# comment #>>` | Comment style |
 | **Literal blocks** | `<<< ... >>>` | PreProc style |
+| **Embedded languages** | `<<<html`, `<<<python`, etc. | Language-specific |
 | **Dividers** | `----`, `====` | Delimiter |
 | **Audio keywords** | `Audiomack`, `Suno:` | Keyword |
 | **Headings** | `#`, `##`, `###` | Title style |
@@ -65,6 +66,25 @@ autocmd Syntax poem hi poemTitle ctermfg=cyan guifg=#00ffff
 " Example: Change variable references to green
 autocmd Syntax poem hi poemVariableRef ctermfg=green guifg=#00ff00
 ```
+
+## Embedded Language Support
+
+Literal blocks support language-specific syntax highlighting:
+
+```poem
+<<<html
+<p>HTML code with proper highlighting</p>
+>>>
+
+<<<python
+def hello():
+    print("Python with syntax highlighting!")
+>>>
+```
+
+**Supported languages**: HTML, CSS, JavaScript, Python, YAML, JSON, XML, SQL, Shell/Bash, Markdown
+
+See `VIM-SYNTAX.md` for complete list of supported languages and aliases.
 
 ## Complete Documentation
 

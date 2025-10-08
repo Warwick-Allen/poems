@@ -11,12 +11,100 @@ The syntax highlighting provides colour-coding for:
 - **Labels**: Version labels `{{ ... }}`, segment labels `{ ... }`, postscript labels, and analysis labels
 - **Variables**: Single-line and multi-line variable definitions (`={var}=`), and variable references (`${var}`)
 - **Comment blocks**: `<<# ... #>>`
-- **Literal blocks**: `<<< ... >>>`
+- **Literal blocks**: `<<< ... >>>` with optional language-specific syntax highlighting
+- **Embedded languages**: HTML, CSS, JavaScript, Python, YAML, JSON, XML, SQL, Shell/Bash, Markdown
 - **Audio section**: `Audiomack` and `Suno:` keywords
 - **Analysis headings**: `#`, `##`, and `###` headings
 - **Inline markup**: Emphasis (`_text_`), strong (`*text*`), strikethrough (`~text~`), links (`[text|url]`), smart quotes (`` `text` `` and `"text"`), and span elements (`/.class{text}`)
 - **Special characters**: Escaped characters (`\*`), em dashes (`---`), and en dashes (`--`)
 - **Trailing text**: Inline comments after line-anchored tokens (e.g., `----  # comment`)
+
+## Embedded Language Support
+
+Literal blocks can specify a language tag for syntax-specific highlighting:
+
+```poem
+<<<html
+<p>This HTML will be highlighted with HTML syntax</p>
+>>>
+
+<<<python
+def hello():
+    print("Python code with proper highlighting!")
+>>>
+
+<<<yaml
+key: value
+nested:
+  - item1
+  - item2
+>>>
+```
+
+### Supported Languages
+
+The following languages are supported with their alternative tags:
+
+| Language | Tags | Notes |
+|----------|------|-------|
+| HTML | `html` | Web markup |
+| CSS | `css` | Stylesheets |
+| JavaScript | `javascript`, `js` | ECMAScript |
+| Python | `python`, `py` | Python code |
+| YAML | `yaml`, `yml` | Configuration files |
+| JSON | `json` | Data interchange |
+| XML | `xml` | Markup language |
+| SQL | `sql` | Database queries |
+| Shell | `shell`, `bash`, `sh` | Shell scripts |
+| Markdown | `markdown`, `md` | Markdown text |
+
+**Notes:**
+- Language tags are case-sensitive (use lowercase)
+- The language name must immediately follow `<<<` with no space (e.g., `<<<html`)
+- Text after the language tag is treated as a comment (e.g., `<<<html # My HTML block`)
+- Plain `<<<` without a language tag uses default literal block highlighting
+- Unrecognized language tags also use default literal block highlighting
+
+### Examples
+
+```poem
+<<<html  # A complete HTML snippet
+<!DOCTYPE html>
+<html>
+<head><title>Example</title></head>
+<body><p>Hello, world!</p></body>
+</html>
+>>>
+
+<<<python  # Python function
+def calculate_sum(numbers):
+    """Calculate the sum of a list of numbers."""
+    return sum(numbers)
+>>>
+
+<<<yaml  # Configuration example
+server:
+  host: localhost
+  port: 8080
+  ssl: true
+>>>
+
+<<<  # Plain literal block (no language tag)
+  - $ref: "_shared.yaml#/disclaimer"
+>>>
+```
+
+The embedded language syntax uses Vim's built-in syntax files, so you get the same highlighting you're used to in dedicated language files.
+
+### Disabling Embedded Languages
+
+If you experience performance issues or want to disable embedded language highlighting, add this to your `.vimrc`:
+
+```vim
+let g:poem_no_embedded_languages = 1
+```
+
+This will disable all embedded language syntax loading, and literal blocks will use default highlighting regardless of language tags.
 
 ## Installation
 
