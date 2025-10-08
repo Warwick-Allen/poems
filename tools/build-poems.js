@@ -211,6 +211,12 @@ function buildAllPoems() {
       return;
     }
 
+    if (!poemData.author) {
+      console.error(`Error: Missing 'author' field in ${yamlFile}`);
+      errorCount++;
+      return;
+    }
+
     // Calculate slug from title
     poemData.slug = slugify(poemData.title);
 

@@ -5,8 +5,12 @@ This document describes the YAML schema for poem files.
 ## Required Fields
 
 - `title`: String - The title of the poem
+- `author`: String - The author's name
 - `date`: String - The date in format "yyyy-mm-dd" (e.g., "2015-05-04")
 - `versions`: Array - List of poem versions, each containing segments
+
+**Note on Author Field:**
+When using `.poem` source files, if the author line is omitted, the converter automatically defaults to `${author}`. If the `${author}` variable is defined (e.g., in `.shared.poem`), it will be expanded; otherwise, it remains as the literal text `${author}`. This ensures all YAML files have an author field.
 
 ## Content Fields
 
@@ -35,9 +39,6 @@ versions:
 - Each version contains its own `segments` list.
 
 ## Optional Fields
-
-### Author
-- `author`: String - The author's name (defaults to "Warwick Allen" if omitted)
 
 ### Audio
 ```yaml
