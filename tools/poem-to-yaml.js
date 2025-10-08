@@ -611,6 +611,45 @@ class PoemParser {
       postscript.content = paragraphs.map(p => `<p>${p}</p>`).join('\n\n') + '\n';
     }
 
+    // Parse any literal blocks that follow
+    const literalBlocks = [];
+    while (true) {
+      this.skipBlankLines();
+      const nextLine = this.peek();
+      
+      // Stop at end of file or structural markers
+      if (!nextLine || nextLine.trim() === '----' || nextLine.trim() === '====') {
+        break;
+      }
+      
+      // Check for literal block
+      if (nextLine.trim() === '<<<') {
+        const literalBlock = this.parseLiteralBlock();
+        if (literalBlock) {
+          literalBlocks.push(literalBlock);
+        }
+      } else {
+        // Not a literal block, stop
+        break;
+      }
+    }
+
+    // Append literal blocks to content
+    if (literalBlocks.length > 0) {
+      for (const block of literalBlocks) {
+        if (block.$ref) {
+          // It's a $ref block, return just the reference
+          return block;
+        } else if (block.content) {
+          // It's a literal content block, append to postscript content
+          if (!postscript.content) {
+            postscript.content = '';
+          }
+          postscript.content += '\n' + block.content;
+        }
+      }
+    }
+
     return postscript.content || postscript.label ? postscript : null;
   }
 
@@ -634,21 +673,24 @@ class PoemParser {
       this.next(); // Skip >>>
     }
 
+    // Get the content
+    const content = lines.join('\n');
+
     // Check if this is a $ref line
-    const content = lines.join('\n').trim();
-    if (content.includes('$ref:')) {
+    if (content.trim().includes('$ref:')) {
       // Parse as YAML to get the reference
       try {
-        const parsed = yaml.load(content);
+        const parsed = yaml.load(content.trim());
         if (Array.isArray(parsed) && parsed.length > 0 && parsed[0].$ref) {
           return { '$ref': parsed[0].$ref };
         }
       } catch (e) {
-        // If not valid YAML, return as literal content
+        // If not valid YAML, fall through to return as literal content
       }
     }
 
-    return null;
+    // Return the literal content as-is (no markup conversion)
+    return { content: content };
   }
 
   /**

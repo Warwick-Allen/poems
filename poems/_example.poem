@@ -51,9 +51,9 @@ This note has two paragraphs.
 
 
 ----
-<<<
-  - $ref: "_shared.yaml#/disclaimer"
->>>
+
+${disclaimer}
+
 ====
 
 {Synopsis}
