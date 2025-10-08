@@ -10,6 +10,7 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
+const { parseDateForSorting } = require("./date-utils");
 
 function parseArgs(argv) {
   const args = { port: undefined, dir: undefined };
@@ -180,29 +181,22 @@ function formatFileSize(bytes) {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
 }
 
-function extractCustomCSSFromTemplate() {
+function extractCustomCSSFromStyles() {
   try {
-    const templatePath = path.join(
+    const stylesPath = path.join(
       process.cwd(),
-      "fragments-and-unity.template.html"
+      "public",
+      "styles.css"
     );
-    if (!fileExists(templatePath)) {
+    if (!fileExists(stylesPath)) {
       return "";
     }
 
-    const templateContent = fs.readFileSync(templatePath, "utf8");
-    const customCSSMatch = templateContent.match(
-      /\/\* ~~ CUSTOM CSS START ~~ \*\/([\s\S]*?)\/\* ~~ CUSTOM CSS END ~~ \*\//
-    );
-
-    if (customCSSMatch && customCSSMatch[1]) {
-      return customCSSMatch[1].trim();
-    }
-
-    return "";
+    const stylesContent = fs.readFileSync(stylesPath, "utf8");
+    return stylesContent.trim();
   } catch (err) {
     console.warn(
-      "Warning: Could not extract custom CSS from template:",
+      "Warning: Could not read CSS from styles.css:",
       err.message
     );
     return "";
@@ -293,42 +287,8 @@ function concatenateAllHtmlFiles(dirPath) {
 
     // Sort poems by date (oldest first) for display order
     poemData.sort((a, b) => {
-      const parseDate = (dateStr) => {
-        if (dateStr === "Unknown Date") return new Date(0);
-
-        // Handle format: "Monday, 4 May 2015" or "Friday, 1 August 1997"
-        const months = {
-          January: 0,
-          February: 1,
-          March: 2,
-          April: 3,
-          May: 4,
-          June: 5,
-          July: 6,
-          August: 7,
-          September: 8,
-          October: 9,
-          November: 10,
-          December: 11,
-        };
-
-        const parts = dateStr.split(", ");
-        if (parts.length >= 2) {
-          const datePart = parts[1].split(" ");
-          if (datePart.length >= 3) {
-            const day = parseInt(datePart[0]);
-            const month = months[datePart[1]];
-            const year = parseInt(datePart[2]);
-            if (!isNaN(day) && month !== undefined && !isNaN(year)) {
-              return new Date(year, month, day);
-            }
-          }
-        }
-        return new Date(0); // fallback for invalid dates
-      };
-
-      const aDate = parseDate(a.date);
-      const bDate = parseDate(b.date);
+      const aDate = parseDateForSorting(a.date);
+      const bDate = parseDateForSorting(b.date);
       return aDate - bDate; // oldest first
     });
 
@@ -337,8 +297,8 @@ function concatenateAllHtmlFiles(dirPath) {
       poem.anchor = `poem-${index}`;
     });
 
-    // Extract custom CSS from template
-    const customCSS = extractCustomCSSFromTemplate();
+    // Extract custom CSS from styles.css
+    const customCSS = extractCustomCSSFromStyles();
 
     let concatenatedContent = `<!DOCTYPE html>
 <html lang="en">
@@ -371,7 +331,7 @@ function concatenateAllHtmlFiles(dirPath) {
         .audio-cell:empty::after { content: "—"; color: #ccc; }
         .back-link { display: inline-block; margin-bottom: 20px; color: #007AFF; text-decoration: none; }
         .back-link:hover { text-decoration: underline; }
-        
+
         /* Custom CSS from template */
         ${customCSS}
     </style>
@@ -383,7 +343,7 @@ function concatenateAllHtmlFiles(dirPath) {
             <p class="subtitle">Concatenated view of all HTML files (${htmlFiles.length} files)</p>
             <a href="/" class="back-link">← Back to Directory Listing</a>
         </div>
-        
+
         <div class="toc">
             <h2>Table of Contents</h2>
             <table class="toc-table" id="poemTable">
@@ -435,19 +395,30 @@ function concatenateAllHtmlFiles(dirPath) {
 
     concatenatedContent += `
     </div>
-    
+
     <script>
         let currentSort = { column: -1, direction: 'asc' };
-        
+
         function parseDate(dateStr) {
             if (dateStr === "Unknown Date") return new Date(0);
-            
-            // Handle format: "Monday, 4 May 2015" or "Friday, 1 August 1997"
+
+            // Ensure dateStr is a string
+            if (typeof dateStr !== 'string') {
+                dateStr = String(dateStr);
+            }
+
+            // Handle both yyyy-mm-dd and "DayOfWeek, DD Month YYYY" formats
+            if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+                const date = new Date(dateStr + 'T00:00:00');
+                return isNaN(date.getTime()) ? new Date(0) : date;
+            }
+
+            // Handle display format: "Monday, 4 May 2015" or "Friday, 1 August 1997"
             const months = {
                 'January': 0, 'February': 1, 'March': 2, 'April': 3, 'May': 4, 'June': 5,
                 'July': 6, 'August': 7, 'September': 8, 'October': 9, 'November': 10, 'December': 11
             };
-            
+
             const parts = dateStr.split(', ');
             if (parts.length >= 2) {
                 const datePart = parts[1].split(' ');
@@ -462,12 +433,12 @@ function concatenateAllHtmlFiles(dirPath) {
             }
             return new Date(0); // fallback for invalid dates
         }
-        
+
         function sortTable(columnIndex, sortType) {
             const table = document.getElementById('poemTable');
             const tbody = document.getElementById('poemTableBody');
             const rows = Array.from(tbody.getElementsByTagName('tr'));
-            
+
             // Determine sort direction
             if (currentSort.column === columnIndex) {
                 currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
@@ -475,7 +446,7 @@ function concatenateAllHtmlFiles(dirPath) {
                 currentSort.direction = 'asc';
             }
             currentSort.column = columnIndex;
-            
+
             // Update header styling
             const headers = table.getElementsByTagName('th');
             for (let i = 0; i < headers.length; i++) {
@@ -484,14 +455,14 @@ function concatenateAllHtmlFiles(dirPath) {
                     headers[i].className = currentSort.direction === 'asc' ? 'sort-asc' : 'sort-desc';
                 }
             }
-            
+
             // Sort rows
             rows.sort((a, b) => {
                 const aVal = a.cells[columnIndex].textContent.trim();
                 const bVal = b.cells[columnIndex].textContent.trim();
-                
+
                 let comparison = 0;
-                
+
                 if (sortType === 'date') {
                     const aDate = parseDate(aVal);
                     const bDate = parseDate(bVal);
@@ -505,10 +476,10 @@ function concatenateAllHtmlFiles(dirPath) {
                     // String comparison (for titles)
                     comparison = aVal.localeCompare(bVal);
                 }
-                
+
                 return currentSort.direction === 'asc' ? comparison : -comparison;
             });
-            
+
             // Re-append sorted rows
             rows.forEach(row => tbody.appendChild(row));
         }
