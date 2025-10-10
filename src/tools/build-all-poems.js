@@ -257,6 +257,7 @@ function concatenateAllHtmlFiles(dirPath) {
     concatenatedContent += `
     </div>
 
+    <script src="lazy-iframe.js"></script>
     <script>
         let currentSort = { column: -1, direction: 'asc' };
 
