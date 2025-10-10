@@ -254,21 +254,10 @@ function concatenateAllHtmlFiles(dirPath) {
       }
     });
 
-    // Read the lazy-iframe.js content to inline it
-    const lazyIframeScriptPath = path.join(process.cwd(), "public", "lazy-iframe.js");
-    let lazyIframeScript = "";
-    try {
-      lazyIframeScript = fs.readFileSync(lazyIframeScriptPath, "utf8");
-    } catch (err) {
-      console.warn("Warning: Could not read lazy-iframe.js, iframes will not lazy load:", err.message);
-    }
-
     concatenatedContent += `
     </div>
 
-    <script>
-${lazyIframeScript}
-    </script>
+    <script src="lazy-iframe.js"></script>
     <script>
         let currentSort = { column: -1, direction: 'asc' };
 
