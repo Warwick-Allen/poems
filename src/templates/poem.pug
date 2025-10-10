@@ -71,26 +71,14 @@ div(id=`poem--${slug}`)
   if audio
     div(id=`song--${slug}` class="song-link")
       if audio.audiomack === true
-        div.iframe-wrapper
-          div.iframe-loading(data-loading="true") Loading audio player...
-          iframe.lazy-iframe(
-            data-src=`https://audiomack.com/embed/saltysojourner/song/${slug}`
-            scrolling="no"
-            width="100%"
-            height="252"
-            frameborder="0"
-            title=title
-            loading="lazy"
-          )
-        noscript
-          iframe(
-            src=`https://audiomack.com/embed/saltysojourner/song/${slug}`
-            scrolling="no"
-            width="100%"
-            height="252"
-            frameborder="0"
-            title=title
-          )
+        iframe(
+          src=`https://audiomack.com/embed/saltysojourner/song/${slug}`
+          scrolling="no"
+          width="100%"
+          height="252"
+          frameborder="0"
+          title=title
+        )
         br
       if audio.suno
         |  (
