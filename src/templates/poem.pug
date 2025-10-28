@@ -71,14 +71,14 @@ div(id=`poem--${slug}`)
   if audio
     div(id=`song--${slug}` class="song-link")
       if audio.audiomack === true
-        iframe(
-          src=`https://audiomack.com/embed/saltysojourner/song/${slug}`
-          scrolling="no"
-          width="100%"
-          height="252"
-          frameborder="0"
-          title=title
-        )
+        div(id=`audiomack-container--${slug}` class="audiomack-container")
+          button(
+            id=`load-audiomack--${slug}`
+            class="load-audiomack-btn"
+            onclick=`loadAudiomackPlayer('${slug}', '${title}')`
+            type="button"
+          ) 🎵 Load Audio Player
+          div(id=`audiomack-player--${slug}` class="audiomack-player" style="display: none;")
         br
       if audio.suno
         |  (
@@ -148,4 +148,58 @@ div(id=`poem--${slug}`)
     //- end analysis section
 //- end poem
 
+//- Add JavaScript and CSS for lazy loading Audiomack players
+script.
+  function loadAudiomackPlayer(slug, title) {
+    const button = document.getElementById(`load-audiomack--${slug}`);
+    const playerContainer = document.getElementById(`audiomack-player--${slug}`);
+
+    if (button && playerContainer) {
+      // Hide the button
+      button.style.display = 'none';
+
+      // Create and insert the iframe
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://audiomack.com/embed/saltysojourner/song/${slug}`;
+      iframe.scrolling = 'no';
+      iframe.width = '100%';
+      iframe.height = '252';
+      iframe.frameBorder = '0';
+      iframe.title = title;
+
+      // Show the container and append the iframe
+      playerContainer.style.display = 'block';
+      playerContainer.appendChild(iframe);
+    }
+  }
+
+style.
+  .load-audiomack-btn {
+    background: #007AFF;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  .load-audiomack-btn:hover {
+    background: #0056CC;
+  }
+
+  .load-audiomack-btn:active {
+    background: #004499;
+  }
+
+  .audiomack-container {
+    margin: 10px 0;
+  }
+
+  .audiomack-player {
+    width: 100%;
+  }
 

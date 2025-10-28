@@ -140,6 +140,7 @@ function generatePoemHTML(poemData) {
   try {
     const compiledFunction = pug.compileFile(TEMPLATE_FILE, {
       pretty: false,
+      cache: false,
     });
     const html = compiledFunction(poemData);
     return html;
