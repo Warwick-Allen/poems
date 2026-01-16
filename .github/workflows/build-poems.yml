@@ -88,13 +88,15 @@ jobs:
           mkdir -p deployment/public
           # Copy all public files to the deployment/public directory
           cp -r public/* deployment/public/
-          # Also copy the files to the root for direct access
+          # Copy essential files to root for direct access
           cp public/index.html deployment/
           cp public/all-poems.html deployment/
           cp public/styles.css deployment/
+          # Copy all individual poem HTML files to root for GitHub Pages access
+          find public -maxdepth 1 -name "*.html" -type f -exec cp {} deployment/ \;
           echo "Deployment structure created:"
           ls -la deployment/
-          ls -la deployment/public/
+          ls -la deployment/public/ | head -20
 
       - name: Upload artifact
         id: upload
