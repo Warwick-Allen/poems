@@ -3,8 +3,22 @@ name: Build and Deploy Poems to GitHub Pages
 on:
   push:
     branches: [main]
+    paths:
+      - 'src/poems/**'
+      - 'src/templates/**'
+      - 'src/tools/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/**'
   pull_request:
     branches: [main]
+    paths:
+      - 'src/poems/**'
+      - 'src/templates/**'
+      - 'src/tools/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/**'
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
