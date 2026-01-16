@@ -190,6 +190,37 @@ function concatenateAllHtmlFiles(dirPath) {
         .audio-cell:empty::after { content: "—"; color: #ccc; }
         .back-link { display: inline-block; margin-bottom: 20px; color: #007AFF; text-decoration: none; }
         .back-link:hover { text-decoration: underline; }
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #007AFF;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        .back-to-top:hover {
+            background: #0056CC;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .back-to-top:active {
+            transform: translateY(0);
+        }
+        .back-to-top.visible {
+            display: flex;
+        }
     </style>
 </head>
 <body>
@@ -344,6 +375,33 @@ function concatenateAllHtmlFiles(dirPath) {
             // Re-append sorted rows
             rows.forEach(row => tbody.appendChild(row));
         }
+
+        // Back to Top functionality
+        const backToTopButton = document.createElement('button');
+        backToTopButton.className = 'back-to-top';
+        backToTopButton.innerHTML = '↑';
+        backToTopButton.setAttribute('aria-label', 'Back to top');
+        backToTopButton.onclick = () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        };
+        document.body.appendChild(backToTopButton);
+
+        // Show/hide button based on scroll position
+        function toggleBackToTop() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        }
+
+        // Listen for scroll events
+        window.addEventListener('scroll', toggleBackToTop);
+        // Check on page load
+        toggleBackToTop();
     </script>
 </body>
 </html>`;
