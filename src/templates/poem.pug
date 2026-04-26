@@ -93,7 +93,7 @@ div(id=`poem--${slug}`)
         class="postscript"
       )
         if postscriptItem.label
-          div.postscript-label= postscriptItem.label
+          div.postscript-label!= postscriptItem.label
         if postscriptItem.content
           - const processedContent = postscriptItem.content.replace(/\$\{slug\}/g, slug)
           != processedContent
