@@ -53,7 +53,7 @@ div(id=`poem--${slug}`)
       each version, versionIndex in versions
         if version.label
           hr
-          div.poem-info= version.label
+          div.poem-info!= version.label
         if version.segments && version.segments.length > 0
           each segment in version.segments
             if segment.label
