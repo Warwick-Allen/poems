@@ -487,12 +487,65 @@ class PoemParser {
       }
 
       if (contentLines.length > 0) {
-        // Join lines, convert markup (which can span across lines), then split and convert spaces
-        const joinedContent = contentLines.join('\n');
-        const withMarkup = this.convertMarkup(joinedContent);
-        const linesWithMarkup = withMarkup.split('\n');
-        const processedLines = linesWithMarkup.map(line => this.convertSpacesToNbsp(line));
-        segment.lines = processedLines.join('\n') + '\n';
+          // Process content, handling blockquotes (lines starting with optional
+          // indentation followed by '>') as a single block. Non-quote text is
+          // processed with markup conversion which may span lines.
+          const processedParts = [];
+          let i = 0;
+          while (i < contentLines.length) {
+            const cur = contentLines[i];
+
+            // Blockquote run
+            if (/^\s*>/.test(cur)) {
+              const quoteLines = [];
+              while (i < contentLines.length && /^\s*>/.test(contentLines[i])) {
+                // Strip leading indentation + '>' and an optional single space
+                const inner = contentLines[i].replace(/^\s*>\s?/, '');
+                quoteLines.push(inner);
+                i++;
+              }
+
+              // Convert markup for the entire quote block at once. This lets
+              // convertMarkup handle trailing-double-space -> <br/> and avoids
+              // inserting an extra <br/> when we join lines. Collapse any
+              // remaining newlines so the blockquote content is a single-line
+              // HTML fragment (the template will not inject extra <br/> inside
+              // it).
+              // Convert each inner line, strip any trailing <br/> introduced by
+              // trailing spaces, and then join with a single <br/> between
+              // lines. Empty quote lines (from a lone '>') will produce an
+              // empty element which results in consecutive <br/> tokens.
+              const processedLines = quoteLines.map(l => {
+                let s = this.convertMarkup(l);
+                // Remove any newline characters left by convertMarkup
+                s = s.replace(/\r?\n/g, '');
+                // Remove any trailing <br/> that came from trailing spaces
+                s = s.replace(/(?:<br\/>)+$/g, '');
+                return s;
+              });
+
+              const processedInner = processedLines.join('<br/>');
+              processedParts.push(`<blockquote>${processedInner}</blockquote>`);
+              continue;
+            }
+
+            // Non-quote block: gather contiguous non-quote lines and process
+            const normalLines = [];
+            while (i < contentLines.length && !/^\s*>/.test(contentLines[i])) {
+              normalLines.push(contentLines[i]);
+              i++;
+            }
+
+            const joined = normalLines.join('\n');
+            const withMarkup = this.convertMarkup(joined);
+            const linesWithMarkup = withMarkup.split('\n');
+            for (const l of linesWithMarkup) {
+              processedParts.push(l);
+            }
+          }
+
+          const processedLines = processedParts.map(line => this.convertSpacesToNbsp(line));
+          segment.lines = processedLines.join('\n') + '\n';
       }
     }
 
@@ -795,6 +848,38 @@ class PoemParser {
 
       const trimmed = line.trim();
 
+      // Check for blockquote lines (allow optional leading indentation)
+      if (/^\s*>/.test(line)) {
+        // End any current paragraph first
+        if (currentParagraph.length > 0) {
+          blocks.push(`<p>${this.convertMarkup(currentParagraph.join(' '))}</p>`);
+          currentParagraph = [];
+        }
+
+        // Collect contiguous blockquote lines
+        const quoteLines = [];
+        while (this.peek() !== null && /^\s*>/.test(this.peek())) {
+          const qline = this.substituteVariables(this.next()).replace(/^\s*>\s?/, '');
+          quoteLines.push(qline);
+        }
+
+        // Convert markup for the entire quote block at once and collapse
+        // newlines to avoid duplicate <br/> markers when trailing spaces
+        // already introduce <br/> in convertMarkup.
+        // Convert each inner line, strip trailing <br/> inserted by
+        // trailing spaces inside lines, then join with a single <br/>.
+        const processedLines = quoteLines.map(l => {
+          let s = this.convertMarkup(l);
+          s = s.replace(/\r?\n/g, '');
+          s = s.replace(/(?:<br\/>)+$/g, '');
+          return s;
+        });
+
+        const processedInner = processedLines.join('<br/>');
+        blocks.push(`<blockquote>${processedInner}</blockquote>`);
+        continue;
+      }
+
       // Check for headings (process longer patterns first)
       if (trimmed.startsWith('### ')) {
         // H5
@@ -899,6 +984,11 @@ class PoemParser {
       text = text.replace(placeholder, char);
     }
 
+    // Hard line break: trailing two-or-more spaces before a newline (or end-of-string)
+    // are converted to a hard line break <br/>. This applies outside literal blocks
+    // and is intended to match the common Markdown behaviour for two-space line breaks.
+    text = text.replace(/ {2,}(\r?\n|$)/g, '<br/>$1');
+
     return text;
   }
 }
@@ -981,4 +1071,3 @@ if (require.main === module) {
 }
 
 module.exports = { PoemParser, convertPoemToYaml };
-

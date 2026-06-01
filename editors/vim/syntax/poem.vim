@@ -157,6 +157,12 @@ syn match poemEmDash "---\%(-\)\@!"
 " En-dash: two hyphens not followed by another hyphen
 syn match poemEnDash "--\%(-\)\@!"
 
+" Quote operator at start of quoted lines (highlight only the '>')
+syn match poemQuoteOperator /^\s*\zs>\ze\(\s\|$\)/
+
+" Trailing double-spaces (used as hard line-break markers)
+syn match poemTrailingSpaces / \{2,}$/
+
 " Define highlighting - lines with trailing text are Comment
 hi def link poemTitle Title
 hi def link poemDate Special
@@ -210,5 +216,7 @@ hi def link poemSpan Special
 hi def link poemEscaped Special
 hi def link poemEmDash Special
 hi def link poemEnDash Special
+hi def link poemQuoteOperator Operator
+hi def link poemTrailingSpaces Todo
 
 let b:current_syntax = "poem"
