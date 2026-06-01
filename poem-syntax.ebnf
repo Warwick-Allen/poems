@@ -155,7 +155,7 @@ full_label = "{Full}", { ? any character except newline ? } ;
 
 analysis_content = analysis_block, { blank_lines, analysis_block } ;
 
-analysis_block = heading | paragraph ;
+analysis_block = heading | paragraph | blockquote ;
 
 heading = heading_h3 | heading_h4 | heading_h5 ;
 
@@ -164,6 +164,15 @@ heading_h3 = "#", whitespace, text_with_markup ;
 heading_h4 = "##", whitespace, text_with_markup ;
 
 heading_h5 = "###", whitespace, text_with_markup ;
+
+(* Blockquote: one or more lines beginning with optional indentation then '>'
+   The leading indentation and the '>' (and one optional following space)
+   are removed from the inner text. Empty '>' lines are permitted and
+   preserved as empty lines inside the blockquote. *)
+
+blockquote = blockquote_line, { newline, blockquote_line } ;
+
+blockquote_line = [ leading_whitespace ], ">", [ " " ], text_content ;
 
 (* ============================================================================
    COMMENT BLOCKS
@@ -463,9 +472,23 @@ leading_whitespace = ( " " | tab ), { " " | tab } ;
    29. Variable definitions and blank lines may appear before the header
        (title/author/date). This allows for defining variables at the top
        of the file that can be used in the header itself
+   
+      30. A line that begins with optional indentation and the character `>`
+         (i.e. matches `/^\s*>/`) is a blockquote line. Contiguous blockquote
+         lines are grouped into a single `blockquote`. The leading `>` and
+         at most one following space are removed from the inner text which is
+         then processed for inline markup. A blockquote line that contains
+         only `>` (optionally surrounded by spaces) is interpreted as an
+         empty quoted line and is preserved inside the blockquote.
+
+      31. Trailing whitespace is significant in poem content: two or more
+         spaces before a newline are converted to a hard line break `<br/>`.
+         This applies in poem segments and analysis content but not inside
+         literal blocks (delimited by `<<<` and `>>>`). Maintenance tools
+         that automatically strip trailing spaces should exclude `.poem`
+         files to avoid removing intentional hard-break markers.
 *)
 
 (* ============================================================================
    END OF GRAMMAR
    ============================================================================ *)
-

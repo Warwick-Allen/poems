@@ -31,6 +31,10 @@ while IFS= read -r file; do
     fi
     
     files_processed=$((files_processed + 1))
+    # Skip .poem files to preserve intentional trailing double-spaces used for line breaks
+    if [[ "$file" == *.poem ]]; then
+        continue
+    fi
     
     # Create a temporary file
     tmp_file=$(mktemp)
@@ -59,4 +63,3 @@ if [[ $files_modified -gt 0 ]]; then
 else
     echo -e "${GREEN}All files are clean - no trailing spaces found.${NC}"
 fi
-

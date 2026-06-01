@@ -715,6 +715,37 @@ Converts to:
 
 **Note:** You can also manually use `&nbsp;` in your `.poem` files if needed, and they will be preserved as-is. The alternating pattern (normal space + `&nbsp;`) ensures that text can wrap at appropriate points on small displays while still preserving the visual spacing.
 
+## Blockquotes and Hard Line Breaks
+
+The Poem format supports two Markdown-like features to control presentation:
+
+- **Blockquotes**: Any line that begins with optional indentation followed by a `>` character (that is, `/^\s*>/`) is treated as a blockquote line. Contiguous runs of such lines are grouped into a single blockquote. For each line in the quote the leading indentation and the `>` (plus one optional following space) are removed and the inner text is processed for inline markup. Lines that are only `>` (possibly surrounded by spaces) are preserved as empty quote lines inside the blockquote.
+
+  Example:
+
+  ```
+  {Verse}
+    > This is a quoted line
+    >
+    > This is another quoted line
+  ```
+
+  Produces a single `<blockquote>` containing the three quote lines (the empty `>` line becomes an internal blank line within the blockquote).
+
+- **Hard line breaks (trailing double-space)**: If a line ends with two or more spaces, that trailing run of spaces is converted into a hard line break (`<br/>`). This behavior is applied in poem segments and analysis sections but is not applied inside literal blocks (delimited by `<<<`/`>>>`).
+
+  Example:
+
+  ```
+  {Verse}
+  Line one with a break.  
+  Line two follows after a hard break.
+  ```
+
+  The first line will contain a `<br/>` at its end so the rendered output breaks where the two spaces were placed.
+
+Note: To avoid accidental removal of meaningful trailing spaces, maintenance scripts that strip trailing whitespace should exclude `.poem` files. The included script `scripts/remove-trailing-spaces.sh` skips `.poem` files.
+
 ## 11. Complete Example
 
 See `_example.poem` for a complete example file demonstrating all features.
@@ -722,4 +753,3 @@ See `_example.poem` for a complete example file demonstrating all features.
 ## 12. Formal Grammar
 
 For the complete formal specification, see `poem-syntax.ebnf`, which defines the grammar in Extended Backus-Naur Form (EBNF).
-
