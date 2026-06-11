@@ -18,8 +18,20 @@
 
 .song-segment {
   color: gray;
-  font-size: 80%;
+  display: block;
+  height: 1ex;
+  font-family: monospace;
+  font-size: 70%;
   font-style: italic;
+  letter-spacing: 5%;
+  opacity: 70%;
+  overflow: visible;
+  position: relative;
+  text-transform: lowercase;
+  top: -2ex;
+}
+.song-segment + br {
+  display: none;
 }
 
 .song-link {

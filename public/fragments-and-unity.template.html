@@ -526,8 +526,20 @@ h3.post-title, .comments h4 {
 
 .song-segment {
   color: gray;
-  font-size: 80%;
+  display: block;
+  height: 1ex;
+  font-family: monospace;
+  font-size: 70%;
   font-style: italic;
+  letter-spacing: 5%;
+  opacity: 70%;
+  overflow: visible;
+  position: relative;
+  text-transform: lowercase;
+  top: -2ex;
+}
+.song-segment + br {
+  display: none;
 }
 
 .song-link {
@@ -629,6 +641,37 @@ div.analysis {
 
 .analysis em {
   font-style: italic;
+}
+
+/* Audiomack Lazy Loading */
+
+.load-audiomack-btn {
+  background: #001833;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.load-audiomack-btn:hover {
+  background: #0056CC;
+}
+
+.load-audiomack-btn:active {
+  background: #004499;
+}
+
+.audiomack-container {
+  margin: 10px 0;
+}
+
+.audiomack-player {
+  width: 100%;
 }
 
 /* ~~ CUSTOM CSS END ~~ */
