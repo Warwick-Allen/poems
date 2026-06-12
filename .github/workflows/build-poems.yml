@@ -52,6 +52,9 @@ jobs:
       - name: Build poems
         run: npm run build
 
+      - name: Build raw poem files
+        run: npm run poem-to-raw
+
       - name: Check for build artifacts
         run: |
           echo "Checking for generated files..."
@@ -99,9 +102,11 @@ jobs:
           cp public/raw/index.html deployment/public/raw/index.html
           # Display results
           echo "Deployment structure created:"
-          ls -la deployment/
-          ls -la deployment/public/ | head -20
-          ls -la deployment/public/raw | head -20
+          if $(type tree >/dev/null 2>&1); then
+            tree -s deployment
+          else
+            find deployment -type f -ls
+          fi | head -500
 
       - name: Upload artifact
         id: upload
