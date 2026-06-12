@@ -22,7 +22,8 @@ HERE
 for poem_file in "$repo_toplevel"/src/poems/*.poem; do
   [[ "$poem_file" =~ /_ ]] && continue;
   title="$(<"$poem_file" head -1)"
-  echo "    <li><a href=\"$gh_raw/$title\">$title</a></li>" >>"$index"
+  href="$gh_raw/${title//\?/%3F}"
+  echo "    <li><a href=\"$href\">$title</a></li>" >>"$index"
   (
     echo "$title" | tee >(sed s/./-/g)
     <"$poem_file" awk '
