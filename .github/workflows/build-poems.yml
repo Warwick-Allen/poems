@@ -94,9 +94,14 @@ jobs:
           cp public/styles.css deployment/
           # Copy all individual poem HTML files to root for GitHub Pages access
           find public -maxdepth 1 -name "*.html" -type f -exec cp {} deployment/ \;
+          # Raw poem file access
+          mkdir -p deployment/public/raw
+          cp public/raw/index.html deployment/public/raw/index.html
+          # Display results
           echo "Deployment structure created:"
           ls -la deployment/
           ls -la deployment/public/ | head -20
+          ls -la deployment/public/raw | head -20
 
       - name: Upload artifact
         id: upload
