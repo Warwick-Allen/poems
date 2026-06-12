@@ -1,23 +1,39 @@
 #!/bin/bash
 
-shopt -quo dotglob
+shopt -qu dotglob
 
 repo_toplevel=$(git rev-parse --show-toplevel)
-mkdir -p "$repo_toplevel/raw"
+mkdir -p "$repo_toplevel/raw" "$repo_toplevel/public/raw"
+index="$repo_toplevel/public/raw/index.html"
+gh_repo="Warwick-Allen/poems"
+gh_raw="https://raw.githubusercontent.com/$gh_repo/refs/heads/main/raw"
+cat <<HERE >"$index"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poems</title>
+</head>
+<body>
+  <h1>Poems</h1>
+  <ul>
+HERE
 for poem_file in "$repo_toplevel"/src/poems/*.poem; do
   [[ "$poem_file" =~ /_ ]] && continue;
   title="$(<"$poem_file" head -1)"
+  echo "    <li><a href=\"$gh_raw/$title\">$title</a></li>" >>"$index"
   (
     echo "$title" | tee >(sed s/./-/g)
     <"$poem_file" awk '
-      /^\s*$/           {blank++}
-      blank<1           {next}
-      /^====\s*(#.*)?$/ {exit}
-      /^\s*{[^{]/       {next}
-      /^<<#/            {comment=1}
+      /^\s*$/           {blank++        }
+      blank<1           {next           }
+      /^====\s*(#.*)?$/ {exit           }
+      /^\s*{[^{]/       {next           }
+      /^<<#/            {comment=1      }
       /^#>>/            {comment=0; next}
-      comment           {next}
-                        {print}
+      comment           {next           }
+                        {print          }
     ' |
     perl -pe 'BEGIN {no warnings utf8; undef $/}
       s:  /\.\w+\{([^}]*)\}         :\1:gx;
@@ -34,4 +50,9 @@ for poem_file in "$repo_toplevel"/src/poems/*.poem; do
     '
   ) >"$repo_toplevel/raw/$title"
 done
+echo <<HERE >>"$index"
+  </ul>
+</body>
+</html>
+HERE
 
