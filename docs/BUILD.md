@@ -20,6 +20,12 @@ Since GitHub Pages serves static files only, we use a build script to generate t
    npm run build:all
    ```
 
+2.5 **Generate raw text files from `.poem` sources:**
+
+   ```bash
+   npm run poem-to-raw
+   ```
+
 3. **View locally:**
    - Main page: http://localhost:8080
    - All poems: http://localhost:8080/all-poems.html
@@ -58,6 +64,10 @@ The Blogger template script:
 4. Replaces the content between these delimiters with the styles from `styles.css`
 5. Provides error handling for missing files or malformed delimiters
 6. Updates the template file in place for uploading to Blogger
+
+#### Raw extraction script (`src/tools/poem-to-raw.js`)
+
+The `poem-to-raw` script extracts the plain text body from `.poem` source files and writes them to the `raw/` directory at the repository root. It mirrors the legacy `scripts/poem-to-raw.sh` behaviour (skips partial files, removes comments and front-matter delimiters, and normalises common HTML entities). Run it standalone with `npm run poem-to-raw` or let the main `build` sequence invoke it automatically.
 
 ### Workflow for Updates
 
