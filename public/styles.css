@@ -31,7 +31,8 @@
   top: -2ex;
 }
 .song-segment + br {
-  display: none;
+  display: block;
+  height: 0;
 }
 
 .song-link {
