@@ -52,9 +52,6 @@ jobs:
       - name: Build poems
         run: npm run build
 
-      - name: Build raw poem files
-        run: npm run poem-to-raw
-
       - name: Check for build artifacts
         run: |
           echo "Checking for generated files..."
