@@ -5,6 +5,24 @@
     <meta expr:content='data:blog.isMobile         ? &quot;width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0&quot;         : &quot;width=1100&quot;' name='viewport'/>
     <b:include data='blog' name='all-head-content'/>
     <title><data:blog.pageTitle/></title>
+    <script type='text/javascript'>
+      // Dark mode detection and class application
+      (function() {
+        function applyDarkMode() {
+          if (window.matchMedia &amp;&amp; window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark-mode');
+          } else {
+            document.documentElement.classList.remove('dark-mode');
+          }
+        }
+        // Apply on page load
+        applyDarkMode();
+        // Listen for color scheme changes
+        if (window.matchMedia) {
+          window.matchMedia('(prefers-color-scheme: dark)').addListener(applyDarkMode);
+        }
+      })();
+    </script>
 
     <b:skin><![CDATA[/*
 -----------------------------------------------
@@ -30,8 +48,20 @@ URL:      www.blogger.com
 
    <Group description="Backgrounds" selector=".body-fauxcolumns-outer">
      <Variable name="body.background.color" description="Outer Background" type="color" default="#66bbdd" value="#eeaa00"/>
-     <Variable name="content.background.color" description="Main Background" type="color" default="#ffffff" value="#ffffff"/>
-     <Variable name="header.background.color" description="Header Background" type="color" default="transparent" value="#cc6611"/>
+     <Variable
+       name="content.background.color"
+       description="Main Background"
+       type="color"
+       default="rgba(255, 255, 255, 0.1)"
+       value="rgba(255, 255, 255, 0.1)"
+     />
+     <Variable
+       name="header.background.color"
+       description="Header Background"
+       type="color"
+       default="transparent"
+       value="#cc6611"
+     />
    </Group>
 
    <Group description="Links" selector=".main-outer">
@@ -80,11 +110,30 @@ URL:      www.blogger.com
      <Variable name="date.header.margin" description="Date Header Margin" type="string" default="inherit" value="inherit"/>
    </Group>
 
-   <Group description="Post Footer" selector=".post-footer">
-     <Variable name="post.footer.text.color" description="Text Color" type="color" default="#666666" value="#666666"/>
-     <Variable name="post.footer.background.color" description="Background Color" type="color"
-         default="#f9f9f9" value="#f9f9f9"/>
-     <Variable name="post.footer.border.color" description="Shadow Color" type="color" default="#eeeeee" value="#eeeeee"/>
+   <Group
+     description="Post Footer"
+     selector=".post-footer">
+     <Variable
+       name="post.footer.text.color"
+       description="Text Color"
+       type="color"
+       default="rgba(119, 119, 119, 0.1)"
+       value="rgba(119, 119, 119, 0.1)"
+     />
+     <Variable
+       name="post.footer.background.color"
+       description="Background Color"
+       type="color"
+       default="rgba(249, 249, 249, 0.1)"
+       value="rgba(249, 249, 249, 0.1)"
+     />
+     <Variable
+       name="post.footer.border.color"
+       description="Shadow Color"
+       type="color"
+       default="rgba(238, 238, 238, 0.1)"
+       value="rgba(238, 238, 238, 0.1)"
+     />
    </Group>
 
    <Group description="Gadgets" selector="h2">
@@ -484,6 +533,10 @@ h3.post-title, .comments h4 {
   border-top: 2px solid $(widget.alternate.text.color);
 }
 
+.comments {
+  opacity: 0.4;
+ }
+
 /* Accents
 ---------------------------------------------- */
 .section-columns td.columns-cell {
@@ -675,6 +728,91 @@ div.analysis {
   width: 100%;
 }
 
+/* Dark mode support using .dark-mode class (for Blogger JavaScript workaround) */
+html.dark-mode {
+  color-scheme: dark;
+}
+
+html.dark-mode :root {
+  --bg: #0b0d0f;
+  --surface: #0f1113;
+  --text: #e6eef6;
+  --muted: #9aa6b2;
+  --accent: #7fb3ff;
+  --border: #23303a;
+}
+
+html.dark-mode body {
+  background: #0b0d0f !important;
+  color: #e6eef6;
+}
+
+html.dark-mode .header,
+html.dark-mode .poem-section,
+html.dark-mode .toc,
+html.dark-mode .toc-table th,
+html.dark-mode .toc-table tr,
+html.dark-mode .toc-table td,
+html.dark-mode .content-inner,
+html.dark-mode .content-outer,
+html.dark-mode .main-inner,
+html.dark-mode .post,
+html.dark-mode .main-outer,
+html.dark-mode .sidebar {
+  background: #0f1113 !important;
+  color: #e6eef6 !important;
+  box-shadow: none !important;
+  border-color: #23303a !important;
+}
+
+html.dark-mode h1,
+html.dark-mode .subtitle,
+html.dark-mode .poem-title,
+html.dark-mode .poem-content,
+html.dark-mode .back-link {
+  color: #e6eef6 !important;
+}
+
+html.dark-mode .toc h2 {
+  color: #f0f6fb !important;
+}
+
+html.dark-mode .toc-table th > a,
+html.dark-mode .toc-table th > a:visited {
+  color: #007AFF !important;
+}
+
+html.dark-mode a {
+  color: #7fb3ff;
+}
+
+html.dark-mode .poem-info,
+html.dark-mode .song-segment,
+html.dark-mode .song-link,
+html.dark-mode .postscript {
+  color: #9aa6b2;
+}
+
+html.dark-mode .analysis {
+  background-color: #0e1619;
+  border-color: #23303a;
+  color: #e6eef6;
+}
+
+html.dark-mode button.analysis {
+  background-color: #122026;
+  color: #e6eef6;
+}
+
+html.dark-mode button.analysis.hide,
+html.dark-mode button.selected {
+  background-color: #0c1416;
+}
+
+html.dark-mode .audiomack-container {
+  color: #e6eef6;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #0b0d0f;
@@ -696,7 +834,13 @@ div.analysis {
   .toc,
   .toc-table th,
   .toc-table tr,
-  .toc-table td {
+  .toc-table td,
+  .content-inner,
+  .content-outer,
+  .main-inner,
+  .post,
+  .main-outer,
+  .sidebar {
     background: var(--surface) !important;
     color: var(--text) !important;
     box-shadow: none !important;
