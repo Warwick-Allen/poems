@@ -1,0 +1,107 @@
+Easter Joy (Immanuel Is His Name)
+1997-03-29
+
+{{ Original poem, "Easter Joy" (1997) }}
+
+O rejoice, all you peoples of the Earth!
+Rejoice, for the Lord is with us,
+And God is among us,
+And Immanuel is His name.
+
+For unto us He was given,
+And for our sake He was slain;
+That God's love shan't be hidden,
+He suffered our pain.
+
+But our Lord, He is risen;
+His glory we shall proclaim.
+
+O rejoice, all you peoples of the Earth!
+Rejoice, for the Lord is with us,
+And God is among us,
+And Jesus is His name.
+
+
+----
+
+
+{{ Song arrangement, with an added verse and pre-chorus/.25{ (2025)}/.26{, retitled as "Immanuel Is His Name" (2026)} }}
+
+{Chorus 1}
+O rejoice, all you peoples of the Earth!
+Rejoice, for the Lord is with us,
+And God is among us,
+And Immanuel is His name.
+
+{Verse 1}
+For unto us He was given,
+And for our sake He was slain;
+/.25{That God's love shan't be hidden,}/.26{To buy for us a pardon}
+He suffered our pain.
+
+{Chorus 2}
+O rejoice, all you peoples of the Earth!
+Rejoice, for the Lord is with us,
+And God is among us,
+And Immanuel is His name.
+
+{Verse 2}
+/.25{Equal with God, was His due}/.26{Truly God in His essence,}
+/.25{But He came down, became man}/.26{He came down and took on flesh,}
+/.25{His rights He chose to eschew}/.26{Through suff'ring, learnt obedience,}
+/.25{Obediently bore our shame}/.26{Became the death of our death!}
+
+{Pre-Chorus}
+But our Lord, He is risen,
+And the Name He is given/.25{,}/.26{:}
+It's above every name.
+His glory we shall proclaim!
+
+{Chorus 3}
+O rejoice, all you peoples of the Earth!
+Rejoice, for the Lord is with us,
+And God is among us,
+And Jesus is His name.
+
+{Outro}
+Jesus is His name.
+
+====
+
+Audiomack
+Suno: s/DZltZrIbbVhDkrts
+
+====
+
+<<<
+    <button type="button" id="select-2025-2026-btn" name="select-2025-2026-btn">
+      Show 2025 version
+    </button>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const spans25 = document.getElementsByClassName('25');
+        const spans26 = document.getElementsByClassName('26');
+        const btn = document.getElementById('select-2025-2026-btn');
+        let showing26 = true;
+        function applyVisibility() {
+          const display25 = showing26 ? 'none' : '';
+          const display26 = showing26 ? '' : 'none';
+          Array.from(spans25).forEach(
+            function (el) { el.style.display = display25; }
+          );
+          Array.from(spans26).forEach(
+            function (el) { el.style.display = display26; }
+          );
+          btn.textContent = showing26 ?
+            'Show 2025 version.' :
+            'Show 2026 version.';
+        }
+        applyVisibility();
+        btn.addEventListener('click', function () {
+          showing26 = !showing26;
+          applyVisibility();
+        });
+      });
+    </script>
+>>>
+

@@ -37,6 +37,7 @@ for poem_file in "$repo_toplevel"/src/poems/*.poem; do
                         {print          }
     ' |
     perl -pe 'BEGIN {no warnings utf8; undef $/}
+      s:/\.\d+\{[^}]*\}/\.\d+\{([^}]*)\}:\1:gx;
       s:  /\.\w+\{([^}]*)\}         :\1:gx;
       s:  \.\.\.                     :…:gx;
       s:( &hellip; | \.\.\.         ):…:gx;
