@@ -180,7 +180,7 @@ To verify the syntax highlighting is working:
 1. Open a `.poem` file in Vim:
 
    ```bash
-   vim src/poems/_example.poem
+   vim src/poems/poem/_example.poem
    ```
 
 2. Check the filetype:

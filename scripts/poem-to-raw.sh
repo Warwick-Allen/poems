@@ -19,7 +19,7 @@ cat <<HERE >"$index"
   <h1>Poems</h1>
   <ul>
 HERE
-for poem_file in "$repo_toplevel"/src/poems/*.poem; do
+for poem_file in "$repo_toplevel"/src/poems/poem/*.poem; do
   [[ "$poem_file" =~ /_ ]] && continue;
   title="$(<"$poem_file" head -1)"
   href="$gh_raw/${title//\?/%3F}"

@@ -2,5 +2,5 @@
 *.sw[op]
 node_modules
 
-src/poems/*.yaml
+src/poems/yaml/*.yaml
 public/*.html

@@ -70,7 +70,7 @@ function main() {
 		const rawDir = path.join(repo, 'raw');
 		if (!fs.existsSync(rawDir)) fs.mkdirSync(rawDir, { recursive: true });
 
-		const poemsDir = path.join(repo, 'src', 'poems');
+		const poemsDir = path.join(repo, 'src', 'poems', 'poem');
 		if (!fs.existsSync(poemsDir)) return;
 
 		const files = fs.readdirSync(poemsDir);

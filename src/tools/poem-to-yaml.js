@@ -1030,15 +1030,16 @@ function main() {
   }
 
   if (args[0] === '--all') {
-    // Convert all .poem files in poems/ directory
-    const poemsDir = path.join(process.cwd(), 'src', 'poems');
-    const files = fs.readdirSync(poemsDir);
+    // Convert all .poem files in src/poems/poem/ directory
+    const poemDir = path.join(process.cwd(), 'src', 'poems', 'poem');
+    const yamlDir = path.join(process.cwd(), 'src', 'poems', 'yaml');
+    const files = fs.readdirSync(poemDir);
 
     for (const file of files) {
       // Skip .shared.poem (it's included by other files)
       if (file.endsWith('.poem') && file !== '.shared.poem') {
-        const poemPath = path.join(poemsDir, file);
-        const yamlPath = path.join(poemsDir, file.replace('.poem', '.yaml'));
+        const poemPath = path.join(poemDir, file);
+        const yamlPath = path.join(yamlDir, file.replace('.poem', '.yaml'));
 
         try {
           console.log(`Converting ${file}...`);

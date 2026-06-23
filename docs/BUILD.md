@@ -112,10 +112,25 @@ public/
 ├── poem2.html
 └── ...
 
+src/poems/
+├── poem/
+│   ├── _example.poem                    # Example poem source
+│   ├── _shared.poem                     # Shared poem content included by others
+│   ├── poem1.poem                       # Individual poem source files
+│   ├── poem2.poem
+│   └── ...
+└── yaml/
+    ├── _example.yaml                    # Example poem YAML (generated)
+    ├── _shared.yaml                     # Shared YAML content
+    ├── poem1.yaml                       # Individual poem YAML (generated)
+    ├── poem2.yaml
+    └── ...
+
 src/tools/
 ├── build-all-poems.js                   # Main build script
 ├── build-poems.js                       # Individual poem builder
 ├── date-utils.js                        # Date format utilities
+├── poem-to-yaml.js                      # Converter script
 ├── serve-static.js                      # Development server
 └── ...
 ```
