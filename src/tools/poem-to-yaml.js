@@ -7,6 +7,7 @@
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
+const { renderGfm } = require('./markdown');
 
 /**
  * Parse a .poem file and convert to structured data
@@ -30,6 +31,9 @@ class PoemParser {
 
     // Process variables (extract and remove definition lines)
     this.processVariables();
+
+    // Strip ignored trailing text after line-anchored tokens (spec section 10)
+    this.normalizeTokenLines();
 
     this.parseHeader();
     this.parseVersions();
@@ -90,6 +94,38 @@ class PoemParser {
   }
 
   /**
+   * Strip the ignored trailing text after a line-anchored token (spec section
+   * 10: "Any text after a line-anchored token on the same line is ignored").
+   * Applies to dividers/end markers and version/segment/analysis labels; leaves
+   * everything else (including single-line variable values) untouched.
+   */
+  stripTrailingAfterToken(line) {
+    let m;
+    if ((m = line.match(/^(={4})(?!=)/))) return m[1];      // end marker ====
+    if ((m = line.match(/^(-{4})(?!-)/))) return m[1];      // divider ----
+    if ((m = line.match(/^(\{\{.*?\}\})/))) return m[1];    // version label {{...}}
+    if (/^\{(?!\{)/.test(line) && (m = line.match(/^(\{.*?\})/))) {
+      return m[1];                                          // segment/analysis label {...}
+    }
+    return line;
+  }
+
+  /**
+   * Apply stripTrailingAfterToken to every line, skipping the contents of
+   * literal/markdown blocks (which are opaque). Runs after variable processing
+   * so block markers reflect the expanded content.
+   */
+  normalizeTokenLines() {
+    let inBlock = false;
+    this.lines = this.lines.map((line) => {
+      if (this.blockStartTag(line) !== null) { inBlock = true; return line; }
+      if (this.isBlockEnd(line)) { inBlock = false; return line; }
+      if (inBlock) return line;
+      return this.stripTrailingAfterToken(line);
+    });
+  }
+
+  /**
    * Process variables: extract definitions and expand multi-line substitutions
    */
   processVariables() {
@@ -100,14 +136,15 @@ class PoemParser {
     while (i < this.lines.length) {
       const line = this.lines[i];
 
-      // Track literal blocks (variables not defined inside them)
-      if (line.trim() === '<<<') {
+      // Track literal/markdown blocks (variable definitions not extracted inside
+      // them; the block content is opaque to this pass).
+      if (this.blockStartTag(line) !== null) {
         inLiteralBlock = true;
         newLines.push(line);
         i++;
         continue;
       }
-      if (line.trim() === '>>>') {
+      if (this.isBlockEnd(line)) {
         inLiteralBlock = false;
         newLines.push(line);
         i++;
@@ -262,6 +299,55 @@ class PoemParser {
    */
   eof() {
     return this.index >= this.lines.length;
+  }
+
+  /**
+   * If `line` starts a literal/markdown block (`<<<`, optionally followed by a
+   * tag word and ignored trailing text), return the tag (possibly ''); else null.
+   *   <<<            -> ''        (raw passthrough)
+   *   <<<markdown    -> 'markdown'(rendered as GFM)
+   *   <<<yaml  # ... -> 'yaml'    (unknown tag -> raw passthrough)
+   */
+  blockStartTag(line) {
+    if (line === null) return null;
+    const m = line.trim().match(/^<<<(\w*)(?:\s.*)?$/);
+    return m ? m[1] : null;
+  }
+
+  /**
+   * True if `line` is a block end marker (`>>>`, ignoring trailing text).
+   */
+  isBlockEnd(line) {
+    return line !== null && /^>>>(?:\s.*)?$/.test(line.trim());
+  }
+
+  /**
+   * Read a `<<< ... >>>` block starting at the current line. Consumes the start
+   * and end markers and returns { tag, lines } with the raw inner lines.
+   */
+  readBlock() {
+    const tag = this.blockStartTag(this.peek()) || '';
+    this.next(); // consume start marker
+    const lines = [];
+    while (this.peek() !== null && !this.isBlockEnd(this.peek())) {
+      lines.push(this.next());
+    }
+    if (this.isBlockEnd(this.peek())) {
+      this.next(); // consume end marker
+    }
+    return { tag, lines };
+  }
+
+  /**
+   * Render a block's inner lines to an HTML fragment based on its tag:
+   *   markdown/md -> GFM (with variable substitution)
+   *   anything else -> raw passthrough (no substitution, no conversion)
+   */
+  renderBlock(tag, lines) {
+    if (tag === 'markdown' || tag === 'md') {
+      return renderGfm(lines.map(l => this.substituteVariables(l)).join('\n'));
+    }
+    return lines.join('\n');
   }
 
   /**
@@ -455,11 +541,25 @@ class PoemParser {
       }
     }
 
-    // Parse segment content (poem lines)
-    const contentLines = [];
+    // Parse segment content. WYSIWYG poem lines are accumulated into runs; any
+    // `<<< ... >>>` block (raw or markdown) is emitted as a separate HTML part
+    // so it is rendered verbatim rather than <br/>-joined like poem lines.
+    const parts = [];
+    let run = [];
+    let hasBlock = false;
+
+    const flushRun = () => {
+      const linesHtml = this.processWysiwygLines(run);
+      if (linesHtml) parts.push({ type: 'lines', lines: linesHtml });
+      run = [];
+    };
+
     while (true) {
       const contentLine = this.peek();
-      if (!contentLine ||
+      // A blank line ('') separates segments (the template renders a <br/>
+      // between them), so it ends this segment without being consumed.
+      if (contentLine === null ||
+          contentLine === '' ||
           contentLine.trim() === '----' ||
           contentLine.trim() === '====') {
         break;
@@ -475,81 +575,98 @@ class PoemParser {
         }
       }
 
+      // Embedded literal/markdown block
+      if (this.blockStartTag(contentLine) !== null) {
+        hasBlock = true;
+        flushRun();
+        const { tag, lines } = this.readBlock();
+        const html = this.renderBlock(tag, lines);
+        if (html) parts.push({ type: 'html', html });
+        continue;
+      }
+
       // Substitute variables only (markup processing happens after joining lines)
-      const substituted = this.substituteVariables(this.next());
-      contentLines.push(substituted);
+      run.push(this.substituteVariables(this.next()));
     }
+    flushRun();
 
-    if (contentLines.length > 0) {
-      // Remove trailing blank lines from content
-      while (contentLines.length > 0 && contentLines[contentLines.length - 1].trim() === '') {
-        contentLines.pop();
+    if (hasBlock) {
+      // Mixed content: keep the ordered parts for the template to render.
+      if (parts.length > 0) {
+        segment.parts = parts;
       }
-
-      if (contentLines.length > 0) {
-          // Process content, handling blockquotes (lines starting with optional
-          // indentation followed by '>') as a single block. Non-quote text is
-          // processed with markup conversion which may span lines.
-          const processedParts = [];
-          let i = 0;
-          while (i < contentLines.length) {
-            const cur = contentLines[i];
-
-            // Blockquote run
-            if (/^\s*>/.test(cur)) {
-              const quoteLines = [];
-              while (i < contentLines.length && /^\s*>/.test(contentLines[i])) {
-                // Strip leading indentation + '>' and an optional single space
-                const inner = contentLines[i].replace(/^\s*>\s?/, '');
-                quoteLines.push(inner);
-                i++;
-              }
-
-              // Convert markup for the entire quote block at once. This lets
-              // convertMarkup handle trailing-double-space -> <br/> and avoids
-              // inserting an extra <br/> when we join lines. Collapse any
-              // remaining newlines so the blockquote content is a single-line
-              // HTML fragment (the template will not inject extra <br/> inside
-              // it).
-              // Convert each inner line, strip any trailing <br/> introduced by
-              // trailing spaces, and then join with a single <br/> between
-              // lines. Empty quote lines (from a lone '>') will produce an
-              // empty element which results in consecutive <br/> tokens.
-              const processedLines = quoteLines.map(l => {
-                let s = this.convertMarkup(l);
-                // Remove any newline characters left by convertMarkup
-                s = s.replace(/\r?\n/g, '');
-                // Remove any trailing <br/> that came from trailing spaces
-                s = s.replace(/(?:<br\/>)+$/g, '');
-                return s;
-              });
-
-              const processedInner = processedLines.join('<br/>');
-              processedParts.push(`<blockquote>${processedInner}</blockquote>`);
-              continue;
-            }
-
-            // Non-quote block: gather contiguous non-quote lines and process
-            const normalLines = [];
-            while (i < contentLines.length && !/^\s*>/.test(contentLines[i])) {
-              normalLines.push(contentLines[i]);
-              i++;
-            }
-
-            const joined = normalLines.join('\n');
-            const withMarkup = this.convertMarkup(joined);
-            const linesWithMarkup = withMarkup.split('\n');
-            for (const l of linesWithMarkup) {
-              processedParts.push(l);
-            }
-          }
-
-          const processedLines = processedParts.map(line => this.convertSpacesToNbsp(line));
-          segment.lines = processedLines.join('\n') + '\n';
+    } else {
+      // Pure WYSIWYG: keep the simple `lines` shape (unchanged YAML output).
+      if (parts.length > 0) {
+        segment.lines = parts[0].lines;
       }
     }
 
-    return segment.lines ? segment : null;
+    return (segment.lines || segment.parts) ? segment : null;
+  }
+
+  /**
+   * Process a run of WYSIWYG poem lines (blockquotes + inline markup + nbsp)
+   * into a single newline-joined HTML string with a trailing newline, or '' if
+   * the run is empty after trimming surrounding blank lines.
+   */
+  processWysiwygLines(contentLines) {
+    const lines = contentLines.slice();
+    while (lines.length > 0 && lines[lines.length - 1].trim() === '') {
+      lines.pop();
+    }
+    while (lines.length > 0 && lines[0].trim() === '') {
+      lines.shift();
+    }
+    if (lines.length === 0) {
+      return '';
+    }
+
+    // Handle blockquotes (lines starting with optional indentation followed by
+    // '>') as a single block. Non-quote text is processed with markup
+    // conversion which may span lines.
+    const processedParts = [];
+    let i = 0;
+    while (i < lines.length) {
+      const cur = lines[i];
+
+      // Blockquote run
+      if (/^\s*>/.test(cur)) {
+        const quoteLines = [];
+        while (i < lines.length && /^\s*>/.test(lines[i])) {
+          // Strip leading indentation + '>' and an optional single space
+          const inner = lines[i].replace(/^\s*>\s?/, '');
+          quoteLines.push(inner);
+          i++;
+        }
+
+        // Convert each inner line, strip any trailing <br/> introduced by
+        // trailing spaces, then join with a single <br/> between lines.
+        const processedLines = quoteLines.map(l => {
+          let s = this.convertMarkup(l);
+          s = s.replace(/\r?\n/g, '');
+          s = s.replace(/(?:<br\/>)+$/g, '');
+          return s;
+        });
+
+        processedParts.push(`<blockquote>${processedLines.join('<br/>')}</blockquote>`);
+        continue;
+      }
+
+      // Non-quote block: gather contiguous non-quote lines and process
+      const normalLines = [];
+      while (i < lines.length && !/^\s*>/.test(lines[i])) {
+        normalLines.push(lines[i]);
+        i++;
+      }
+
+      const withMarkup = this.convertMarkup(normalLines.join('\n'));
+      for (const l of withMarkup.split('\n')) {
+        processedParts.push(l);
+      }
+    }
+
+    return processedParts.map(line => this.convertSpacesToNbsp(line)).join('\n') + '\n';
   }
 
   /**
@@ -654,7 +771,7 @@ class PoemParser {
     }
 
     // Check for literal block or reference
-    if (line.trim() === '<<<') {
+    if (this.blockStartTag(line) !== null) {
       return this.parseLiteralBlock();
     }
 
@@ -670,12 +787,11 @@ class PoemParser {
       }
     }
 
-    // Parse content paragraphs (keep reading until we hit a divider or marker)
-    // Multiple paragraphs within one postscript are separated by blank lines
-    // Different postscripts are separated by ---- dividers
-    const paragraphs = [];
-    let currentParagraph = [];
-
+    // Parse prose content as GitHub-Flavoured Markdown. Read raw lines (with
+    // variable substitution) until a divider, end marker, or block marker, then
+    // render the run as GFM. Single newlines are significant to Markdown, so the
+    // lines are preserved rather than collapsed.
+    const proseLines = [];
     while (true) {
       const contentLine = this.peek();
 
@@ -683,31 +799,22 @@ class PoemParser {
       if (contentLine === null ||
           contentLine.trim() === '----' ||
           contentLine.trim() === '====' ||
-          contentLine.trim() === '<<<') {
+          this.blockStartTag(contentLine) !== null) {
         break;
       }
 
-      if (contentLine.trim() === '') {
-        // Blank line - save current paragraph if we have one
-        if (currentParagraph.length > 0) {
-          paragraphs.push(this.convertMarkup(currentParagraph.join(' ')));
-          currentParagraph = [];
-        }
-        this.next();
-      } else {
-        // Add line to current paragraph (with variable substitution)
-        currentParagraph.push(this.substituteVariables(contentLine.trim()));
-        this.next();
-      }
+      proseLines.push(this.substituteVariables(this.next()));
     }
 
-    // Add final paragraph
-    if (currentParagraph.length > 0) {
-      paragraphs.push(this.convertMarkup(currentParagraph.join(' ')));
+    // Trim surrounding blank lines, then render
+    while (proseLines.length > 0 && proseLines[0].trim() === '') {
+      proseLines.shift();
     }
-
-    if (paragraphs.length > 0) {
-      postscript.content = paragraphs.map(p => `<p>${p}</p>`).join('\n\n') + '\n';
+    while (proseLines.length > 0 && proseLines[proseLines.length - 1].trim() === '') {
+      proseLines.pop();
+    }
+    if (proseLines.length > 0) {
+      postscript.content = renderGfm(proseLines.join('\n'));
     }
 
     // Parse any literal blocks that follow
@@ -722,7 +829,7 @@ class PoemParser {
       }
 
       // Check for literal block
-      if (nextLine.trim() === '<<<') {
+      if (this.blockStartTag(nextLine) !== null) {
         const literalBlock = this.parseLiteralBlock();
         if (literalBlock) {
           literalBlocks.push(literalBlock);
@@ -753,26 +860,19 @@ class PoemParser {
   }
 
   /**
-   * Parse literal block
+   * Parse a `<<< ... >>>` block in a postscript context.
+   *  - `<<<markdown` / `<<<md` -> rendered as GFM (with variable substitution)
+   *  - bare `<<<` (or unknown tag) -> raw passthrough; a `$ref:` payload is
+   *    returned as a reference object.
    */
   parseLiteralBlock() {
-    this.next(); // Skip <<<
-    const lines = [];
+    const { tag, lines } = this.readBlock();
 
-    while (true) {
-      const line = this.peek();
-      if (!line || line.trim() === '>>>') {
-        break;
-      }
-      lines.push(line);
-      this.next();
+    if (tag === 'markdown' || tag === 'md') {
+      return { content: this.renderBlock(tag, lines) };
     }
 
-    if (this.peek() && this.peek().trim() === '>>>') {
-      this.next(); // Skip >>>
-    }
-
-    // Get the content
+    // Raw passthrough
     const content = lines.join('\n');
 
     // Check if this is a $ref line
@@ -827,106 +927,42 @@ class PoemParser {
   }
 
   /**
-   * Parse analysis content (synopsis or full)
+   * Parse analysis content (synopsis or full) as GitHub-Flavoured Markdown.
+   *
+   * Collects the raw lines of the block (with variable substitution), then hands
+   * them to the shared GFM renderer. Headings, lists, tables, fenced code and
+   * blockquotes are all handled by markdown-it (see src/tools/markdown.js).
    */
   parseAnalysisContent() {
-    const blocks = [];
-    let currentParagraph = [];
+    const contentLines = [];
 
     while (true) {
       const line = this.peek();
 
-      // Stop at end of file or end marker or if we hit the next section label
-      if (line === null || line.trim() === '====') {
+      // Stop at end of file, end marker, or the next analysis label
+      if (line === null ||
+          line.trim() === '====' ||
+          line.trim() === '{Synopsis}' ||
+          line.trim() === '{Full}') {
         break;
       }
 
-      // Check for section labels (Synopsis or Full)
-      if (line.trim() === '{Synopsis}' || line.trim() === '{Full}') {
-        break;
-      }
-
-      const trimmed = line.trim();
-
-      // Check for blockquote lines (allow optional leading indentation)
-      if (/^\s*>/.test(line)) {
-        // End any current paragraph first
-        if (currentParagraph.length > 0) {
-          blocks.push(`<p>${this.convertMarkup(currentParagraph.join(' '))}</p>`);
-          currentParagraph = [];
-        }
-
-        // Collect contiguous blockquote lines
-        const quoteLines = [];
-        while (this.peek() !== null && /^\s*>/.test(this.peek())) {
-          const qline = this.substituteVariables(this.next()).replace(/^\s*>\s?/, '');
-          quoteLines.push(qline);
-        }
-
-        // Convert markup for the entire quote block at once and collapse
-        // newlines to avoid duplicate <br/> markers when trailing spaces
-        // already introduce <br/> in convertMarkup.
-        // Convert each inner line, strip trailing <br/> inserted by
-        // trailing spaces inside lines, then join with a single <br/>.
-        const processedLines = quoteLines.map(l => {
-          let s = this.convertMarkup(l);
-          s = s.replace(/\r?\n/g, '');
-          s = s.replace(/(?:<br\/>)+$/g, '');
-          return s;
-        });
-
-        const processedInner = processedLines.join('<br/>');
-        blocks.push(`<blockquote>${processedInner}</blockquote>`);
-        continue;
-      }
-
-      // Check for headings (process longer patterns first)
-      if (trimmed.startsWith('### ')) {
-        // H5
-        if (currentParagraph.length > 0) {
-          blocks.push(`<p>${this.convertMarkup(currentParagraph.join(' '))}</p>`);
-          currentParagraph = [];
-        }
-        const headingText = this.convertMarkup(this.substituteVariables(trimmed.substring(4).trim()));
-        blocks.push(`<h5>${headingText}</h5>`);
-        this.next();
-      } else if (trimmed.startsWith('## ')) {
-        // H4
-        if (currentParagraph.length > 0) {
-          blocks.push(`<p>${this.convertMarkup(currentParagraph.join(' '))}</p>`);
-          currentParagraph = [];
-        }
-        const headingText = this.convertMarkup(this.substituteVariables(trimmed.substring(3).trim()));
-        blocks.push(`<h4>${headingText}</h4>`);
-        this.next();
-      } else if (trimmed.startsWith('# ')) {
-        // H3
-        if (currentParagraph.length > 0) {
-          blocks.push(`<p>${this.convertMarkup(currentParagraph.join(' '))}</p>`);
-          currentParagraph = [];
-        }
-        const headingText = this.convertMarkup(this.substituteVariables(trimmed.substring(2).trim()));
-        blocks.push(`<h3>${headingText}</h3>`);
-        this.next();
-      } else if (trimmed === '') {
-        // Blank line - end current paragraph
-        if (currentParagraph.length > 0) {
-          blocks.push(`<p>${this.convertMarkup(currentParagraph.join(' '))}</p>`);
-          currentParagraph = [];
-        }
-        this.next();
-      } else {
-        currentParagraph.push(this.substituteVariables(trimmed));
-        this.next();
-      }
+      contentLines.push(this.substituteVariables(this.next()));
     }
 
-    // Add final paragraph
-    if (currentParagraph.length > 0) {
-      blocks.push(`<p>${this.convertMarkup(currentParagraph.join(' '))}</p>`);
+    // Trim leading/trailing blank lines before rendering
+    while (contentLines.length > 0 && contentLines[0].trim() === '') {
+      contentLines.shift();
+    }
+    while (contentLines.length > 0 && contentLines[contentLines.length - 1].trim() === '') {
+      contentLines.pop();
     }
 
-    return blocks.length > 0 ? blocks.join('\n\n') + '\n' : '';
+    if (contentLines.length === 0) {
+      return '';
+    }
+
+    return renderGfm(contentLines.join('\n'));
   }
 
   /**
@@ -970,10 +1006,13 @@ class PoemParser {
       return `<span class="${className}">${content}</span>`;
     });
 
-    // Basic formatting
+    // Basic formatting (Markdown-style emphasis: ** = strong, * = em)
     text = text.replace(/\~([^~]+)\~/g, '<s>$1</s>'); // Strikethrough
-    text = text.replace(/\*([^*]+)\*/g, '<strong>$1</strong>'); // Strong
-    text = text.replace(/_([^_]+)_/g, '<em>$1</em>'); // Emphasis
+    // Strong (double markers) must run before emphasis (single markers)
+    text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>'); // Strong
+    text = text.replace(/__([^_]+)__/g, '<strong>$1</strong>'); // Strong (underscore)
+    text = text.replace(/\*([^*]+)\*/g, '<em>$1</em>'); // Emphasis
+    text = text.replace(/_([^_]+)_/g, '<em>$1</em>'); // Emphasis (underscore)
 
     // Entities - convert & to &#38; but NOT if it's already part of an entity (&#...;)
     text = text.replace(/&(?!#\d+;|[a-z]+;)/gi, '&#38;');

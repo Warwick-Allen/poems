@@ -2,9 +2,11 @@
   "dependencies": {
     "js-beautify": "^1.15.4",
     "js-yaml": "^4.1.0",
+    "markdown-it": "^14.2.0",
     "pug": "^3.0.2"
   },
   "scripts": {
+    "test": "node --test",
     "start": "node src/tools/serve-static.js",
     "stop": "pkill -f 'node src/tools/serve-static.js' || true",
     "stop:win": "for /f \"tokens=5\" %a in ('netstat -ano ^| findstr :8080') do taskkill /PID %a /F",

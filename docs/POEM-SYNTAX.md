@@ -212,15 +212,15 @@ Section for postscript notes. The section and its markers are optional if empty.
 
 - Multiple postscript notes separated by `----` (exactly 4 hyphens) only if there is a subsequent note
 - Each note can have an optional label (wrapped in `{ }`)
-- Single newlines within postscript paragraphs are **not preserved** (collapsed into single line)
-- Blank lines indicate paragraph breaks
-- Literal blocks can appear between postscript notes
+- Note prose is rendered as **GitHub-Flavoured Markdown** (see [Markdown Sections](#markdown-sections-analysis-postscript-and-markdown-blocks)), so lists, tables, headings, fenced code and blockquotes are all available
+- Literal blocks (raw `<<<`/`>>>` and `$ref` blocks) can appear between or after notes and are passed through unchanged
 - The `====` end marker is only required if there are subsequent non-empty sections
 - Any text after labels, dividers, markers, or literal block delimiters on the same line is ignored
 
-### Literal Blocks
+### Literal and Markdown Blocks
 
-Literal blocks preserve content exactly as written without any markup conversion:
+A block is delimited by a start marker (`<<<`, optionally followed by a tag word)
+and an end marker (`>>>`), each anchored to the start of a line:
 
 ```
 <<<
@@ -228,10 +228,23 @@ Literal blocks preserve content exactly as written without any markup conversion
 >>>
 ```
 
-- Start marker: `<<<` (must be at start of line)
-- End marker: `>>>` (must be at start of line)
-- Any text after the markers on the same line is ignored
-- Content between markers is not processed or converted
+The tag selects how the block is processed:
+
+- **`<<<`** (no tag, or any unrecognised tag such as `<<<yaml`): a **literal
+  block**. Content is passed through exactly as written — no markup conversion and
+  no variable substitution. Use this for raw HTML, interactive widgets, or a
+  `$ref` payload.
+- **`<<<markdown`** (or **`<<<md`**): a **Markdown block**. Content has variables
+  substituted and is then rendered as GitHub-Flavoured Markdown. This is how you
+  opt into Markdown outside the analysis/postscript sections — for example, to drop
+  a table or list into the middle of a poem segment (see
+  [Markdown Sections](#markdown-sections-analysis-postscript-and-markdown-blocks)).
+
+Rules:
+
+- Markers must be at the start of a line
+- Any text after a marker on the same line is ignored
+- Literal-block content is never processed; Markdown-block content is rendered as GFM
 
 ### Example
 
@@ -287,21 +300,19 @@ Section for poem analysis. The section may be empty. Can have two forms:
 
 - If `{Synopsis}` is present, `{Full}` **must** also be present
 - `{Full}` can appear on its own without `{Synopsis}`
-- Single newlines within paragraphs are **not preserved** (collapsed)
-- Blank lines indicate paragraph breaks
-- Supports heading markup and inline markup
+- Content is rendered as **GitHub-Flavoured Markdown** (see [Markdown Sections](#markdown-sections-analysis-postscript-and-markdown-blocks))
 - The `====` end marker is optional - only required if followed by ignored content (comments)
 - Any text after analysis labels or the end marker on the same line is ignored
 
-### Heading Markup
+### Heading Levels
 
-Analysis sections support Markdown-style headings:
+Markdown headings are offset by +2 so they nest under the page's `<h2>` analysis
+title (and never emit an `<h1>`):
 
-- `# Text` → `<h3>` heading
-- `## Text` → `<h4>` heading
-- `### Text` → `<h5>` heading
-
-Note: The grammar does not provide for `<h1>` or `<h2>` headings.
+- `# Text` → `<h3>`
+- `## Text` → `<h4>`
+- `### Text` → `<h5>`
+- `#### Text` → `<h6>` (deeper headings are clamped at `<h6>`)
 
 ### Example
 
@@ -505,15 +516,22 @@ This demonstrates:
 
 ## 8. Inline Markup
 
-Text content supports inline markup for formatting:
+The **poem body** and **labels** use a Markdown-like inline dialect (the
+"WYSIWYG" dialect): literal line breaks and indentation are preserved, and the
+markup below is applied. This is distinct from the **analysis** and
+**postscript** sections and `<<<markdown>>>` blocks, which are rendered as full
+GitHub-Flavoured Markdown (see [Markdown Sections](#markdown-sections-analysis-postscript-and-markdown-blocks)).
+
+Emphasis uses Markdown conventions in **every** section, so `*`/`**` mean the
+same thing everywhere.
 
 ### Basic Formatting
 
 | Syntax | Output |
 |--------|--------|
-| `_text_` | `<em>text</em>` (emphasis) |
-| `*text*` | `<strong>text</strong>` (strong) |
-| `~text~` | `<s>text</s>` (strikethrough) |
+| `*text*` or `_text_` | `<em>text</em>` (italic) |
+| `**text**` or `__text__` | `<strong>text</strong>` (bold) |
+| `~text~` | `<s>text</s>` (strikethrough; in Markdown sections use `~~text~~`) |
 
 ### Links
 
@@ -581,14 +599,47 @@ Use backslash to prevent markup conversion:
 
 ### Markup Rules
 
-1. **Nesting**: Markup can be nested (e.g., `` `[*_text_*\|url]` ``, `/.c{*text*}`)
+1. **Nesting**: Markup can be nested (e.g., `` `[**_text_**\|url]` ``, `/.c{*text*}`)
 2. **Paragraph Boundaries**: Markup pairs (`_`, `*`, `~`, `` ` ``, `"`, and span elements) match across lines within a paragraph but **not** across paragraph boundaries
 3. **Unmatched Pairs**: If a pair is not matched, it remains as literal text
-4. **Context**: Inline markup applies in:
+4. **Context**: This WYSIWYG inline dialect applies in:
    - Poem segment content
-   - Postscript note content
-   - Analysis section content
    - Labels (version and segment labels)
+
+   The **analysis** and **postscript** sections, and `<<<markdown>>>` blocks, are
+   instead rendered as full GitHub-Flavoured Markdown (see
+   [Markdown Sections](#markdown-sections-analysis-postscript-and-markdown-blocks)).
+
+## Markdown Sections (Analysis, Postscript, and Markdown Blocks)
+
+Some content is rendered as full **GitHub-Flavoured Markdown** (GFM) rather than
+with the WYSIWYG inline dialect. GFM applies:
+
+1. **By default** in the **analysis** section and **postscript** note prose.
+2. **On demand** anywhere else, inside a `<<<markdown` … `>>>` block (the markers
+   must be at the start of a line). This lets you embed a list, table, fenced code
+   block, etc. into a poem segment while the surrounding lines stay WYSIWYG.
+
+GFM is rendered with [markdown-it](https://github.com/markdown-it/markdown-it)
+(`html: true`, `typographer: true`); the renderer lives in `src/tools/markdown.js`.
+This means GFM sections support the full feature set: ATX headings, ordered and
+unordered (and nested) lists, tables, fenced code, blockquotes, `~~strikethrough~~`,
+`` `inline code` ``, `[links](url)`, raw HTML, and so on.
+
+Notes:
+
+- **Emphasis** is the same as the WYSIWYG dialect: `*`/`_` = italic, `**`/`__` = bold.
+- **Typography** is automatic: `--` → en dash, `---` → em dash, `...` → ellipsis,
+  and straight quotes become curly quotes.
+- **Headings** are offset by +2 (`#` → `<h3>`), as described under
+  [Analysis → Heading Levels](#heading-levels).
+- **Variables** (`${name}`) are substituted before rendering, including inside
+  `<<<markdown>>>` blocks (but **not** inside raw `<<<` literal blocks).
+- The structural tokens `====`, `----`, `{Synopsis}`, `{Full}`, and postscript
+  labels are still recognised and are **not** part of the Markdown content.
+
+For a single file that exercises every feature, see
+[`_example.poem`](../src/poems/poem/_example.poem).
 
 ## 9. Minimal File Structure
 
@@ -677,8 +728,7 @@ The following elements **must** appear at the start of a line (column 0):
 ### Whitespace Handling
 
 - **Poem segments**: All newlines and indentation (spaces/tabs) are preserved exactly
-- **Postscript notes**: Single newlines are collapsed; only blank lines (paragraph breaks) are preserved
-- **Analysis sections**: Single newlines are collapsed; only blank lines (paragraph breaks) are preserved
+- **Postscript notes** and **analysis sections**: whitespace follows GitHub-Flavoured Markdown rules (single newlines are soft breaks; blank lines separate blocks)
 - **Blank lines**: Any number of blank lines before/after dividers, markers, and labels are normalized (have no effect on output)
 
 ### Indentation and Space Preservation in Poem Segments

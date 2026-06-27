@@ -117,22 +117,42 @@ postscript_note = [ postscript_label, blank_lines ],
 
 postscript_label = "{", label_text, "}", { ? any character except newline ? } ;
 
-postscript_content = paragraph, { blank_lines, paragraph } ;
+(* Postscript prose is rendered as GitHub-Flavoured Markdown (see gfm_content). *)
+postscript_content = gfm_content ;
 
 paragraph = text_with_markup, { single_newline, text_with_markup } ;
 
-literal_block = literal_block_start,
+(* ----------------------------------------------------------------------------
+   BLOCKS: <<< ... >>>
+   A block is opened by "<<<" optionally followed by a tag word. The tag
+   selects processing:
+     - no tag, or any unrecognised tag  -> literal block (raw passthrough,
+       no markup conversion, no variable substitution)
+     - "markdown" or "md"               -> markdown block (variables are
+       substituted, then content is rendered as GitHub-Flavoured Markdown)
+   ---------------------------------------------------------------------------- *)
+
+literal_block = block_start,
                 newline,
-                { literal_block_line },
-                literal_block_end ;
+                { block_line },
+                block_end ;
 
-literal_block_start = "<<<", { ? any character except newline ? } ;
+block_start = "<<<", [ block_tag ], { ? any character except newline ? } ;
 
-literal_block_end = ">>>", { ? any character except newline ? } ;
+block_tag = letter, { letter | digit } ;
 
-literal_block_line = literal_content, newline ;
+block_end = ">>>", { ? any character except newline ? } ;
 
-literal_content = { ? any character except newline ? } ;
+block_line = block_content, newline ;
+
+block_content = { ? any character except newline ? } ;
+
+(* GitHub-Flavoured Markdown content. The exact grammar is delegated to a
+   Markdown processor (markdown-it); it is not specified here. It supports
+   headings (offset +2: # -> h3 ... clamped at h6), ordered/unordered/nested
+   lists, tables, fenced code, blockquotes, strikethrough, inline code, links,
+   emphasis/strong, and raw HTML. Variables are substituted before rendering. *)
+gfm_content = { ? any line that is not a structural token ? } ;
 
 (* ============================================================================
    ANALYSIS SECTION
@@ -153,22 +173,15 @@ full_section = full_label,
 
 full_label = "{Full}", { ? any character except newline ? } ;
 
-analysis_content = analysis_block, { blank_lines, analysis_block } ;
+(* Analysis content is rendered as GitHub-Flavoured Markdown (see gfm_content). *)
+analysis_content = gfm_content ;
 
-analysis_block = heading | paragraph | blockquote ;
-
-heading = heading_h3 | heading_h4 | heading_h5 ;
-
-heading_h3 = "#", whitespace, text_with_markup ;
-
-heading_h4 = "##", whitespace, text_with_markup ;
-
-heading_h5 = "###", whitespace, text_with_markup ;
-
-(* Blockquote: one or more lines beginning with optional indentation then '>'
-   The leading indentation and the '>' (and one optional following space)
-   are removed from the inner text. Empty '>' lines are permitted and
-   preserved as empty lines inside the blockquote. *)
+(* Blockquote: in WYSIWYG poem segments, any content_line beginning with optional
+   indentation then '>' (i.e. /^\s*>/) is a blockquote line. Contiguous such lines
+   are grouped into one blockquote; the leading '>' (and one optional following
+   space) is removed and the inner text is processed for inline markup. (In the
+   analysis/postscript Markdown sections, blockquotes are handled by the Markdown
+   processor instead.) *)
 
 blockquote = blockquote_line, { newline, blockquote_line } ;
 
@@ -247,8 +260,8 @@ variable_substitution = "${", variable_name, "}" ;
 text_with_markup = { markup_element } ;
 
 markup_element = escaped_char
-               | emphasis
                | strong
+               | emphasis
                | strikethrough
                | link
                | span_element
@@ -263,9 +276,10 @@ markup_element = escaped_char
 
 escaped_char = "\", ( "_" | "*" | "~" | "[" | "`" | '"' | "&" | "'" | "-" | "<" | ">" | "=" | "$" | "/" | "{" | "}" | "\" ) ;
 
-emphasis = "_", markup_content, "_" ;
+(* Emphasis follows Markdown conventions: single markers = italic, double = bold. *)
+emphasis = ( "*", markup_content, "*" ) | ( "_", markup_content, "_" ) ;
 
-strong = "*", markup_content, "*" ;
+strong = ( "**", markup_content, "**" ) | ( "__", markup_content, "__" ) ;
 
 strikethrough = "~", markup_content, "~" ;
 
@@ -395,15 +409,17 @@ leading_whitespace = ( " " | tab ), { " " | tab } ;
    5. Version labels and segment labels have leading and trailing whitespace
       trimmed
 
-   6. Within postscript notes, single newlines are collapsed (not preserved);
-      only paragraph breaks (blank lines) are preserved
+   6. Postscript notes and analysis sections are rendered as GitHub-Flavoured
+      Markdown (whitespace follows Markdown rules: single newlines are soft
+      breaks; blank lines separate blocks). The WYSIWYG markup notes below
+      (8-11) apply to poem segments and labels, not to these Markdown sections.
 
    7. Within poem segments, all newlines and indentation are preserved
 
-   8. Within analysis sections, single newlines within paragraphs are
-      collapsed; only paragraph breaks (blank lines) are preserved
+   8. Emphasis follows Markdown conventions everywhere: * or _ = italic,
+      ** or __ = bold
 
-   9. Markup special character pairs (_, *, ~, `, ", and span elements)
+   9. Markup special character pairs (*, _, ~, `, ", and span elements)
       match across lines within a paragraph but not across paragraph boundaries
 
    10. Unmatched markup pairs are not converted and remain as literal text
