@@ -14,10 +14,20 @@ The syntax highlighting provides colour-coding for:
 - **Literal blocks**: `<<< ... >>>` with optional language-specific syntax highlighting
 - **Embedded languages**: HTML, CSS, JavaScript, Python, YAML, JSON, XML, SQL, Shell/Bash, Markdown
 - **Audio section**: `Audiomack` and `Suno:` keywords
-- **Analysis headings**: `#`, `##`, and `###` headings
-- **Inline markup**: Emphasis (`_text_`), strong (`*text*`), strikethrough (`~text~`), links (`[text|url]`), smart quotes (`` `text` `` and `"text"`), and span elements (`/.class{text}`)
+- **Analysis section**: rendered with the embedded **Markdown** syntax (it is GitHub-Flavoured Markdown), keyed on the `{Synopsis}`/`{Full}` labels
+- **Markdown blocks**: `<<<markdown` … `>>>` (and `<<<md`) blocks use the embedded Markdown syntax
+- **Inline markup** (poem body and labels): italic (`*text*` or `_text_`), bold (`**text**` or `__text__`), strikethrough (`~text~`), links (`[text|url]`), smart quotes (`` `text` `` and `"text"`), and span elements (`/.class{text}`). These pairs may span multiple lines within a paragraph (but not across a blank line).
 - **Special characters**: Escaped characters (`\*`), em dashes (`---`), and en dashes (`--`)
 - **Trailing text**: Inline comments after line-anchored tokens (e.g., `----  # comment`)
+
+> **Note on emphasis:** emphasis follows Markdown conventions everywhere
+> (`*`/`_` = italic, `**`/`__` = bold), matching the poem renderer.
+>
+> **Note on postscript:** postscript prose is also GitHub-Flavoured Markdown, but
+> because the postscript section cannot be reliably delimited by the syntax
+> highlighter, it is highlighted with the general inline rules above (headings,
+> bold/italic, etc.) rather than the full embedded Markdown syntax. The analysis
+> section and `<<<markdown>>>` blocks use full Markdown highlighting.
 
 ## Embedded Language Support
 

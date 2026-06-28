@@ -2,7 +2,7 @@
 
 ## Summary
 
-Successfully implemented embedded language syntax highlighting for Poem literal blocks in Vim. Code inside `<<<language` blocks now displays with proper language-specific syntax highlighting.
+Code inside `<<<language` blocks displays with proper language-specific syntax highlighting.
 
 ## The Solution
 
@@ -49,18 +49,18 @@ syn region myHtml start="..." end="..." contains=@myCustomHtml
 
 ## Supported Languages
 
-| Language | Tags | Cluster Name |
-|----------|------|--------------|
-| HTML | `html` | `@poemHtml` |
-| CSS | `css` | `@poemCss` |
-| JavaScript | `javascript`, `js` | `@poemJavascript` |
-| Python | `python`, `py` | `@poemPython` |
-| YAML | `yaml`, `yml` | `@poemYaml` |
-| JSON | `json` | `@poemJson` |
-| XML | `xml` | `@poemXml` |
-| SQL | `sql` | `@poemSql` |
-| Shell | `shell`, `bash`, `sh` | `@poemSh` |
-| Markdown | `markdown`, `md` | `@poemMarkdown` |
+| Language   | Tags                  | Cluster Name      |
+|------------|-----------------------|-------------------|
+| HTML       | `html`                | `@poemHtml`       |
+| CSS        | `css`                 | `@poemCss`        |
+| JavaScript | `javascript`, `js`    | `@poemJavascript` |
+| Python     | `python`, `py`        | `@poemPython`     |
+| YAML       | `yaml`, `yml`         | `@poemYaml`       |
+| JSON       | `json`                | `@poemJson`       |
+| XML        | `xml`                 | `@poemXml`        |
+| SQL        | `sql`                 | `@poemSql`        |
+| Shell      | `shell`, `bash`, `sh` | `@poemSh`         |
+| Markdown   | `markdown`, `md`      | `@poemMarkdown`   |
 
 ## Example Output
 
@@ -141,4 +141,3 @@ Potential additions:
 - Language-specific configuration
 - Lazy loading (only include syntax when that language is used)
 - Custom language mappings via configuration
-

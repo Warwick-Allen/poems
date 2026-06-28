@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language:     Poem
 " Maintainer:   Warwick Allen
-" Last Change:  2025-10-08
+" Last Change:  2026-06-28
 " Filenames:    *.poem
 " URL:          https://github.com/warwickallen/poems
 
@@ -133,22 +133,46 @@ syn match poemAudioKeyword "^Audiomack$"
 syn match poemSunoLine "^Suno:\s\+\S\+" contains=poemSunoKeyword
 syn match poemSunoKeyword "^Suno:" contained
 
-" Headings in analysis section
+" Analysis section: rendered as GitHub-Flavoured Markdown.
+" Highlight it with the embedded Markdown syntax, from the {Synopsis}/{Full}
+" label to the optional end-of-analysis ==== marker (or end of file). Defined
+" after the segment-label rules so its region start wins on {Synopsis}/{Full}.
+if !exists('g:poem_no_embedded_languages')
+  syn region poemAnalysis
+        \ matchgroup=poemAnalysisLabel start="^{Synopsis}.*$" start="^{Full}.*$"
+        \ matchgroup=poemEndMarkerMark end="^====.*$"
+        \ keepend contains=@poemMarkdown,poemAnalysisLabel,poemVariableRef
+  " The second label ({Full} after a {Synopsis}) appears inside the region.
+  syn match poemAnalysisLabel "^{\%(Synopsis\|Full\)}.*$" contained
+endif
+
+" Markdown-style headings. The analysis section is handled by the embedded
+" Markdown syntax above; these rules cover headings elsewhere (e.g. postscript
+" prose) and act as a fallback when embedded languages are disabled.
 syn match poemHeading1 "^#\s\+.*$"
 syn match poemHeading2 "^##\s\+.*$"
 syn match poemHeading3 "^###\s\+.*$"
 
-" Inline markup
-syn region poemEmphasis start="_" end="_" oneline contains=poemStrong,poemStrikethrough,poemVariableRef
-syn region poemStrong start="\*" end="\*" oneline contains=poemEmphasis,poemStrikethrough,poemVariableRef
-syn region poemStrikethrough start="\~" end="\~" oneline contains=poemEmphasis,poemStrong,poemVariableRef
-syn region poemLink start="\[" end="\]" contains=poemLinkPipe,poemVariableRef oneline
+" Inline markup (poem body and labels).
+" Emphasis follows Markdown conventions: single markers (* or _) = italic,
+" double markers (** or __) = bold.
+" Each pair may span multiple lines within a paragraph but must NOT cross a
+" blank line (a paragraph boundary). The extra `end=/^$/` stops a region at the
+" blank line so an unmatched marker cannot run away to the end of the file.
+" poemStrong is defined after poemEmphasis so that, at a `**`/`__` position, the
+" (later-defined) strong region wins over the single-marker emphasis region.
+syn region poemEmphasis start="\*" end="\*" end="^$" keepend contains=poemStrong,poemStrikethrough,poemVariableRef,poemEscaped
+syn region poemEmphasis start="_" end="_" end="^$" keepend contains=poemStrong,poemStrikethrough,poemVariableRef,poemEscaped
+syn region poemStrong start="\*\*" end="\*\*" end="^$" keepend contains=poemEmphasis,poemStrikethrough,poemVariableRef,poemEscaped
+syn region poemStrong start="__" end="__" end="^$" keepend contains=poemEmphasis,poemStrikethrough,poemVariableRef,poemEscaped
+syn region poemStrikethrough start="\~" end="\~" end="^$" keepend contains=poemEmphasis,poemStrong,poemVariableRef,poemEscaped
+syn region poemLink start="\[" end="\]" end="^$" keepend contains=poemLinkPipe,poemEmphasis,poemStrong,poemStrikethrough,poemSmartSingleQuote,poemSmartDoubleQuote,poemVariableRef
 syn match poemLinkPipe "|" contained
-syn region poemSmartSingleQuote start="`" end="`" oneline
-syn region poemSmartDoubleQuote start='"' end='"' oneline
+syn region poemSmartSingleQuote start="`" end="`" end="^$" keepend
+syn region poemSmartDoubleQuote start='"' end='"' end="^$" keepend
 
 " Span elements
-syn region poemSpan start="/\.\w\+{" end="}" oneline
+syn region poemSpan start="/\.\w[[:alnum:].-]*{" end="}" end="^$" keepend contains=poemEmphasis,poemStrong,poemVariableRef
 
 " Special characters
 syn match poemEscaped "\\[_*~\[`\"&'\-<>=$/{}\\]"
@@ -199,6 +223,8 @@ hi def link poemLiteralEndMark Delimiter
 hi def link poemAudioKeyword Keyword
 hi def link poemSunoKeyword Keyword
 hi def link poemSunoLine String
+
+hi def link poemAnalysisLabel Type
 
 hi def link poemHeading1 Title
 hi def link poemHeading2 Title
