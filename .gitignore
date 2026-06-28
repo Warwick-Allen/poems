@@ -2,6 +2,7 @@
 *.sw[op]
 node_modules
 .claude
+.poetic-config
 
 src/poems/yaml/*.yaml
 public/*.html
