@@ -1,0 +1,16 @@
+/* User customisations — this file is not managed by sync-framework.sh. */
+
+/* rest indicator */
+.r::after {
+  bottom: 0.2ex;
+  content: "\00B7";
+  display: inline-block;
+  height: 0.7ex;
+  font-size: 0.75em;
+  opacity: 0.5;
+  padding-right: 0.25em;
+  position: relative;
+  text-align: center;
+  width: 0.75em;
+}
+

@@ -60,7 +60,7 @@ Stanza two line one
 - Remaining lines: poem body (blank lines = stanza breaks)
 - Files starting with `_` or `.` are ignored by the build (use for drafts/templates)
 - `.shared.poem` in `src/poems/poem/` is auto-prepended to every poem before processing
-  (defines shared variables like disclaimer text)
+  (defines shared variables like disclaimer text); **user-owned — not overwritten by sync**
 
 See `docs/POEM-SYNTAX.md` for the full syntax (variables, markup, embedded languages, etc.)
 and `poem-syntax.ebnf` for the formal grammar.
@@ -81,6 +81,15 @@ scripts/sync-framework.sh --ref main   # pull latest
 ```
 
 Do not hand-edit files that are synced from the framework — changes will be overwritten.
+Exceptions — files that are **user-owned** and never overwritten by sync:
+- `src/poems/poem/.shared.poem` — shared variables (author name, etc.)
+- `public/custom.css` — personal CSS customisations (add styles here)
+
+`public/poetic.css` is framework-owned (synced). To stop it being overwritten (e.g. if you
+pin a local tweak), add it to `skip_paths` in `.poetic-config`:
+```
+skip_paths=public/poetic.css
+```
 
 ## Key docs
 
