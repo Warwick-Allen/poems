@@ -84,12 +84,17 @@ Do not hand-edit files that are synced from the framework — changes will be ov
 Exceptions — files that are **user-owned** and never overwritten by sync:
 - `src/poems/poem/.shared.poem` — shared variables (author name, etc.)
 - `public/custom.css` — personal CSS customisations (add styles here)
+- `.poetic-config` — personal build settings (committed to this repo; see below)
 
 `public/poetic.css` is framework-owned (synced). To stop it being overwritten (e.g. if you
 pin a local tweak), add it to `skip_paths` in `.poetic-config`:
 ```
 skip_paths=public/poetic.css
 ```
+
+`.poetic-config` is committed to this repo so CI picks it up when building for GitHub Pages.
+Supported keys: `favicon`, `subtitle`, `skip_paths`, `auto_sync`, `sync_schedule`.
+See `docs/BUILD.md` for full details.
 
 ## Key docs
 
