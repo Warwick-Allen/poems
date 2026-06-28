@@ -425,7 +425,7 @@ function concatenateAllHtmlFiles(dirPath, favicon = "poetic-logo.svg") {
   }
 }
 
-function generateIndexHtml(publicDir, favicon = "poetic-logo.svg") {
+function generateIndexHtml(publicDir, favicon = "poetic-logo.svg", subtitle = "My Poems") {
   try {
     // Read YAML files from the poems directory for metadata
     const poemsDir = path.join(process.cwd(), "src", "poems", "yaml");
@@ -499,6 +499,11 @@ function generateIndexHtml(publicDir, favicon = "poetic-logo.svg") {
       indexContent = indexContent.replace(
         /<link rel="icon" href="[^"]*"/,
         `<link rel="icon" href="${favicon}"`
+      );
+      // Keep the subtitle in sync with config
+      indexContent = indexContent.replace(
+        /<p class="subtitle">[^<]*<\/p>/,
+        `<p class="subtitle">${subtitle}</p>`
       );
     } else {
       // Create a default index.html template
@@ -595,7 +600,7 @@ function generateIndexHtml(publicDir, favicon = "poetic-logo.svg") {
     <div class="container">
         <div class="header">
             <h1>Fragments &#38; Unity</h1>
-            <p class="subtitle">My Poems</p>
+            <p class="subtitle">${subtitle}</p>
         </div>
 
         <div class="poem-grid" id="poemGrid">
@@ -662,6 +667,10 @@ function main() {
   if (config.favicon) {
     console.log(`Using favicon from .poetic-config: ${favicon}`);
   }
+  const subtitle = config.subtitle || "My Poems";
+  if (config.subtitle) {
+    console.log(`Using subtitle from .poetic-config: ${subtitle}`);
+  }
 
   console.log("Step 1: Building all-poems.html...");
 
@@ -681,7 +690,7 @@ function main() {
 
   console.log("\nStep 2: Updating index.html...");
 
-  const updatedIndexContent = generateIndexHtml(publicDir, favicon);
+  const updatedIndexContent = generateIndexHtml(publicDir, favicon, subtitle);
   if (updatedIndexContent) {
     const indexPath = path.join(publicDir, "index.html");
     const prettifiedIndexContent = beautify.html(updatedIndexContent, {
