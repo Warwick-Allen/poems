@@ -1,6 +1,10 @@
-# Poems by Warwick Allen
+# Fragments & Unity — Poems by Warwick Allen
 
 These are shared publicly at [Fragments & Unity] and [GitHub Pages].
+
+The authoring framework used by this repo is available separately at [poetic].
+
+[poetic]: https://github.com/warwickallen/poetic
 
 ## Repository Structure
 
@@ -155,5 +159,5 @@ The build system automatically converts these dates to the display format
 https://fragments-and-unity.blogspot.com/
 
 [GitHub Pages]:
-https://warwick-allen.github.io/poems/
+https://warwick-allen.github.io/fragments-and-unity/
 

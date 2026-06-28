@@ -1,6 +1,6 @@
 # Building for GitHub Pages
 
-This repository contains a collection of poems that are published to GitHub Pages at https://warwick-allen.github.io/poems/
+This repository contains a collection of poems that are published to GitHub Pages at https://warwick-allen.github.io/fragments-and-unity/
 
 ## Build Process
 

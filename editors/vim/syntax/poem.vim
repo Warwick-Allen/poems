@@ -3,7 +3,7 @@
 " Maintainer:   Warwick Allen
 " Last Change:  2026-06-28
 " Filenames:    *.poem
-" URL:          https://github.com/warwickallen/poems
+" URL:          https://github.com/Warwick-Allen/fragments-and-unity
 
 if exists("b:current_syntax")
   finish
