@@ -52,7 +52,7 @@ to gullies where I find defeat.
 
 {Sheep's Refrain}
 O, You, my Lord, I love You most—
-this I state.  But
+/.r{}this /.r{}I /.r{}state.  /.r{}But
 my ways expose an empty boast...
 
 {Shepherd's Refrain 1}
@@ -68,7 +68,7 @@ and choose the dark and lonely place.
 
 {Sheep's Refrain}
 O, You, my Lord, I love You most—
-this I state.  But
+/.r{}this /.r{}I /.r{}state.  /.r{}But
 my ways expose an empty boast...
 
 {Shepherd's Refrain 2}
@@ -85,7 +85,7 @@ I break, I weep, and I repent.
 
 {Sheep's Refrain}
 O, You, my Lord, I love You most—
-this I state.  But
+/.r{}this /.r{}I /.r{}state.  /.r{}But
 my ways expose an empty boast...
 
 {Shepherd's Refrain 3}
@@ -117,6 +117,17 @@ Suno: s/LjVl72tGJVuSIzLO
 
 ====
 
+{Performance Note}
+
+The four-monosyllabic word that form the middle line of the sheep's responses
+should be read on the stressed beats of an iambic tetrameter line.  That is:
+
+> _rest_ THIS _rest_ I _rest_ STATE. _rest_ BUT
+
+These rests are indicated in the text by the middle-dot (&#183;) symbol.
+
+----
+
 {Structural Goals and Literary Devices}
 
 These are the guidelines and objectives I have been reaching for when
@@ -145,13 +156,14 @@ constructing the revised version of this poem.
   measured; its very recurrence enacts the besetting sin. The settled text is:
 
   > O, You, my Lord, I love You most  
-  > This I state, but  
-  > My ways expose an empty boast.
+  > this I state.  But  
+  > my ways expose an empty boast.
 
-  Within it, "You" is used throughout for grammar and consistency; "state" is
-  preferred over "profess" because its hard, clinical close survives repetition,
-  keeps the middle line a distinct trochaic dimeter, and sharpens the turn,
-  while the Titus 1:16 echo is already carried obliquely by the third line; and
+  Within it, "state" is
+  preferred over "profess" because its hard, clinical close survives repetition and
+  keeps the middle line to four monosyllabic stresses, each preceded by a rest, so that the iambic pulse is preserved but hollowed out.
+  The deliberate weight of each word, suspended in its rest, sharpens the turn.
+  The Titus 1:16 echo is already carried obliquely by the third line; and
   the dangling, enjambed "but" is the pivot on which the refrain swings.
 
   The final sheep's refrain redeems the boast and acts as a pivot toward the
