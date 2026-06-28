@@ -438,7 +438,7 @@ leading_whitespace = ( " " | tab ), { " " | tab } ;
    13. Comment blocks (<<# ... #>>) can appear anywhere and are completely
        removed during parsing
 
-   14. The author line is optional; if omitted, defaults to "Warwick Allen"
+   14. The author line is optional; if omitted, defaults to the value of the ${author} variable
 
    15. Dividers (both ---- and ====) are only required if there is subsequent
        non-empty content. If the parser reaches end-of-file, all remaining

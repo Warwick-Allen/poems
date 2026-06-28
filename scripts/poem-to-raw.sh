@@ -5,7 +5,7 @@ shopt -qu dotglob
 repo_toplevel=$(git rev-parse --show-toplevel)
 mkdir -p "$repo_toplevel/raw" "$repo_toplevel/public/raw"
 index="$repo_toplevel/public/raw/index.html"
-gh_repo="Warwick-Allen/fragments-and-unity"
+gh_repo=$(git remote get-url origin | sed 's|.*github.com[:/]||; s|\.git$||')
 gh_raw="https://raw.githubusercontent.com/$gh_repo/refs/heads/main/raw"
 cat <<HERE >"$index"
 <!DOCTYPE html>

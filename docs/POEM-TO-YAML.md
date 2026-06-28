@@ -30,7 +30,7 @@ The converter handles all features defined in the `.poem` syntax specification:
 
 ### Header
 - Title (mandatory)
-- Author (optional, defaults to "Warwick Allen" if omitted in YAML)
+- Author (optional, defaults to the value of the ${author} variable if omitted in YAML)
 - Date in YYYY-MM-DD format (mandatory)
 
 ### Versions

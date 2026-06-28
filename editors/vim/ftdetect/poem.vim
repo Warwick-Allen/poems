@@ -1,6 +1,6 @@
 " Vim filetype detection file
 " Language:     Poem
-" Maintainer:   Warwick Allen
+" Maintainer:   (maintainer name)
 " Last Change:  2025-10-08
 
 " Detect .poem files

@@ -26,7 +26,7 @@ function parseHtmlPoem(htmlContent, filename) {
   const authorMatch = htmlContent.match(
     /<span[^>]*id="author--[^"]*"[^>]*>([\s\S]*?)<\/span>/
   );
-  const author = authorMatch ? authorMatch[1].trim() : "Warwick Allen";
+  const author = authorMatch ? authorMatch[1].trim() : "A Poet";
 
   // Extract date
   const dateMatch = htmlContent.match(

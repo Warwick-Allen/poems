@@ -35,6 +35,8 @@ This allows you to define variables that can be used in the header (title/author
 
 The `poem-to-yaml.js` converter automatically prepends the contents of `.shared.poem` (if it exists in the same directory) to each `.poem` file before processing. This allows you to define common variables that are available to all poems without repeating them in each file.
 
+`.shared.poem` is **user-owned** — it is not overwritten by `sync-framework.sh`. Customise it freely (e.g. set `={author}=Your Name`).
+
 **Example `.shared.poem`:**
 ```
 ={disclaimer}<<=
@@ -50,7 +52,7 @@ All `.poem` files in the same directory can then use `${disclaimer}` without def
 
 ```
 ={poem_title}=The Journey Home
-={author_name}=Warwick Allen
+={author_name}=A Poet
 
 ${poem_title}
 ${author_name}
@@ -91,7 +93,7 @@ A Poet
 ={year}=2025
 
 ${poem_title}
-Warwick Allen
+A Poet
 ${year}-01-15
 ```
 
@@ -475,7 +477,7 @@ ${variable_name}
 
 {% raw %}
 ```
-={author}=Warwick Allen
+={author}=A Poet
 ={poem_title}=My Journey
 
 ${poem_title}

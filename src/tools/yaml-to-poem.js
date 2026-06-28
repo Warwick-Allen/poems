@@ -53,7 +53,7 @@ class YamlToPoemConverter {
     this.addLine(this.data.title);
 
     // Only add author line if it's not the default
-    if (this.data.author && this.data.author !== 'Warwick Allen') {
+    if (this.data.author && this.data.author !== 'A Poet') {
       this.addLine(this.data.author);
     }
 
