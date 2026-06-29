@@ -31,7 +31,13 @@ else
 fi
 
 echo "Fetching from poetic..."
+# In CI, actions/checkout sets a repo-scoped GITHUB_TOKEN as an HTTP extraheader
+# for all github.com requests. That token is rejected by a different GitHub repo
+# (even a public one). Temporarily unset it around the fetch.
+_ci_auth=$(git config --local http.https://github.com/.extraheader 2>/dev/null || true)
+[ -n "$_ci_auth" ] && git config --local --unset http.https://github.com/.extraheader
 git fetch "$POETIC_REMOTE" --tags --quiet
+[ -n "$_ci_auth" ] && git config --local http.https://github.com/.extraheader "$_ci_auth"
 
 # Resolve ref: try remote branch first, then tag
 if POETIC_COMMIT=$(git rev-parse "refs/remotes/$POETIC_REMOTE/$POETIC_REF" 2>/dev/null); then
