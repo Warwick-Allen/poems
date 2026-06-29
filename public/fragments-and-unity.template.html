@@ -559,7 +559,7 @@ h3.post-title, .comments h4 {
 
 /* ~~ CUSTOM CSS START ~~ */
 
-/* Custom CSS for Fragments & Unity */
+/* Poem site CSS */
 
 .poem-info {
   color: gray;
@@ -617,21 +617,6 @@ h3.post-title, .comments h4 {
 .postscript :first-child {
   font-weight: bold;
 }
-
-/* rest indicator */
-.r::after {
-  bottom: 0.2ex;
-  content: "\00B7";
-  display: inline-block;
-  height: 0.7ex;
-  font-size: 0.75em;
-  opacity: 0.5;
-  padding-right: 0.25em;
-  position: relative;
-  text-align: center;
-  width: 0.75em;
-}
-
 
 /* Analysis */
 
@@ -749,7 +734,7 @@ html.dark-mode {
 }
 
 html.dark-mode :root {
-  --bg: #0b0d0f;
+  --bg: #22262b;
   --surface: #0f1113;
   --text: #e6eef6;
   --muted: #9aa6b2;
@@ -758,7 +743,7 @@ html.dark-mode :root {
 }
 
 html.dark-mode body {
-  background: #0b0d0f !important;
+  background: #22262b !important;
   color: #e6eef6;
 }
 
@@ -830,7 +815,7 @@ html.dark-mode .audiomack-container {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0b0d0f;
+    --bg: #22262b;
     --surface: #0f1113;
     --text: #e6eef6;
     --muted: #9aa6b2;
@@ -905,6 +890,22 @@ html.dark-mode .audiomack-container {
   .audiomack-container {
     color: var(--text);
   }
+}
+
+/* User customisations — this file is not managed by sync-framework.sh. */
+
+/* rest indicator */
+.r::after {
+  bottom: 0.2ex;
+  content: "\00B7";
+  display: inline-block;
+  height: 0.7ex;
+  font-size: 0.75em;
+  opacity: 0.5;
+  padding-right: 0.25em;
+  position: relative;
+  text-align: center;
+  width: 0.75em;
 }
 
 /* ~~ CUSTOM CSS END ~~ */
@@ -2287,7 +2288,26 @@ head.appendChild(script);
   </script>
 
   <!-- ~~ CUSTOM JS START ~~ -->
-  <!-- ~~ CUSTOM JS END ~~ -->
+
+<script type='text/javascript'>//<![CDATA[
+// Shared Audiomack lazy-loader — framework-owned, do not hand-edit.
+// A single delegated click handler that works for any number of poems on any page.
+document.addEventListener('click', function (e) {
+  const btn = e.target.closest('.load-audiomack-btn');
+  if (!btn) return;
+  const { slug, title, artist } = btn.dataset;
+  const player = document.getElementById('audiomack-player--' + slug);
+  if (!player) return;
+  btn.style.display = 'none';
+  const iframe = document.createElement('iframe');
+  iframe.src = 'https://audiomack.com/embed/' + artist + '/song/' + slug;
+  iframe.scrolling = 'no'; iframe.width = '100%'; iframe.height = '252';
+  iframe.frameBorder = '0'; iframe.title = title || '';
+  player.style.display = 'block'; player.appendChild(iframe);
+});
+//]]></script>
+
+<!-- ~~ CUSTOM JS END ~~ -->
 </body>
 
 <macro:includable id='sections' var='col'>
