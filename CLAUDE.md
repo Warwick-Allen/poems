@@ -104,4 +104,5 @@ See `docs/BUILD.md` for full details.
 | `docs/YAML-SCHEMA.md` | YAML poem schema |
 | `docs/POEM-TO-YAML.md` | Converter docs |
 | `docs/BUILD.md` | GitHub Pages deployment |
+| `docs/BLOGGER.md` | Auto-publishing poems to Blogger |
 | `poem-syntax.ebnf` | Formal EBNF grammar |
