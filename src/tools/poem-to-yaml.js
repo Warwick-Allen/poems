@@ -1075,8 +1075,8 @@ function main() {
     const files = fs.readdirSync(poemDir);
 
     for (const file of files) {
-      // Skip .shared.poem (it's included by other files)
-      if (file.endsWith('.poem') && file !== '.shared.poem') {
+      // Skip partial/private files (starting with '_' or '.', e.g. .shared.poem)
+      if (file.endsWith('.poem') && !file.startsWith('_') && !file.startsWith('.')) {
         const poemPath = path.join(poemDir, file);
         const yamlPath = path.join(yamlDir, file.replace('.poem', '.yaml'));
 
@@ -1089,6 +1089,19 @@ function main() {
           console.error(`Error converting ${file}:`, error.message);
         }
       }
+    }
+
+    // Warn about stale YAML artefacts that have no active source poem.
+    const activePoemBases = new Set(
+      files
+        .filter(f => f.endsWith('.poem') && !f.startsWith('_') && !f.startsWith('.'))
+        .map(f => f.replace('.poem', '.yaml'))
+    );
+    const existingYamls = fs.readdirSync(yamlDir).filter(
+      f => f.endsWith('.yaml') && !f.startsWith('_') && !f.startsWith('.') && f !== 'YAML-SCHEMA.yaml'
+    );
+    for (const stale of existingYamls.filter(f => !activePoemBases.has(f))) {
+      console.warn(`Warning: stale YAML artefact (no source poem): src/poems/yaml/${stale}`);
     }
   } else {
     // Convert single file
