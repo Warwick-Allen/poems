@@ -27,18 +27,18 @@
 shopt -qu dotglob
 
 repo_toplevel=$(git rev-parse --show-toplevel)
-mkdir -p "$repo_toplevel/raw" "$repo_toplevel/public/raw"
-index="$repo_toplevel/public/raw/index.html"
+mkdir -p “$repo_toplevel/raw” “$repo_toplevel/public/raw”
+index=”$repo_toplevel/public/raw/index.html”
 gh_repo=$(git remote get-url origin | sed 's|.*github.com[:/]||; s|\.git$||')
 gh_raw="https://raw.githubusercontent.com/$gh_repo/refs/heads/main/raw"
 
 # Write the opening of the index page; individual poem links are appended below.
 cat <<HERE >"$index"
 <!DOCTYPE html>
-<html lang="en">
+<html lang=”en”>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset=”UTF-8”>
+  <meta name=”viewport” content=”width=device-width, initial-scale=1.0”>
   <title>Poems</title>
 </head>
 <body>
@@ -84,7 +84,7 @@ for poem_file in "$repo_toplevel"/src/poems/poem/*.poem; do
       # Normalise common HTML entities to Unicode characters.
       s:  \.\.\.                     :…:gx;
       s:( &hellip; | \.\.\.         ):…:gx;
-      s:  &ldquo;                    :“:gx;
+      s:  &ldquo;                    :”:gx;
       s:  &rdquo;                    :”:gx;
       s:( &mdash;  | (?<!-)---(?!-) ):—:gx;
       s:  &mdash;                    :—:gx;
