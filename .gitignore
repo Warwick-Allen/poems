@@ -5,3 +5,5 @@ node_modules
 
 src/poems/yaml/*.yaml
 public/*.html
+
+.blogger-credentials.json

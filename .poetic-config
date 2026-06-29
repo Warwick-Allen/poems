@@ -3,3 +3,9 @@ sync_schedule=hourly
 subtitle=Poems by Warwick Allen
 favicon=public/fragments-and-unity.favicon-32.png
 audiomack_artist=saltysojourner
+
+# Blogger publishing — see docs/BLOGGER.md. Sensitive OAuth values
+# (client id/secret, refresh token) are GitHub Actions secrets, not stored here.
+blogger_sync=true
+blogger_blog_id=7781143180070523245
+blogger_template=public/fragments-and-unity.template.html

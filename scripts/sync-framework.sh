@@ -1,10 +1,22 @@
 #!/bin/bash
-# Syncs framework files from warwickallen/poetic into this repo.
+#
+# sync-framework.sh — pull framework files from warwickallen/poetic into this repo.
+#
+# The poetic framework owns the build tools, templates, editor integrations, and
+# documentation.  This script fetches the requested ref from the upstream repo,
+# checks out each framework-owned path at that ref, and updates .poetic-version.
+#
+# Paths listed in skip_paths inside .poetic-config are left untouched, allowing
+# users to maintain local overrides of specific framework files.
 #
 # Usage:
 #   scripts/sync-framework.sh                  # sync using ref in .poetic-version
 #   scripts/sync-framework.sh --ref v1.2.0     # sync from a specific tag
 #   scripts/sync-framework.sh --ref main       # sync from latest main
+#
+# After running, review staged changes with `git diff --staged`, then commit.
+# If sync-framework.sh itself was updated during the sync, re-run the script to
+# pick up the new version before committing.
 
 set -euo pipefail
 
@@ -67,6 +79,7 @@ FRAMEWORK_PATHS=(
   public/poetic-logo.svg
   .github/workflows/build-poems.yml
   .github/workflows/sync-framework.yml
+  .github/workflows/sync-blogger.yml
   scripts/sync-framework.sh
   scripts/edit-poem
   scripts/poem-to-raw.sh
@@ -107,7 +120,11 @@ current_channel=$(grep '^channel=' "$VERSION_FILE" 2>/dev/null | cut -d= -f2 || 
 printf 'channel=%s\nref=%s\ncommit=%s\n' "$current_channel" "$POETIC_REF" "$POETIC_COMMIT" > "$VERSION_FILE"
 
 echo ""
-echo "Done. Review staged changes with: git diff --staged"
-echo "Commit with: git commit -m 'chore: sync framework from poetic $POETIC_REF'"
-echo ""
-echo "If scripts/sync-framework.sh itself was updated, re-run to pick up the new version."
+if git diff --staged --quiet; then
+  echo "Done. Already up to date — no changes to commit."
+else
+  echo "Done. Review staged changes with: git diff --staged"
+  echo "Commit with: git commit -m 'chore: sync framework from poetic $POETIC_REF'"
+  echo ""
+  echo "If scripts/sync-framework.sh itself was updated, re-run to pick up the new version."
+fi
